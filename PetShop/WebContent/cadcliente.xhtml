@@ -52,22 +52,23 @@
 
 								<h:outputLabel for="date" value="Data Nascimento:"
 									style="font-weight:bold" />
-								<p:inputText id="date" style="border-radius:30px;"
-									value="#{usuarioController.usu.dataNascimento}"
+								<p:inputMask id="date" style="border-radius:30px;"
+									value="#{usuarioController.usu.dataNascimento}" mask="99/99/9999"
 									placeholder="Insira sua data de nascimento" label="data">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</p:inputText>
+								</p:inputMask>
 
 								<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-								<p:inputText id="cpf" style="border-radius:30px;"
-									value="#{usuarioController.usu.cpf}" required="true"
+								<p:inputMask id="cpf" style="border-radius:30px;"
+									value="#{usuarioController.usu.cpf}" required="true" mask="999.999.999-99"
 									requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
 									placeholder="Insira seu CPF" />
 
 								<h:outputLabel for="numero" value="Numero de Celular:"
 									style="font-weight:bold" />
-								<p:inputText id="numero" style="border-radius:30px;"
+								<p:inputMask id="numero" style="border-radius:30px;"
 									value="#{usuarioController.usu.telefone}" required="true"
+									mask="(99)99999999"
 									requiredMessage="Numero não pode ser um campo nulo!"
 									label="numero"
 									placeholder="Insira seu numero de telefone/celular" />
@@ -85,7 +86,7 @@
 									value="#{usuarioController.usu.endereco}" required="true"
 									requiredMessage="Endereço não pode ser um campo nulo!"
 									label="endereco"
-									placeholder="Insira seu endereço:" />
+									placeholder="Bairro alameda e lote" />
 							</p:panelGrid>
 						</div>
 					</div>

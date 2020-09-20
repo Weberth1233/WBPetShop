@@ -48,7 +48,7 @@ public class LoginController {
 			funcionario = (Funcionario)query.getSingleResult();
 			/*Coloquei pra caso não lembrasse de instanciar o funcionario*/
 			if(getSenha().equals(funcionario.getSenha())) {
-				return "index.xhtml?faces-redirect=true";
+				return "cadcliente.xhtml?faces-redirect=true";
 			}
 		}catch (NoResultException e){
 		}
