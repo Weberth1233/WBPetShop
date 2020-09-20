@@ -1,0 +1,196 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="info" summary="INFO!"
+					detail="Olá, operação com sucesso!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="warn" summary="WARN!"
+					detail="Olá, operação deu erro!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="error" summary="ERROR!"
+					detail="Olá, operação falhou!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="fatal" summary="FATAL!"
+					detail="Olá, erro fatal!" />
+			</div>
+		</div>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:panel id="panel">
+				<p:growl id="growl" sticky="false" />
+				<f:facet name="header">
+					<div align="center">
+						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
+						<p style="font-family: arial">Cadastro de Cliente</p>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<h:outputLabel value="Nome completo:" style="font-weight:bold" />
+								<p:inputText id="name" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.nome}"
+									required="true" placeholder="Insira seu nome" />
+
+								<h:outputLabel for="date" value="Data Nascimento:"
+									style="font-weight:bold" />
+								<p:inputMask id="date" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.dataNascimento}"
+									mask="99/99/9999" placeholder="Insira sua data de nascimento">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+
+								<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
+								<p:inputText id="cpf" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.cpf}"
+									required="true"
+									requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
+									placeholder="Insira seu CPF" />
+
+								<h:outputLabel for="cargo" value="Cargo ocupado:"
+									style="font-weight:bold" />
+								<p:inputText id="cargo" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.cargoOcupado}"
+									required="true"
+									requiredMessage="Cargo não pode ser um campo nulo!"
+									label="cargoOcupado"
+									placeholder="Insira o Cargo que vai ser ocupado pelo funcionario" />
+
+								<h:outputLabel for="email" value="E-mail:"
+									style="font-weight:bold" />
+								<p:inputText id="email" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.email}"
+									required="true"
+									requiredMessage="E-mail não pode ser um campo nulo!"
+									label="email" placeholder="exemplo@hotmail.com" />
+
+								<h:outputLabel for="salario" value="salario"
+									style="font-weight:bold" />
+								<p:inputText id="salario" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.salario}"
+									required="true"
+									requiredMessage="Salario não pode ser um campo nulo!"
+									label="endereco" placeholder="Insira o salario" />
+
+								<h:outputLabel for="chorario" value="Carga Horaria:"
+									style="font-weight:bold" />
+								<p:inputText id="cargahoraria" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.cargaHoraria}"
+									required="true"
+									requiredMessage="Carga Horaria não pode ser um campo nulo!"
+									label="Carga Horaria" placeholder="Insira a carga Horaria" />
+
+								<h:outputLabel for="senha" value="Senha:"
+									style="font-weight:bold" />
+								<p:inputText id="senhafunc" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.senha}"
+									required="true" requiredMessage="Campo senha é obrigatorio!"
+									label="Senha" placeholder="Insira uma senha:" />
+
+								<h:outputLabel for="login" value="Login"
+									style="font-weight:bold" />
+								<p:inputText id="loginfunc" style="border-radius:30px;"
+									value="#{funcionarioController.funcionario.login}"
+									required="true" requiredMessage="Campo login é obrigatorio!"
+									label="login" placeholder="Insira um login" />
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Salvar" process="@form" update="@form"
+							icon="pi pi-check" style="margin-right:10px"
+							actionListener="#{funcionarioController.salvar}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Lista Funcionario"
+							onclick="PF('dlg').show();" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@this" update="panel"
+							actionListener="#{usuarioController.excluir}">
+							<p:confirm header="Confirmação" message="Deseja excluir?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:panel>
+			<p:dialog header="Consulta Funcionario" widgetVar="dlg" modal="true"
+				width="80%" height="300">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Pesquisar:" />
+					<p:inputText id="filtro" />
+					<p:commandButton value="Pesquisar" process="@this" update="tabela"
+						actionListener="#{funcionarioController.pesquisar}" />
+				</p:panelGrid>
+
+				<p:dataTable id="tabela"
+					value="#{funcionarioController.listaFuncionario}" var="obj">
+					<p:column>
+						<f:facet name="header">Nome:</f:facet>
+						<p:outputLabel value="#{obj.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data Nascimento:</f:facet>
+						<p:outputLabel value="#{obj.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">CPF:</f:facet>
+						<p:outputLabel value="#{obj.cpf}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Cargo Ocupado:</f:facet>
+						<p:outputLabel value="#{obj.cargoOcupado}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">E-mail:</f:facet>
+						<p:outputLabel value="#{obj.email}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Salario:</f:facet>
+						<p:outputLabel value="#{obj.salario}">
+							<f:convertNumber locale="pt_BR" currencySymbol="R$"
+								type="currency" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Senha:</f:facet>
+						<p:outputLabel value="#{obj.senha}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Login:</f:facet>
+						<p:outputLabel value="#{obj.login}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Ação:</f:facet>
+						<p:commandButton value="Editar"
+							actionListener="#{usuarioController.editar(obj)}" process="@this"
+							update="@form" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
