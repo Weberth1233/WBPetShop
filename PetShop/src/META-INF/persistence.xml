@@ -4,6 +4,7 @@
 		<class>br.unitins.petshop.model.DefaultEntity</class>
 		<class>br.unitins.petshop.model.Funcionario</class>
 		<class>br.unitins.petshop.model.Usuario</class>
+		<class>br.unitins.petshop.model.Veterinario</class>
 	
 	<properties>
 			<!-- DB Driver -->

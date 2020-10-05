@@ -3,6 +3,8 @@ package br.unitins.petshop.model;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -20,6 +22,7 @@ public class Usuario extends DefaultEntity{
 	private String cpf;
 	
 	@Past(message = "Data não pode estar no futuro!")
+	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
 	private String telefone;
