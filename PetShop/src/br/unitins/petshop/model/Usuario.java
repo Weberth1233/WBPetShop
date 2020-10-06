@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-public class Usuario extends DefaultEntity{
+public class Usuario extends DefaultEntity<Usuario>{
 	@NotBlank(message = "Nome não pode ser uma campo nulo!")
 	@Size(min = 20, max = 35 ,message = "Nome muito pequeno!")
 	private String nome;

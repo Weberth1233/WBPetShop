@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Funcionario extends DefaultEntity {
+public class Funcionario extends DefaultEntity<Funcionario> {
 	private String nome;
 	private String cpf;
 	private Date dataNascimento;

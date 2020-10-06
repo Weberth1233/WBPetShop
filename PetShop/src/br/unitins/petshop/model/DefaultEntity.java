@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @MappedSuperclass
-public class DefaultEntity {
+public class DefaultEntity<T>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
