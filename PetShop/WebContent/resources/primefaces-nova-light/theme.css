@@ -1797,7 +1797,8 @@ body .ui-button {
   body .ui-button.ui-button-text-only .ui-button-text {
     padding: 0.429em 1em; }
   body .ui-button.ui-button-text-icon-left .ui-button-text {
-    padding: 0.429em 1em 0.429em 2em; }
+    padding: 0.429em 1em 0.429em 2em; 
+    background-color: #000}
   body .ui-button.ui-button-text-icon-left .ui-icon {
     position: absolute;
     top: 50%;
@@ -2070,9 +2071,9 @@ body .ui-panel {
   body .ui-panel .ui-panel-title {
     margin: 0; }
   body .ui-panel .ui-panel-titlebar {
-    border: 1px solid #c8c8c8;
-    background-color: #f4f4f4;
-    color: #333333;
+    border: 2px solid #000;
+    background-color: #51519A;
+    color: #fff;
     padding: 0.571em 1em 0.571em 1em;
     font-weight: 700;
     -moz-border-radius-topleft: 3px;
@@ -2166,7 +2167,7 @@ body .ui-panel {
       body .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon.ui-state-hover {
         color: #333333; }
   body .ui-panel .ui-panel-content {
-    border: 1px solid #c8c8c8;
+    border: 1px solid #000;
     background-color: #ffffff;
     color: #333333;
     padding: 0.571em 1em;
@@ -2472,7 +2473,7 @@ body .ui-scrollpanel {
     background-color: #f8f8f8; }
 body .ui-toolbar {
   border: 1px solid #c8c8c8;
-  background-color: #f4f4f4;
+  background-color: #8080FF;
   color: #333333;
   padding: 0.571em 1em 0.571em 1em; }
   body .ui-toolbar .ui-button {
