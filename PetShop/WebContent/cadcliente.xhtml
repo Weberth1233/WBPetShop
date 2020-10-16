@@ -12,11 +12,11 @@
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="warn" summary="WARN!"
-					detail="Olá, operação deu erro!" />
+					detail="Olá, operação falhou!" />
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="error" summary="ERROR!"
-					detail="Olá, operação falhou!" />
+					detail="Olá, operação deu erro!" />
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="fatal" summary="FATAL!"
@@ -54,7 +54,7 @@
 									style="font-weight:bold" />
 								<p:inputMask id="date" style="border-radius:30px;"
 									value="#{usuarioController.usu.dataNascimento}" mask="99/99/9999"
-									placeholder="Insira sua data de nascimento" label="data">
+									placeholder="dia/mês/ano" label="data">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</p:inputMask>
 
@@ -62,16 +62,16 @@
 								<p:inputMask id="cpf" style="border-radius:30px;"
 									value="#{usuarioController.usu.cpf}" required="true" mask="999.999.999-99"
 									requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
-									placeholder="Insira seu CPF" />
+									placeholder="000.000.000-00" />
 
 								<h:outputLabel for="numero" value="Numero de Celular:"
 									style="font-weight:bold" />
 								<p:inputMask id="numero" style="border-radius:30px;"
 									value="#{usuarioController.usu.telefone}" required="true"
-									mask="(99)99999999"
+									mask="(99)99999-9999"
 									requiredMessage="Numero não pode ser um campo nulo!"
 									label="numero"
-									placeholder="Insira seu numero de telefone/celular" />
+									placeholder="(99)99999-9999" />
 									
 								<h:outputLabel for="email" value="E-mail:"
 									style="font-weight:bold" />

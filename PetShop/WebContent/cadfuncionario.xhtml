@@ -12,11 +12,11 @@
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="warn" summary="WARN!"
-					detail="Olá, operação deu erro!" />
+					detail="Olá, operação falhou!" />
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="error" summary="ERROR!"
-					detail="Olá, operação falhou!" />
+					detail="Olá, operação deu erro!" />
 			</div>
 			<div class="ui-g-12 ui-md-3">
 				<p:staticMessage severity="fatal" summary="FATAL!"
@@ -48,13 +48,13 @@
 								<h:outputLabel value="Nome completo:" style="font-weight:bold" />
 								<p:inputText id="name" style="border-radius:30px;"
 									value="#{funcionarioController.funcionario.nome}"
-									required="true" placeholder="Insira seu nome" />
+									required="true" placeholder="Insira seu nome completo" />
 
 								<h:outputLabel for="date" value="Data Nascimento:"
 									style="font-weight:bold" />
 								<p:inputMask id="date" style="border-radius:30px;"
 									value="#{funcionarioController.funcionario.dataNascimento}"
-									mask="99/99/9999" placeholder="Insira sua data de nascimento">
+									mask="99/99/9999" placeholder="dia/mês/ano">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</p:inputMask>
 
@@ -63,7 +63,7 @@
 									value="#{funcionarioController.funcionario.cpf}"
 									required="true" mask="999.999.999-99"
 									requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
-									placeholder="Insira seu CPF" />
+									placeholder="000.000.000-00" />
 
 								<h:outputLabel for="cargo" value="Cargo ocupado:"
 									style="font-weight:bold" />
@@ -72,7 +72,7 @@
 									required="true"
 									requiredMessage="Cargo não pode ser um campo nulo!"
 									label="cargoOcupado"
-									placeholder="Insira o Cargo que vai ser ocupado pelo funcionario" />
+									placeholder="Exemplo: Atendente" />
 
 								<h:outputLabel for="email" value="E-mail:"
 									style="font-weight:bold" />
@@ -88,7 +88,7 @@
 									value="#{funcionarioController.funcionario.salario}"
 									required="true"
 									requiredMessage="Salario não pode ser um campo nulo!"
-									label="endereco" placeholder="Insira o salario" />
+									label="endereco" placeholder="0000" />
 
 								<h:outputLabel for="chorario" value="Carga Horaria:"
 									style="font-weight:bold" />
@@ -96,21 +96,21 @@
 									value="#{funcionarioController.funcionario.cargaHoraria}"
 									required="true"
 									requiredMessage="Carga Horaria não pode ser um campo nulo!"
-									label="Carga Horaria" placeholder="Insira a carga Horaria" />
+									label="Carga Horaria" placeholder="Exemplo:60" />
 
 								<h:outputLabel for="senha" value="Senha:"
 									style="font-weight:bold" />
 								<p:inputText id="senhafunc" style="border-radius:30px;"
 									value="#{funcionarioController.funcionario.senha}"
 									required="true" requiredMessage="Campo senha é obrigatorio!"
-									label="Senha" placeholder="Insira uma senha:" />
+									label="Senha" placeholder="Insira uma senha forte:" />
 
 								<h:outputLabel for="login" value="Login"
 									style="font-weight:bold" />
 								<p:inputText id="loginfunc" style="border-radius:30px;"
 									value="#{funcionarioController.funcionario.login}"
 									required="true" requiredMessage="Campo login é obrigatorio!"
-									label="login" placeholder="Insira um login" />
+									label="login" placeholder="Exemplo:meuloginbr" />
 							</p:panelGrid>
 						</div>
 					</div>

@@ -37,7 +37,7 @@
 				<f:facet name="header">
 					<div align="center">
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
-						<p style="font-family: arial">Cadastro de Veterinario</p>
+						<p style="font-family: arial">Cadastro Animal</p>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -46,34 +46,52 @@
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 
-								<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-								<p:inputText id="name" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.nome}"
-									required="true" placeholder="Insira seu nome" />
-								<h:outputLabel for="crnv" value="CRNV:" style="font-weight:bold" />
-								<p:inputMask id="crnv" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.crnv}"
-									required="true" mask="999.999.999-99"
-									requiredMessage="CRNV não pode ser um campo nulo!" label="crnv"
-									placeholder="Insira seu CRNV:" />
-
-								<h:outputLabel for="cargo" value="Carga Horaria:"
+								<h:outputLabel value="Nome Pet:" style="font-weight:bold" />
+								<p:inputText id="namePet" style="border-radius:30px;"
+									value=""
+									required="true" placeholder="Exemplo: Spyke" />
+								
+								<h:outputLabel for="raca" value="Raça:" style="font-weight:bold" />
+								<p:inputText id="raca" style="border-radius:30px;"
+									value="" label="Raça"
+									placeholder="Exemplo: PitBull:" />
+									
+								<h:outputLabel for="sexoPet" value="Sexo:"
 									style="font-weight:bold" />
-								<p:inputText id="cargo" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.cargaHoraria}"
+								<p:inputText id="sexoPet" style="border-radius:30px;"
+									value=""
 									required="true"
-									requiredMessage="Carga Horaria não pode ser um campo nulo!"
-									label="cargo Horaria"
-									placeholder="Insira a Carga Horaria" />
-
-
-								<h:outputLabel for="salario" value="salario"
+									label="Sexo pet:"
+									placeholder="Exemplo: Macho ou fema" />
+								
+								<h:outputLabel for="porte" value="Porte"
 									style="font-weight:bold" />
-								<p:inputMask id="salario" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.salario}"
+								<p:inputText id="porte" style="border-radius:30px;"
+									value=""
 									required="true" 
-									requiredMessage="Salario não pode ser um campo nulo!"
-									label="endereco" placeholder="Insira o salario" />
+									label="porte" placeholder="Mini/Medio/Grande/Muito_Grande" />
+								
+								<h:outputLabel for="peco" value="Peço:"
+									style="font-weight:bold" />
+								<p:inputText id="peco" style="border-radius:30px;"
+									value=""
+									required="true" 
+									label="Peço:" placeholder="12,5kg" />
+									
+								<h:outputLabel for="datePet" value="Data Nascimento:"
+									style="font-weight:bold" />
+								<p:inputMask id="datePet" style="border-radius:30px;"
+									value="" mask="99/99/9999"
+									placeholder="dia/mês/ano" label="data">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+								
+								<h:outputLabel for="observacoes" value="Observações:"
+									style="font-weight:bold" />
+								<p:inputTextarea id="observacoes" style="border-radius:30px;"
+									value=""
+									required="true" 
+									label="Observações:" placeholder="O animal possui alguma doença ?" />
 							</p:panelGrid>
 						</div>
 					</div>
