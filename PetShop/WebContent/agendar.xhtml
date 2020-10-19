@@ -4,23 +4,47 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
+<style type="text/css">
+h1{
+	box-shadow: 2px 2px 2px #000;
+	background-color: #51519A; color: #fff; text-align: center; padding: 5px; border: 2px solid #fff;
+	font-weight: bold;
+}
+div#box-content{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+div#box-content img{
+	box-shadow: 2px 2px 2px #000;
+}
+div#box-content p{
+	font-weight:bold;
+	box-shadow: 2px 2px 2px #000;
+	padding:10px;
+}
+@media only screen and (max-width: 600px) {
+  div#box-content {
+    flex-direction: column;
+  }
+ }
+</style>
 		<p:fieldset>
-			<h1
-				style="background-color: #51519A; color: #fff; text-align: center; padding: 5px; border: 2px solid #fff">Agendar
-				Serviço/Consulta</h1>
+			<h1 >Agendar Consulta/Serviço</h1>
 			<center>
-				<div style="display: flex">
+
+				<div id="box-content">
 					<div class="consulta" style="margin-right: 20px">
-						<p style="background-color: blue; color: #fff">Agendar
-							Consulta</p>
+						<p style="background-color: blue; color: #fff;">Agendar Consulta</p>
 						<p:graphicImage
-							style="width:500px;border:2px solid black;max-width:100%;margin-left:90px"
+							style="width:500px;border:2px solid black;max-width:100%;"
 							name="images/dog-consulta.jpg"></p:graphicImage>
 					</div>
 					<div class="sevico">
 						<p style="background-color: blue; color: #fff">Agendar Serviço</p>
-						<p:graphicImage style="width:500px;border:2px solid black;"
-							name="images/servico.jpg"></p:graphicImage>
+						<a href="agendarservico.xhtml"><p:graphicImage
+								style="width:500px;border:2px solid black;max-width:100%;"
+								name="images/servico.jpg"></p:graphicImage></a>
 					</div>
 				</div>
 			</center>
