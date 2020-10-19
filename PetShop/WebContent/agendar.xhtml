@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<p:fieldset>
+			<h1
+				style="background-color: #51519A; color: #fff; text-align: center; padding: 5px; border: 2px solid #fff">Agendar
+				Serviço/Consulta</h1>
+			<center>
+				<div style="display: flex">
+					<div class="consulta" style="margin-right: 20px">
+						<p style="background-color: blue; color: #fff">Agendar
+							Consulta</p>
+						<p:graphicImage
+							style="width:500px;border:2px solid black;max-width:100%;margin-left:90px"
+							name="images/dog-consulta.jpg"></p:graphicImage>
+					</div>
+					<div class="sevico">
+						<p style="background-color: blue; color: #fff">Agendar Serviço</p>
+						<p:graphicImage style="width:500px;border:2px solid black;"
+							name="images/servico.jpg"></p:graphicImage>
+					</div>
+				</div>
+			</center>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>

@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
-	
+
 	<ui:define name="content">
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-3">
@@ -37,7 +37,7 @@
 				<f:facet name="header">
 					<div align="center">
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
-						<p style="font-family: arial">Cadastro de Cliente</p>
+						<p style="font-family: arial;font-size: 12pt;">Cadastro de Cliente e Pet</p>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -45,48 +45,72 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-								<p:inputText id="name" style="border-radius:30px;"
-									value="#{usuarioController.usu.nome}" required="true"
-									placeholder="Insira seu nome" />
+								<p:fieldset legend="Cadastro de Cliente">
+									<h:outputLabel value="Nome completo:" style="font-weight:bold" />
+									<p:inputText id="name" style="border-radius:30px;"
+										value="#{usuarioController.usu.nome}" required="true"
+										placeholder="Insira seu nome" />
 
-								<h:outputLabel for="date" value="Data Nascimento:"
-									style="font-weight:bold" />
-								<p:inputMask id="date" style="border-radius:30px;"
-									value="#{usuarioController.usu.dataNascimento}" mask="99/99/9999"
-									placeholder="dia/mês/ano" label="data">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</p:inputMask>
+									<h:outputLabel for="date" value="Data Nascimento:"
+										style="font-weight:bold" />
+									<p:inputMask id="date" style="border-radius:30px;"
+										value="#{usuarioController.usu.dataNascimento}"
+										mask="99/99/9999" placeholder="dia/mês/ano" label="data">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:inputMask>
 
-								<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-								<p:inputMask id="cpf" style="border-radius:30px;"
-									value="#{usuarioController.usu.cpf}" required="true" mask="999.999.999-99"
-									requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
-									placeholder="000.000.000-00" />
+									<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
+									<p:inputMask id="cpf" style="border-radius:30px;"
+										value="#{usuarioController.usu.cpf}" required="true"
+										mask="999.999.999-99"
+										requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
+										placeholder="000.000.000-00" />
 
-								<h:outputLabel for="numero" value="Numero de Celular:"
-									style="font-weight:bold" />
-								<p:inputMask id="numero" style="border-radius:30px;"
-									value="#{usuarioController.usu.telefone}" required="true"
-									mask="(99)99999-9999"
-									requiredMessage="Numero não pode ser um campo nulo!"
-									label="numero"
-									placeholder="(99)99999-9999" />
+									<h:outputLabel for="numero" value="Numero de Celular:"
+										style="font-weight:bold" />
+									<p:inputMask id="numero" style="border-radius:30px;"
+										value="#{usuarioController.usu.telefone}" required="true"
+										mask="(99)99999-9999"
+										requiredMessage="Numero não pode ser um campo nulo!"
+										label="numero" placeholder="(99)99999-9999" />
+
+									<h:outputLabel for="email" value="E-mail:"
+										style="font-weight:bold" />
+									<p:inputText id="email" style="border-radius:30px;"
+										value="#{usuarioController.usu.email}" required="true"
+										requiredMessage="E-mail não pode ser um campo nulo!"
+										label="email" placeholder="exemplo@hotmail.com" />
+									<h:outputLabel for="endereco" value="endereco"
+										style="font-weight:bold" />
+									<p:inputText id="endereco" style="border-radius:30px;"
+										value="#{usuarioController.usu.endereco}" required="true"
+										requiredMessage="Endereço não pode ser um campo nulo!"
+										label="endereco" placeholder="Bairro alameda e lote" />
+								</p:fieldset>
+								<p:fieldset legend="Cadastre seu Animal">
+									<h:outputLabel for="nomePet" value="Nome do animal:"
+										style="font-weight:bold" />
+									<p:inputText id="nomeAnimal" style="border-radius:30px;"
+										required="true" label="Nome do Animal"
+										placeholder="Exemplo: Bolt" />
+
+									<h:outputLabel for="raca" value="Raça:"
+										style="font-weight:bold" />
+									<p:inputText id="raca" style="border-radius:30px;"
+										required="true" label="Raça" placeholder="Exemplo: PitBull" />
 									
-								<h:outputLabel for="email" value="E-mail:"
-									style="font-weight:bold" />
-								<p:inputText id="email" style="border-radius:30px;"
-									value="#{usuarioController.usu.email}" required="true"
-									requiredMessage="E-mail não pode ser um campo nulo!"
-									label="email"
-									placeholder="exemplo@hotmail.com" />
-								<h:outputLabel for="endereco" value="endereco"
-									style="font-weight:bold" />
-								<p:inputText id="endereco" style="border-radius:30px;"
-									value="#{usuarioController.usu.endereco}" required="true"
-									requiredMessage="Endereço não pode ser um campo nulo!"
-									label="endereco"
-									placeholder="Bairro alameda e lote" />
+									<h:outputLabel for="peco" value="Peço:"
+										style="font-weight:bold" />
+									<p:inputText id="peco" style="border-radius:30px;"
+										required="true" label="Raça" placeholder="12,5kg" />
+									
+									<h:outputLabel for="dataAnimal" value="Data Nascimento:"
+										style="font-weight:bold" />
+									<p:inputMask id="dataAnimal" style="border-radius:30px;"
+										placeholder="dia/mês/ano"
+										required="true" label="Data Nascimento:" mask="99/99/9999"/>
+
+								</p:fieldset>
 							</p:panelGrid>
 						</div>
 					</div>
@@ -129,7 +153,7 @@
 					<p:column>
 						<f:facet name="header">Data Nascimento:</f:facet>
 						<p:outputLabel value="#{obj.dataNascimento}">
-						<f:convertDateTime pattern="dd/MM/yyyy"/>
+							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</p:outputLabel>
 					</p:column>
 					<p:column>

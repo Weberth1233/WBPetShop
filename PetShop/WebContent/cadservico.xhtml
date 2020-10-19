@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="info" summary="INFO!"
+					detail="Olá, operação com sucesso!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="warn" summary="WARN!"
+					detail="Olá, operação falhou!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="error" summary="ERROR!"
+					detail="Olá, operação deu erro!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="fatal" summary="FATAL!"
+					detail="Olá, erro fatal!" />
+			</div>
+		</div>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:panel id="panel">
+				<p:growl id="growl" sticky="false" />
+				<f:facet name="header">
+					<div align="center">
+						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
+						<p style="font-family: arial; font-size: 12pt;">Cadastro de
+							Serviço</p>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:fieldset legend="Cadastro de Serviço"
+									style="margin-bottom:20px;">
+									<h:outputLabel for="nomeS" value="Nome do Serviço:"
+										style="font-weight:bold" />
+									<p:inputText id="nomeS" style="border-radius:30px;"
+										required="true" label="Nome Serviço:"
+										placeholder="Exemplo: Hospedagem" />
+									<h:outputLabel value="Preço:" style="font-weight:bold" />
+									<p:inputText id="precoS" style="border-radius:30px;"
+										required="true" placeholder="0000" />
+									<h:outputLabel for="descricao" value="Descricao:"
+										style="font-weight:bold" />
+									<p:inputTextarea id="desc" style="border-radius:30px;"
+										required="true" label="Descrição Serviço:" />
+								</p:fieldset>
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Salvar" process="@form" update="@form"
+							icon="pi pi-check" style="margin-right:10px"
+							actionListener="#{usuarioController.salvar}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Lista Clientes"
+							onclick="PF('dlg').show();" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@this" update="panel"
+							actionListener="#{usuarioController.excluir}">
+							<p:confirm header="Confirmação" message="Deseja excluir?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

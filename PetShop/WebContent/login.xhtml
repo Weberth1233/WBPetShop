@@ -75,8 +75,8 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color: #fff;
-	color: #000;
+	background-color:#007ad9;
+	color: #fff;
 	cursor: pointer;
 }
 </style>
@@ -96,7 +96,7 @@ input[type="submit"]:hover {
 		</div>
 		<h:form>
 			<p:inputText style="margin-bottom:20px;" id="login" value="#{loginController.login}"
-				required="true" placeholder="Insira seu login:" />
+				required="true" placeholder="Insira seu login" />
 			<p:password id="senha" value="#{loginController.senha}"
 				placeholder="Insira sua senha" label="senha" />
 			<h:commandButton value="Logar" process="@form" update="@form"

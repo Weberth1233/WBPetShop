@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="info" summary="INFO!"
+					detail="Olá, operação com sucesso!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="warn" summary="WARN!"
+					detail="Olá, operação falhou!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="error" summary="ERROR!"
+					detail="Olá, operação deu erro!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="fatal" summary="FATAL!"
+					detail="Olá, erro fatal!" />
+			</div>
+		</div>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:panel id="panel">
+				<p:growl id="growl" sticky="false" />
+				<f:facet name="header">
+					<div align="center">
+						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
+						<p style="font-family: arial; font-size: 12pt;">Cadastro de
+							Exame</p>
+					</div>
+				</f:facet>
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:panelGrid columns="1"
+								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:fieldset legend="Cadastro de Exame"
+									style="margin-bottom:20px;">
+
+									<h:outputLabel value="Preço:" style="font-weight:bold" />
+									<p:inputText id="precoExame" style="border-radius:30px;"
+										required="true" placeholder="0000" />
+									<h:outputLabel for="descricao" value="Descricao:"
+										style="font-weight:bold" />
+									<p:inputTextarea id="desc" style="border-radius:30px;"
+										required="true" label="Descrição Serviço:" />
+									<h:panelGroup>
+										<p:selectOneMenu id="console"
+											value="#{selectOneMenuView.console}" style="width:125px">
+											<f:selectItem itemLabel="Selecione_Exame" itemValue="" />
+											<f:selectItem itemLabel="CHECK-UP" itemValue="Check-Up" />
+											<f:selectItem itemLabel="EXAME_SANGUE" itemValue="Exame de Sangue" />
+											<f:selectItem itemLabel="EXAME_URINA" itemValue="Exame de Urina" />
+											<f:selectItem itemLabel="EXAME_FEZES" itemValue="Exame de Fezes" />
+											<f:selectItem itemLabel="EXAME_OFTALMOLOGICO" itemValue="Exame de oftamologico"/>
+											<f:selectItem itemLabel="EXAME_ODONTOLOGICO" itemValue="Exame de odontologico"/>
+										</p:selectOneMenu>
+									</h:panelGroup>
+								</p:fieldset>
+
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Salvar" process="@form" update="@form"
+							icon="pi pi-check" style="margin-right:10px"
+							actionListener="#{usuarioController.salvar}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Lista Clientes"
+							onclick="PF('dlg').show();" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@this" update="panel"
+							actionListener="#{usuarioController.excluir}">
+							<p:confirm header="Confirmação" message="Deseja excluir?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
