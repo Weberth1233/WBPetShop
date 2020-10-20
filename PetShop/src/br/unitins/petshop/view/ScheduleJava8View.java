@@ -1,4 +1,4 @@
-package br.unitins.petshop.model;
+package br.unitins.petshop.view;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -33,6 +33,8 @@ public class Usuario extends DefaultEntity<Usuario>{
 	@Email(message = "E-mail inválido!")
 	private String email;
 	
+	private Animal animal;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -69,5 +71,10 @@ public class Usuario extends DefaultEntity<Usuario>{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public Animal getAnimal() {
+		return animal;
+	}
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
+	}
 }

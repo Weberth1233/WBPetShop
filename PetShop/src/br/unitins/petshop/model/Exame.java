@@ -1,37 +1,29 @@
 package br.unitins.petshop.model;
 
-public class Produto {
-	private Integer id;
+import javax.persistence.Entity;
+
+@Entity
+public class Exame extends DefaultEntity<Exame> {
+	private Float precoExame;
 	private String nome;
 	private String descricao;
-
-	public Integer getId() {
-		return id;
+	
+	public Float getPrecoExame() {
+		return precoExame;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPrecoExame(Float precoExame) {
+		this.precoExame = precoExame;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	public String getDescricao() {
 		return descricao;
 	}
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + "]";
-	}
-
 }

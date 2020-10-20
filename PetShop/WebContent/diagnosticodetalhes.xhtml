@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<p:fieldset>
+			<h:form>
+				<div class="row">
+					<div class="col-xs-12 col-xs-updated">
+						<h:form styleClass="form-horizontal">
+							<h:messages id="messages" style="color:red" globalOnly="false" />
+							<p:fieldset legend="Dados Veterinario:">
+								<div class="mb-3">
+									<p>
+										<h:outputLabel style="font-weight:bold"
+											value="Nome veterinario:" />
+									</p>
+									<h:outputLabel />
+									<p>
+										<h:outputLabel style="font-weight:bold" value="CRNV:" />
+									</p>
+									<h:outputLabel />
+								</div>
+							</p:fieldset>
+							<p:fieldset legend="Dados Exame">
+								<div class="mb-3">
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Nome Exame:" />
+									</p>
+									<h:outputLabel />
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Descrição:" />
+									</p>
+									<h:outputLabel />
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Preço Exame:" />
+									</p>
+									<h:outputLabel>
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+											type="currency" />
+									</h:outputLabel>
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Tipo do Exame:" />
+									</p>
+									<h:outputLabel />
+								</div>
+							</p:fieldset>
+							<hr />
+
+							<p:fieldset legend="Diagnóstico do veterinario:">
+								<div class="mb-3">
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Resultado:" />
+									</p>
+									<h:outputLabel />
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Data: " />
+									</p>
+									<h:outputLabel>
+										<f:convertDateTime type="localDate" pattern="dd-MM-yyyy" />
+									</h:outputLabel>
+									<p>
+										<h:outputLabel style="font-weight:bold" value="Valor Total: " />
+									</p>
+									<h:outputLabel>
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+											type="currency" />
+									</h:outputLabel>
+								</div>
+							</p:fieldset>
+							<div class="mb-3">
+								<h:commandButton value="Voltar"
+									onclick="history.go(-1); return false;"
+									styleClass="col-md-2 mb-3 btn btn-default form-control" />
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>

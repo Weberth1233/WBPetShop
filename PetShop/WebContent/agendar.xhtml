@@ -4,45 +4,57 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
-<style type="text/css">
-h1{
+		<style type="text/css">
+h1 {
 	box-shadow: 2px 2px 2px #000;
-	background-color: #51519A; color: #fff; text-align: center; padding: 5px; border: 2px solid #fff;
+	background-color: #51519A;
+	color: #fff;
+	text-align: center;
+	padding: 5px;
+	border: 2px solid #fff;
 	font-weight: bold;
+	border-radius: 15px
 }
-div#box-content{
+
+div#box-content {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 }
-div#box-content img{
+
+div#box-content img {
 	box-shadow: 2px 2px 2px #000;
+	border-radius: 15px
 }
-div#box-content p{
-	font-weight:bold;
+
+div#box-content p {
+	margin: 0px font-weight:bold;
 	box-shadow: 2px 2px 2px #000;
-	padding:10px;
+	padding: 10px;
+	border-radius: 15px
 }
+
 @media only screen and (max-width: 600px) {
-  div#box-content {
-    flex-direction: column;
-  }
- }
+	div#box-content {
+		flex-direction: column;
+	}
+}
 </style>
 		<p:fieldset>
-			<h1 >Agendar Consulta/Serviço</h1>
+			<h1>Agendar Consulta/Serviço</h1>
+			<h3>O que deseja ?</h3>
 			<center>
-
 				<div id="box-content">
 					<div class="consulta" style="margin-right: 20px">
-						<p style="background-color: blue; color: #fff;">Agendar Consulta</p>
-						<p:graphicImage
-							style="width:500px;border:2px solid black;max-width:100%;"
-							name="images/dog-consulta.jpg"></p:graphicImage>
+						<p style="background-color: blue; color: #fff;">Agendar
+							Consulta</p>
+						<a href="agendarconsulta.xhtml"><p:graphicImage
+							style="width:500px;border:2px solid black; max-width:100%;"
+							name="images/dog-consulta.jpg"></p:graphicImage></a>
 					</div>
 					<div class="sevico">
 						<p style="background-color: blue; color: #fff">Agendar Serviço</p>
-						<a href="agendarservico.xhtml"><p:graphicImage
+						<a href="agendaservico.xhtml"><p:graphicImage
 								style="width:500px;border:2px solid black;max-width:100%;"
 								name="images/servico.jpg"></p:graphicImage></a>
 					</div>

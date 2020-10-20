@@ -1,57 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>Página inicial</title>
-	<meta charset="UTF-8" />
-	<meta charset="utf-8" name="viewport"
-		content="width=device-width, initial-scale=1"
-		http-equiv="X-UA-Conpatible" />
-</h:head>
-<h:body>
-	<h:form>
-		<p:growl id="messages" />
-		<p:menubar>
-			<p:submenu label="Cadastrar" icon="pi pi-file">
-				<p:submenu label="Novo" icon="pi pi-briefcase">
-					<p:menuitem value="Cliente" url="cadcliente.xhtml" />
-					<p:menuitem value="Animal" url="#" />
-				</p:submenu>
-			</p:submenu>
-			<p:submenu label="Agendar" icon="pi pi-file">
-				<p:menuitem value="Consulta" url="#" icon="pi pi-angle-double-left" />
-				<p:submenu label="Serviços">
-					<p:menuitem value="Banho" url="#" />
-					<p:menuitem value="Banho com tosa higiênica" url="#" />
-					<p:menuitem value="Banho com tosa completa" url="#" />
-					<p:menuitem value="Higienização de parasitas" url="#" />
-					<p:menuitem value="hidratação de pelos" url="#" />
-				</p:submenu>
-			</p:submenu>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-			<p:menuitem value="Cliente" url="http://www.primefaces.org"
-				icon="pi pi-times" />
+	<ui:define name="content">
+		<style>
+div#box-all-content {
+	position: relative;
+	margin: 0;
+}
 
-			<f:facet name="options">
-				<p:inputText style="margin:1px 10px 1px 1px;"
-					placeholder="Pesquisar" />
-				<p:commandButton type="button" value="Efetuar Login"
-					icon="pi pi-home" />
-			</f:facet>
-			<p:submenu label="Ajuda" icon="pi pi-question">
-				<p:menuitem value="Contents" url="#" />
-			</p:submenu>
-		</p:menubar>
-		<p:layout style="min-width:400px;min-height:200px;">
-			<p:layoutUnit position="west" resizable="true" size="100"
-				minSize="40" maxSize="200">Esquerda</p:layoutUnit>
-			<p:layoutUnit position="center">
-			Centro
-			<h1>WBPETSHOP</h1>
-			</p:layoutUnit>
-		</p:layout>
-	</h:form>
-</h:body>
-</html>
+div.content-hello {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+}
+
+.content-hello .content-hello-text {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	transform: translate(-0%, -0%);
+	color: white;
+}
+
+.content-hello-img {
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url("resources/images/gatotela.jpg");
+	max-width: 100%;
+	margin: 0%;
+	height: 800px;
+	background-position: 60% 20%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 800px;
+	border-radius: 15px;
+	box-shadow: 5px 2px;
+}
+</style>
+		<div id="box-all-content" style="margin-top: -20px">
+			<div class="content-hello-img" style="width: 100%">
+				<div class="content-hello">
+					<div class="content-hello-text">
+						<h2 style="font-size: 25px">Bem vindo!</h2>
+					</div>
+					<h1 style="font-size: 80px">WBPetShop</h1>
+					<h3 style="text-align: center; font-size: 13pt;">O melhor
+						lugar para o seu pet!</h3>
+				</div>
+			</div>
+		</div>
+		<p:fieldset>
+			<h1>Um animal de estimação deve ser levado regularmente a um pet
+				shop, seja para uma consulta veterinária, seja para banho ou tosa</h1>
+			<p style="text-align: justify;">Ter um animal de estimação em casa é sinônimo de ter uma
+				companhia, um amigo fiel e muita alegria, mas também é sinônimo de
+				preocupação. Os animais são como filhos e também precisam de
+				cuidados especiais. Mas, mesmo sabendo da importância desses
+				cuidados, muitos donos acabam deixando eles de lado por falta de
+				tempo. O que eles não sabem é que hoje existem locais onde tudo pode
+				ser resolvido sem ter que ir de um lado para o outro, são os
+				chamados pet shop. Fonte: Canal do Pet - iG</p>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
+

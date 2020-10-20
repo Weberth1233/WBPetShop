@@ -11,10 +11,10 @@
 			<p:graphicImage style="" name="images/logowbpetshopfim.png"
 				styleClass="topbar-logo" />
 			<p:commandLink
-				value="Olá #{templateController.usuarioLogado.nome} (Sair)"
-				rendered="#{templateController.usuarioLogado != null}"
+				value="Olá #{templateController.usuariologado.nome} (Sair)"
+				rendered="#{templateController.usuariologado != null}"
 				styleClass="topbar-link" process="@this"
-				actionListener="#{templateController.encerrarSessao}" />
+				action="#{templateController.encerrarSessao}" />
 		</div>
 	</div>
 </ui:composition>

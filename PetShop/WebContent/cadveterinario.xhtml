@@ -37,7 +37,6 @@
 				<f:facet name="header">
 					<div align="center">
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
-						<p style="font-family: arial">Cadastro de Veterinario</p>
 					</div>
 				</f:facet>
 				<div class="ui-g ui-fluid">
@@ -45,35 +44,65 @@
 						<div class="card card-w-title">
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
+								<p:fieldset legend="Cadastro Veterinário">
+									<h:outputLabel value="Nome completo:" style="font-weight:bold" />
+									<p:inputText id="name" style="border-radius:30px;"
+										required="true" placeholder="Insira seu nome completo" />
 
-								<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-								<p:inputText id="name" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.nome}"
-									required="true" placeholder="Insira seu nome" />
-								<h:outputLabel for="crnv" value="CRNV:" style="font-weight:bold" />
-								<p:inputMask id="crnv" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.crnv}"
-									required="true" mask="999.999.999-99"
-									requiredMessage="CRNV não pode ser um campo nulo!" label="crnv"
-									placeholder="Insira seu CRNV:" />
+									<h:outputLabel for="date" value="Data Nascimento:"
+										style="font-weight:bold" />
+									<p:inputMask id="date" style="border-radius:30px;"
+										mask="99/99/9999" placeholder="dia/mês/ano">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:inputMask>
 
-								<h:outputLabel for="cargo" value="Carga Horaria:"
-									style="font-weight:bold" />
-								<p:inputText id="cargo" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.cargaHoraria}"
-									required="true"
-									requiredMessage="Carga Horaria não pode ser um campo nulo!"
-									label="cargo Horaria"
-									placeholder="Insira a Carga Horaria" />
+									<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
+									<p:inputMask id="cpf" style="border-radius:30px;"
+										required="true" mask="999.999.999-99"
+										requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
+										placeholder="000.000.000-00" />
 
+									<h:outputLabel for="email" value="E-mail:"
+										style="font-weight:bold" />
+									<p:inputText id="email" style="border-radius:30px;"
+										required="true"
+										requiredMessage="E-mail não pode ser um campo nulo!"
+										label="email" placeholder="exemplo@hotmail.com" />
 
-								<h:outputLabel for="salario" value="salario"
-									style="font-weight:bold" />
-								<p:inputMask id="salario" style="border-radius:30px;"
-									value="#{veterinarioController.veterinario.salario}"
-									required="true" 
-									requiredMessage="Salario não pode ser um campo nulo!"
-									label="endereco" placeholder="Insira o salario" />
+									<h:outputLabel for="salario" value="salario"
+										style="font-weight:bold" />
+									<p:inputText id="salario" style="border-radius:30px;"
+										required="true"
+										requiredMessage="Salario não pode ser um campo nulo!"
+										label="endereco" placeholder="0000" />
+
+									<h:outputLabel for="chorario" value="Carga Horaria:"
+										style="font-weight:bold" />
+									<p:inputText id="cargahoraria" style="border-radius:30px;"
+										required="true"
+										requiredMessage="Carga Horaria não pode ser um campo nulo!"
+										label="Carga Horaria" placeholder="Exemplo:60" />
+
+									<h:outputLabel for="senha" value="Senha:"
+										style="font-weight:bold" />
+									<p:password id="senhafunc" style="border-radius:30px;"
+										required="true" requiredMessage="Campo senha é obrigatorio!"
+										label="Senha" placeholder="Insira uma senha forte:" />
+
+									<h:outputLabel for="login" value="Login"
+										style="font-weight:bold" />
+									<p:inputText id="loginfunc" style="border-radius:30px;"
+										required="true" requiredMessage="Campo login é obrigatorio!"
+										label="login" placeholder="Exemplo:meuloginbr" />
+
+									<h:outputLabel for="crnv" value="CRNV:"
+										style="font-weight:bold" />
+									<p:inputMask id="crnv" style="border-radius:30px;"
+										value="#{veterinarioController.veterinario.crnv}"
+										required="true" mask="999.999.999-99"
+										requiredMessage="CRNV não pode ser um campo nulo!"
+										label="crnv" placeholder="Insira seu CRNV:" />
+								</p:fieldset>
 							</p:panelGrid>
 						</div>
 					</div>
@@ -85,14 +114,15 @@
 							actionListener="#{veterinarioController.salvar}" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
-						<p:commandButton value="Lista Veterinario"
+						<p:commandButton value="Lista Veterinário"
 							onclick="PF('dlg').show();" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@this" update="panel"
 							actionListener="#{veterinarioController.desativar}">
-							<p:confirm header="Confirmação" message="Deseja desativar o veterinario ?"
+							<p:confirm header="Confirmação"
+								message="Deseja desativar o veterinario ?"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 					</p:toolbarGroup>
@@ -114,18 +144,18 @@
 						<p:outputLabel value="#{obj.nome}" />
 					</p:column>
 					<p:column>
-						<f:facet name="header">Data Admissão:</f:facet>
-						<p:outputLabel value="#{obj.dataAdmissao}">
+						<f:facet name="header">Data Nascimento:</f:facet>
+						<p:outputLabel value="#{obj.dataNascimento}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</p:outputLabel>
 					</p:column>
 					<p:column>
-						<f:facet name="header">CRNV:</f:facet>
-						<p:outputLabel value="#{obj.crnv}" />
+						<f:facet name="header">CPF:</f:facet>
+						<p:outputLabel value="#{obj.cpf}" />
 					</p:column>
 					<p:column>
-						<f:facet name="header">Cargo Horária:</f:facet>
-						<p:outputLabel value="#{obj.cargaHoraria}" />
+						<f:facet name="header">E-mail:</f:facet>
+						<p:outputLabel value="#{obj.email}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">Salario:</f:facet>
@@ -135,10 +165,18 @@
 						</p:outputLabel>
 					</p:column>
 					<p:column>
+						<f:facet name="header">Login:</f:facet>
+						<p:outputLabel value="#{obj.login}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">CRNV:</f:facet>
+						<p:outputLabel value="#{obj.crnv}" />
+					</p:column>
+					<p:column>
 						<f:facet name="header">Ação:</f:facet>
 						<p:commandButton value="Editar"
-							actionListener="#{veterinarioController.editar(obj)}" process="@this"
-							update="@form" />
+							actionListener="#{veterinarioController.editar(obj)}"
+							process="@this" update="@form" />
 					</p:column>
 				</p:dataTable>
 			</p:dialog>

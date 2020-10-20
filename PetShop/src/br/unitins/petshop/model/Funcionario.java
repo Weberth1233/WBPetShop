@@ -3,12 +3,15 @@ package br.unitins.petshop.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
 public class Funcionario extends DefaultEntity<Funcionario> {
 	private String nome;
 	private String cpf;
+	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	private Integer cargaHoraria;
 	private String cargoOcupado;
