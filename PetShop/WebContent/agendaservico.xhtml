@@ -105,10 +105,10 @@
 						<p:inputText id="filtroname" />
 						<p:outputLabel value="CPF:" />
 						<p:inputText id="filtocpf" />
-						<p:commandButton value="Pesquisar" process="@this" update="tabela"
+						<p:commandButton value="Pesquisarcli" process="@this" update="tabelacli"
 							actionListener="#{usuarioController.pesquisar}" />
 					</p:panelGrid>
-					<p:dataTable id="tabela" value="#{usuarioController.lista}"
+					<p:dataTable id="tabelacli" value="#{usuarioController.lista}"
 						var="obj">
 						<p:column>
 							<f:facet name="header">Nome:</f:facet>
@@ -157,11 +157,11 @@
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
 					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
+					<p:commandButton value="Pesquisarfun" process="@this" update="tabelafun"
 						actionListener="#{funcionarioController.pesquisar}" />
 				</p:panelGrid>
 
-				<p:dataTable id="tabela"
+				<p:dataTable id="tabelafun"
 					value="#{funcionarioController.listaFuncionario}" var="obj">
 					<p:column>
 						<f:facet name="header">Nome:</f:facet>

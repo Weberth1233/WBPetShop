@@ -11,28 +11,24 @@
 					<div class="col-xs-12 col-xs-updated">
 						<h:form styleClass="form-horizontal">
 							<h:messages id="messages" style="color:red" globalOnly="false" />
-							<p:fieldset legend="Dados Veterinario:">
+							<p:fieldset legend="Dados Funcionário">
 								<div class="mb-3">
-									<p><h:outputLabel style="font-weight:bold" value="Nome veterinario:"/></p>
+									<p><h:outputLabel style="font-weight:bold"
+											value="Nome Funcionário:" />
+									</p>
 									<p><h:outputLabel style="font-weight:bold" value="CRNV:"/></p>
 								</div>
 							</p:fieldset>
-							<p:fieldset legend="Dados Exame">
+							<p:fieldset legend="Dados Serviço">
 								<div class="mb-3">
-									<p><h:outputLabel style="font-weight:bold" value="Nome Exame:" /></p>
+									<p><h:outputLabel style="font-weight:bold" value="Nome Serviço:"/></p>
 									<p><h:outputLabel style="font-weight:bold" value="Descrição:" /></p>
-									<p><h:outputLabel style="font-weight:bold" value="Preço Exame:"/></p>
-									<p><h:outputLabel style="font-weight:bold" value="Tipo do Exame:" /></p>
+									<p><h:outputLabel style="font-weight:bold" value="Preço Serviço:">
+									</h:outputLabel>
+									</p>
 								</div>
 							</p:fieldset>
 							<hr />
-							<p:fieldset legend="Diagnóstico do veterinario:">
-								<div class="mb-3">
-									<p><h:outputLabel style="font-weight:bold" value="Resultado:" /></p>
-									<p><h:outputLabel style="font-weight:bold" value="Data: " /></p>
-									<p><h:outputLabel style="font-weight:bold" value="Valor Total: " /></p>
-								</div>
-							</p:fieldset>
 							<div class="mb-3">
 								<h:commandButton value="Voltar"
 									onclick="history.go(-1); return false;"
