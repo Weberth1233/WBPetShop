@@ -68,9 +68,12 @@
 							<f:selectItem itemLabel="Selecione.." itemValue="" />
 							<f:selectItem itemLabel="EXAME_SANGUE" itemValue="EXAME_SANGUE" />
 							<f:selectItem itemLabel="EXAME_URINA" itemValue="EXAME_URINA" />
-							<f:selectItem itemLabel="EXAME_DE_FEZES" itemValue="EXAME_DE_FEZES" />
-							<f:selectItem itemLabel="EXAME_OFTALMOLOGICO" itemValue="EXAME_OFTALMOLOGICO" />
-							<f:selectItem itemLabel="EXAME_ODONTOLOGICO" itemValue="EXAME_ODONTOLOGICO" />
+							<f:selectItem itemLabel="EXAME_DE_FEZES"
+								itemValue="EXAME_DE_FEZES" />
+							<f:selectItem itemLabel="EXAME_OFTALMOLOGICO"
+								itemValue="EXAME_OFTALMOLOGICO" />
+							<f:selectItem itemLabel="EXAME_ODONTOLOGICO"
+								itemValue="EXAME_ODONTOLOGICO" />
 							<f:facet name="footer">
 								<p:separator />
 								<h:outputText value="5 Exames" style="font-weight:bold;" />
@@ -106,13 +109,11 @@
 					width="80%" height="300">
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Nome cliente:" />
-						<p:inputText id="filtroname" />
-						<p:outputLabel value="CPF:" />
-						<p:inputText id="filtocpf" />
+						<p:inputText id="filtroname" value="#{clienteContoller.nome}" />
 						<p:commandButton value="Pesquisar" process="@this" update="tabela"
-							actionListener="#{usuarioController.pesquisar}" />
+							actionListener="#{clienteContoller.pesquisarPorNomeECpf}" />
 					</p:panelGrid>
-					<p:dataTable id="tabela" value="#{usuarioController.lista}"
+					<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
 						var="obj">
 						<p:column>
 							<f:facet name="header">Nome:</f:facet>
@@ -130,7 +131,7 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">Numero:</f:facet>
-							<p:outputLabel value="#{obj.telefone}" />
+							<p:outputLabel value="#{obj.numeroTelefone}" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">E-mail:</f:facet>
@@ -141,16 +142,10 @@
 							<p:outputLabel value="#{obj.endereco}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Animais: <i class="fa fa-eye"
-									aria-hidden="true"></i>
-							</f:facet>
-							<i class="fa fa-eye" aria-hidden="true"></i>
-						</p:column>
-						<p:column>
 							<f:facet name="header">Ação:</f:facet>
 							<p:commandButton value="Editar"
-								actionListener="#{usuarioController.editar(obj)}"
-								process="@this" update="@form" />
+								actionListener="#{clienteContoller.editar(obj)}" process="@this"
+								update="@form" />
 						</p:column>
 					</p:dataTable>
 				</p:dialog>
@@ -160,8 +155,8 @@
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Nome veterinário:" />
 						<p:inputText id="filtronamevet" />
-						<p:outputLabel value="CNPJ:" />
-						<p:inputText id="filtocnpj" />
+						<p:outputLabel value="CRNV:" />
+						<p:inputText id="filtocrnv" />
 						<p:commandButton value="Pesquisar" process="@this" update="tabela" />
 					</p:panelGrid>
 

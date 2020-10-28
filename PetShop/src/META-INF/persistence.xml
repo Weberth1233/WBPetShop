@@ -3,11 +3,11 @@
 	<persistence-unit name="PetShop">
 		<class>br.unitins.petshop.model.Agendamento</class>
 		<class>br.unitins.petshop.model.Animal</class>
+		<class>br.unitins.petshop.model.Cliente</class>
 		<class>br.unitins.petshop.model.DefaultEntity</class>
 		<class>br.unitins.petshop.model.Exame</class>
 		<class>br.unitins.petshop.model.Funcionario</class>
 		<class>br.unitins.petshop.model.Servico</class>
-		<class>br.unitins.petshop.model.Usuario</class>
 		<class>br.unitins.petshop.model.Veterinario</class>
 	<properties>
 			<!-- DB Driver -->

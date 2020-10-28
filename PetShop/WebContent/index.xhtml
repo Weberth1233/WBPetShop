@@ -41,6 +41,14 @@ div.content-hello {
 	border-radius: 15px;
 	box-shadow: 5px 2px;
 }
+.content-hello h1{
+	font-size: 60px;
+}
+@media only screen and (min-width: 1000px) {
+	.content-hello h1 {
+		font-size: 85px;
+	}
+}
 </style>
 		<div id="box-all-content" style="margin-top: -20px">
 			<div class="content-hello-img" style="width: 100%">
@@ -48,23 +56,25 @@ div.content-hello {
 					<div class="content-hello-text">
 						<h2 style="font-size: 25px">Bem vindo!</h2>
 					</div>
-					<h1 style="font-size: 80px">WBPetShop</h1>
+					<h1>WBPetShop</h1>
 					<h3 style="text-align: center; font-size: 13pt;">O melhor
 						lugar para o seu pet!</h3>
 				</div>
 			</div>
 		</div>
-		<p:fieldset>
+		<p:fieldset style="margin-top:20px;">
 			<h1>Um animal de estimação deve ser levado regularmente a um pet
 				shop, seja para uma consulta veterinária, seja para banho ou tosa</h1>
-			<p style="text-align: justify;">Ter um animal de estimação em casa é sinônimo de ter uma
-				companhia, um amigo fiel e muita alegria, mas também é sinônimo de
-				preocupação. Os animais são como filhos e também precisam de
-				cuidados especiais. Mas, mesmo sabendo da importância desses
-				cuidados, muitos donos acabam deixando eles de lado por falta de
-				tempo. O que eles não sabem é que hoje existem locais onde tudo pode
-				ser resolvido sem ter que ir de um lado para o outro, são os
-				chamados pet shop. Fonte: Canal do Pet - iG</p>
+			<div class="conteudo" style="text-indent: 50px">
+				<p style="text-align: justify;">Ter um animal de estimação em
+					casa é sinônimo de ter uma companhia, um amigo fiel e muita
+					alegria, mas também é sinônimo de preocupação. Os animais são como
+					filhos e também precisam de cuidados especiais. Mas, mesmo sabendo
+					da importância desses cuidados, muitos donos acabam deixando eles
+					de lado por falta de tempo. O que eles não sabem é que hoje existem
+					locais onde tudo pode ser resolvido sem ter que ir de um lado para
+					o outro, são os chamados pet shop. Fonte: Canal do Pet - iG</p>
+			</div>
 		</p:fieldset>
 	</ui:define>
 </ui:composition>

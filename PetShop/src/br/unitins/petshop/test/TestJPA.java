@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Funcionario;
-import br.unitins.petshop.model.Usuario;
 
 public class TestJPA {
 	public static void main(String[] args) {
