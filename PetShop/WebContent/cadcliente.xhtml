@@ -30,8 +30,8 @@
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/images/snoopy02.gif" />
 		</p:dialog>
-
 		<h:form>
+		<p:messages></p:messages>
 			<p:panel id="panel">
 				<p:growl id="growl" sticky="false" />
 				<f:facet name="header">
@@ -39,76 +39,156 @@
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
 					</div>
 				</f:facet>
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-						<div class="card card-w-title">
-							<p:panelGrid columns="1"
-								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:fieldset legend="Cadastro de Cliente">
-									<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-									<p:inputText id="name" style="border-radius:30px;" required="true"
-										value="#{clienteContoller.entity.nome}"	placeholder="Insira seu nome" />
+				<p:wizard backLabel="Anterior" nextLabel="Próximo">
+					<p:tab id="tabDadosPrincipais" title="Dados Principais">
+						<p:panel header="Adicionar Cliente">
+							<div class="ui-g ui-fluid">
+								<div class="ui-g-12">
+									<div class="card card-w-title">
+										<p:panelGrid columns="1"
+											styleClass="form-group ui-panelgrid-blank" layout="grid">
+											<p:fieldset legend="Cadastro de Cliente">
+												<h:outputLabel value="Nome completo:"
+													style="font-weight:bold" />
+												<p:inputText id="name" style="border-radius:30px;"
+													required="true" requiredMessage="Nome deve ser informado!"
+													value="#{clienteContoller.entity.nome}"
+													placeholder="Insira seu nome" />
 
-									<h:outputLabel for="date" value="Data Nascimento:"
-										style="font-weight:bold" />
-									<p:inputMask id="date" style="border-radius:30px;" value="#{clienteContoller.entity.dataNascimento}"
-										mask="99/99/9999" placeholder="dia/mês/ano" label="data">
-										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</p:inputMask>
+												<h:outputLabel for="date" value="Data Nascimento:"
+													style="font-weight:bold" />
+												<p:inputMask id="date" style="border-radius:30px;"
+													value="#{clienteContoller.entity.dataNascimento}"
+													required="true" mask="99/99/9999" placeholder="dia/mês/ano"
+													label="data">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:inputMask>
 
-									<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-									<p:inputMask id="cpf" style="border-radius:30px;" value="#{clienteContoller.entity.cpf}"
-										required="true"
-										mask="999.999.999-99"
-										requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
-										placeholder="000.000.000-00" />
+												<h:outputLabel for="cpf" value="CPF:"
+													style="font-weight:bold" />
+												<p:inputMask id="cpf" style="border-radius:30px;"
+													value="#{clienteContoller.entity.cpf}" required="true"
+													mask="999.999.999-99"
+													requiredMessage="CPF não pode ser um campo nulo!"
+													label="cpf" placeholder="000.000.000-00" />
 
-									<h:outputLabel for="numero" value="Contato:"
-										style="font-weight:bold" />
-									<p:inputMask id="numero" style="border-radius:30px;" value="#{clienteContoller.entity.numeroTelefone}"
-										required="true"
-										mask="(99)99999-9999"
-										requiredMessage="Contato não pode ser um campo nulo!"
-										label="numero" placeholder="(99)99999-9999" />
+												<h:outputLabel for="numero" value="Contato:"
+													style="font-weight:bold" />
+												<p:inputMask id="numero" style="border-radius:30px;"
+													value="#{clienteContoller.entity.numeroTelefone}"
+													required="true" mask="(99)99999-9999"
+													requiredMessage="Contato não pode ser um campo nulo!"
+													label="numero" placeholder="(99)99999-9999" />
 
-									<h:outputLabel for="email" value="E-mail:"
-										style="font-weight:bold" />
-									<p:inputText id="email" style="border-radius:30px;" value="#{clienteContoller.entity.email}"
-										required="true"
-										requiredMessage="E-mail não pode ser um campo nulo!"
-										label="email" placeholder="exemplo@hotmail.com" />
-									<h:outputLabel for="endereco" value="endereco"
-										style="font-weight:bold" />
-									<p:inputText id="endereco" style="border-radius:30px;" value="#{clienteContoller.entity.endereco}"
-										required="true"
-										requiredMessage="Endereço não pode ser um campo nulo!"
-										label="endereco" placeholder="Bairro alameda e lote" />
-								</p:fieldset>
-								
-							</p:panelGrid>
-						</div>
-					</div>
-				</div>
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Salvar" process="@form" update="@form"
-							icon="pi pi-check" style="margin-right:10px"
-							actionListener="#{clienteContoller.salvar}" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:commandButton value="Lista Clientes"
-							onclick="PF('dlg').show();" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@this" update="panel"
-							actionListener="#{clienteContoller.remover}">
-							<p:confirm header="Confirmação" message="Deseja excluir?"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
-					</p:toolbarGroup>
-				</p:toolbar>
+												<h:outputLabel for="email" value="E-mail:"
+													style="font-weight:bold" />
+												<p:inputText id="email" style="border-radius:30px;"
+													value="#{clienteContoller.entity.email}" required="true"
+													requiredMessage="E-mail não pode ser um campo nulo!"
+													label="email" placeholder="exemplo@hotmail.com" />
+												<h:outputLabel for="endereco" value="endereco"
+													style="font-weight:bold" />
+												<p:inputText id="endereco" style="border-radius:30px;"
+													value="#{clienteContoller.entity.endereco}" required="true"
+													requiredMessage="Endereço não pode ser um campo nulo!"
+													label="endereco" placeholder="Bairro alameda e lote" />
+											</p:fieldset>
+
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+						</p:panel>
+					</p:tab>
+					<p:tab id="tabAnimal" title="Animal">
+						<p:panel header="Adicionar Animais">
+							<div class="ui-g ui-fluid">
+								<div class="ui-g-12">
+									<div class="card card-w-title">
+										<p:fieldset legend="Cadastre seu Animal">
+											<h:outputLabel for="nomePet" value="Nome do animal:"
+												style="font-weight:bold" />
+											<p:inputText id="itnomeAnimal" style="border-radius:30px;"
+												value="#{clienteContoller.animal.nome}"
+												label="Nome do Animal" placeholder="Exemplo: Bolt" />
+
+											<h:outputLabel for="peso" value="Peso:"
+												style="font-weight:bold" />
+											<p:inputText id="itpesoA" style="border-radius:30px;" 
+												value="#{clienteContoller.animal.peso}" label="Peso:"
+												placeholder="12,5kg" />
+
+											<h:outputLabel for="dataAnimal" value="Data Nascimento:"
+												style="font-weight:bold" />
+											<p:inputMask id="itdataAnimal" style="border-radius:30px;"
+												value="#{clienteContoller.animal.dataNascimento}" 
+												placeholder="dia/mês/ano" label="Data Nascimento:"
+												mask="99/99/9999">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</p:inputMask>
+											<h:outputLabel for="obs" value="Observações:"
+												style="font-weight:bold" />
+											<p:inputTextarea id="itobs" style="border-radius:30px;"
+												value="#{clienteContoller.animal.observacoes}"
+												label="Observações:" />
+											<p:commandButton value="Adicionar"
+												actionListener="#{clienteContoller.adicionarAnimal}"
+												process="@this itnomeAnimal itpesoA itdataAnimal itobs"
+												update="itnomeAnimal itpesoA itdataAnimal itobs dtAnimal" />
+										</p:fieldset>
+									</div>
+								</div>
+							</div>
+						</p:panel>
+
+						<p:dataTable id="dtAnimal"
+							value="#{clienteContoller.entity.listaAnimal}" var="obj">
+							<p:column>
+								<f:facet name="header">Nome:</f:facet>
+								<p:outputLabel value="#{obj.nome}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">Peso:</f:facet>
+								<p:outputLabel value="#{obj.peso}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">Data Nascimento:</f:facet>
+								<p:outputLabel value="#{obj.dataNascimento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+							</p:column>
+							<p:column>
+								<f:facet name="header">Observações:</f:facet>
+								<p:outputLabel value="#{obj.observacoes}" />
+							</p:column>
+						</p:dataTable>
+
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Salvar" icon="pi pi-check"
+									process="@form" update="@form"
+									action="#{clienteContoller.salvar}" />
+								<p:commandButton value="Lista Clientes"
+									onclick="PF('dlg').show();" />
+								<p:commandButton value="Limpar" process="@this" update="panel"
+									action="#{clienteContoller.limpar}">
+									<p:ajax update="@form" resetValues="true" />
+								</p:commandButton>
+							</f:facet>
+
+							<f:facet name="right">
+								<p:commandButton value="Excluir" icon="pi pi-trash"
+									process="@this" update="panel"
+									actionListener="#{clienteContoller.remover}">
+									<p:confirm header="Confirmação" message="Deseja excluir?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</f:facet>
+						</p:toolbar>
+					</p:tab>
+				</p:wizard>
 			</p:panel>
+
 			<p:dialog header="Consulta Clientes" widgetVar="dlg" modal="true"
 				width="80%" height="300">
 				<p:panelGrid columns="2">

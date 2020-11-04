@@ -3,6 +3,7 @@ package br.unitins.petshop.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -13,6 +14,8 @@ public class Animal extends DefaultEntity<Animal>{
 	private String observacoes;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
+	@ManyToOne
+	private Cliente cliente;
 	
 	public String getNome() {
 		return nome;
@@ -38,4 +41,11 @@ public class Animal extends DefaultEntity<Animal>{
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 }

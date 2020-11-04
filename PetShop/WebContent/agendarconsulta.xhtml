@@ -109,9 +109,8 @@
 					width="80%" height="300">
 					<p:panelGrid columns="2">
 						<p:outputLabel value="Nome cliente:" />
-						<p:inputText id="filtroname" value="#{clienteContoller.nome}" />
-						<p:commandButton value="Pesquisar" process="@this" update="tabela"
-							actionListener="#{clienteContoller.pesquisarPorNomeECpf}" />
+						<p:inputText id="filtroname"/>
+						<p:commandButton value="Pesquisar" process="@this" update="tabela" actionListener="#{clienteContoller.pesquisar}"/>
 					</p:panelGrid>
 					<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
 						var="obj">

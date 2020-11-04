@@ -98,7 +98,6 @@
 									<h:outputLabel for="crnv" value="CRNV:"
 										style="font-weight:bold" />
 									<p:inputMask id="crnv" style="border-radius:30px;"
-										value="#{veterinarioController.veterinario.crnv}"
 										required="true" mask="999.999.999-99"
 										requiredMessage="CRNV não pode ser um campo nulo!"
 										label="crnv" placeholder="Insira seu CRNV:" />
@@ -120,7 +119,7 @@
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@this" update="panel"
-							actionListener="#{veterinarioController.desativar}">
+							actionListener="#{veterinarioController.remover}">
 							<p:confirm header="Confirmação"
 								message="Deseja desativar o veterinario ?"
 								icon="pi pi-exclamation-triangle" />

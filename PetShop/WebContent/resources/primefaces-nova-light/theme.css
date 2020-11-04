@@ -139,7 +139,7 @@ body .ui-inputfield {
     -moz-box-shadow: none;
     box-shadow: none; }
   body .ui-inputfield.ui-state-error {
-    border-color: #a80000; }
+    border-color: red; }
 body .ui-autocomplete {
   font-size: 0; }
   body .ui-autocomplete .ui-autocomplete-input.ui-autocomplete-dd-input {

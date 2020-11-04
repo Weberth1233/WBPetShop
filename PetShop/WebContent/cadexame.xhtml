@@ -39,59 +39,91 @@
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
 					</div>
 				</f:facet>
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-						<div class="card card-w-title">
-							<p:panelGrid columns="1"
-								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:fieldset legend="Cadastro de Exame"
-									style="margin-bottom:20px;">
+				<p:panel header="Adicionar Exames">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<p:panelGrid columns="1"
+									styleClass="form-group ui-panelgrid-blank" layout="grid">
+									<p:fieldset legend="Cadastro de Exame"
+										style="margin-bottom:20px;">
 
-									<h:outputLabel value="Preço:" style="font-weight:bold" />
-									<p:inputText id="precoExame" style="border-radius:30px;"
-										required="true" placeholder="0000" />
-									<h:outputLabel for="descricao" value="Descricao:"
-										style="font-weight:bold" />
-									<p:inputTextarea id="desc" style="border-radius:30px;"
-										required="true" label="Descrição Serviço:" />
-									<h:panelGroup>
-										<p:selectOneMenu id="console"
-											value="#{selectOneMenuView.console}" style="width:125px">
-											<f:selectItem itemLabel="Selecione_Exame" itemValue="" />
-											<f:selectItem itemLabel="CHECK-UP" itemValue="Check-Up" />
-											<f:selectItem itemLabel="EXAME_SANGUE" itemValue="Exame de Sangue" />
-											<f:selectItem itemLabel="EXAME_URINA" itemValue="Exame de Urina" />
-											<f:selectItem itemLabel="EXAME_FEZES" itemValue="Exame de Fezes" />
-											<f:selectItem itemLabel="EXAME_OFTALMOLOGICO" itemValue="Exame de oftamologico"/>
-											<f:selectItem itemLabel="EXAME_ODONTOLOGICO" itemValue="Exame de odontologico"/>
-										</p:selectOneMenu>
-									</h:panelGroup>
-								</p:fieldset>
+										<h:outputLabel value="Nome Exame:" style="font-weight:bold" />
+										<p:inputText id="nomeExame" style="border-radius:30px;"
+											value="#{exameController.entity.nome}" required="true" />
 
-							</p:panelGrid>
+										<h:outputLabel value="Preço:" style="font-weight:bold" />
+										<p:inputText id="precoExame" style="border-radius:30px;"
+											value="#{exameController.entity.precoExame}" required="true"
+											placeholder="0000" />
+
+										<h:outputLabel for="descricao" value="Descricao:"
+											style="font-weight:bold" />
+										<p:inputTextarea id="desc" style="border-radius:30px;"
+											value="#{exameController.entity.descricao}" required="true"
+											label="Descrição Serviço:" />
+									</p:fieldset>
+
+								</p:panelGrid>
+							</div>
 						</div>
 					</div>
-				</div>
+				</p:panel>
 				<p:toolbar>
 					<p:toolbarGroup>
 						<p:commandButton value="Salvar" process="@form" update="@form"
 							icon="pi pi-check" style="margin-right:10px"
-							actionListener="#{usuarioController.salvar}" />
+							actionListener="#{exameController.salvar}" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
-						<p:commandButton value="Lista Clientes"
-							onclick="PF('dlg').show();" />
+						<p:commandButton value="Lista Exames:" onclick="PF('dlg').show();" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@this" update="panel"
-							actionListener="#{usuarioController.excluir}">
+							actionListener="#{exameController.remover}">
 							<p:confirm header="Confirmação" message="Deseja excluir?"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
 			</p:panel>
+			<p:dialog header="Consulta Exame" widgetVar="dlg" modal="true"
+				width="80%" height="300">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Pesquisar:" />
+					<p:inputText id="filtro" />
+					<p:commandButton value="Pesquisar" process="@this" update="tabela"
+						actionListener="#{exameController.pesquisar}" />
+				</p:panelGrid>
+
+				<p:dataTable id="tabela" value="#{exameController.listaExames}"
+					var="obj">
+					<p:column>
+						<f:facet name="header">Nome:</f:facet>
+						<p:outputLabel value="#{obj.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Preço:</f:facet>
+						<p:outputLabel value="#{obj.precoExame}">
+							<f:convertNumber locale="pt_BR" currencySymbol="R$"
+								type="currency" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Descrição:</f:facet>
+						<p:outputLabel value="#{obj.descricao}" />
+					</p:column>
+					<p:column>
+						<center>
+							<f:facet name="header">Ação:</f:facet>
+							<p:commandButton value="Editar"
+								actionListener="#{exameController.editar(obj)}" process="@this"
+								update="@form" />
+						</center>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

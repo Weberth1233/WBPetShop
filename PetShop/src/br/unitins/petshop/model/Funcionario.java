@@ -19,6 +19,7 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	private Float salario;
 	private String login;
 	private String email;
+	private TipoFuncionario TipoFuncionario;
 	
 	@Size(min = 10, max = 15 ,message = "Senha fraca!")
 	private String senha;
@@ -83,5 +84,10 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public TipoFuncionario getTipoFuncionario() {
+		return TipoFuncionario;
+	}
+	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
+		TipoFuncionario = tipoFuncionario;
+	}
 }

@@ -39,50 +39,92 @@
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
 					</div>
 				</f:facet>
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12">
-						<div class="card card-w-title">
-							<p:panelGrid columns="1"
-								styleClass="form-group ui-panelgrid-blank" layout="grid">
-								<p:fieldset legend="Cadastro de Serviço"
-									style="margin-bottom:20px;">
-									<h:outputLabel for="nomeS" value="Nome do Serviço:"
-										style="font-weight:bold" />
-									<p:inputText id="nomeS" style="border-radius:30px;"
-										required="true" label="Nome Serviço:"
-										placeholder="Exemplo: Hospedagem" />
-									<h:outputLabel value="Preço:" style="font-weight:bold" />
-									<p:inputText id="precoS" style="border-radius:30px;"
-										required="true" placeholder="0000" />
-									<h:outputLabel for="descricao" value="Descricao:"
-										style="font-weight:bold" />
-									<p:inputTextarea id="desc" style="border-radius:30px;"
-										required="true" label="Descrição Serviço:" />
-								</p:fieldset>
-							</p:panelGrid>
+				<p:panel header="Adicionar Serviços">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<p:panelGrid columns="1"
+									styleClass="form-group ui-panelgrid-blank" layout="grid">
+									<p:fieldset legend="Cadastro de Serviço"
+										style="margin-bottom:20px;">
+										<h:outputLabel for="nomeS" value="Nome do Serviço:"
+											style="font-weight:bold" />
+										<p:inputText id="nomeS" style="border-radius:30px;"
+											value="#{servicoController.entity.nome}" required="true"
+											label="Nome Serviço:" placeholder="Exemplo: Hospedagem" />
+
+										<h:outputLabel value="Preço:" style="font-weight:bold" />
+										<p:inputText id="precoS" style="border-radius:30px;"
+											value="#{servicoController.entity.preco}" required="true"
+											placeholder="0000" />
+
+										<h:outputLabel for="descricao" value="Descricao:"
+											style="font-weight:bold" />
+										<p:inputTextarea id="desc" style="border-radius:30px;"
+											value="#{servicoController.entity.descricao}" required="true"
+											label="Descrição Serviço:" />
+									</p:fieldset>
+								</p:panelGrid>
+							</div>
 						</div>
 					</div>
-				</div>
+				</p:panel>
 				<p:toolbar>
 					<p:toolbarGroup>
 						<p:commandButton value="Salvar" process="@form" update="@form"
 							icon="pi pi-check" style="margin-right:10px"
-							actionListener="#{usuarioController.salvar}" />
+							actionListener="#{servicoController.salvar}" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
-						<p:commandButton value="Lista Clientes"
+						<p:commandButton value="Lista Serviços"
 							onclick="PF('dlg').show();" />
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@this" update="panel"
-							actionListener="#{usuarioController.excluir}">
+							actionListener="#{servicoController.remover}">
 							<p:confirm header="Confirmação" message="Deseja excluir?"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
 			</p:panel>
+			<p:dialog header="Consulta Serviços" widgetVar="dlg" modal="true"
+				width="80%" height="300">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Pesquisar:" />
+					<p:inputText id="filtro" />
+					<p:commandButton value="Pesquisar" process="@this" update="tabela"
+						actionListener="#{servicoController.pesquisar}" />
+				</p:panelGrid>
+
+				<p:dataTable id="tabela" value="#{servicoController.listaServico}"
+					var="obj">
+					<p:column>
+						<f:facet name="header">Nome:</f:facet>
+						<p:outputLabel value="#{obj.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Preço:</f:facet>
+						<p:outputLabel value="#{obj.preco}">
+							<f:convertNumber locale="pt_BR" currencySymbol="R$"
+								type="currency" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Descrição:</f:facet>
+						<p:outputLabel value="#{obj.descricao}" />
+					</p:column>
+					<p:column>
+						<center>
+							<f:facet name="header">Ação:</f:facet>
+							<p:commandButton value="Editar"
+								actionListener="#{servicoController.editar(obj)}"
+								process="@this" update="@form" />
+						</center>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>
