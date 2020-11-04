@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+/*tESTE*/
 @Entity
 public class Animal extends DefaultEntity<Animal>{
 	private String nome;
