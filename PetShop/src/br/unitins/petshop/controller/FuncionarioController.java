@@ -10,24 +10,39 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.unitins.petshop.application.JPAUtil;
+import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.DefaultEntity;
 import br.unitins.petshop.model.Funcionario;
- @Named
- @ViewScoped
-public class FuncionarioController implements Serializable{
-	private static final long serialVersionUID = 2004215866035987320L;
-	private Funcionario funcionario;
+import br.unitins.petshop.model.TipoFuncionario;
+import br.unitins.petshop.repository.FuncionarioRepository;
+@Named
+@ViewScoped
+public class FuncionarioController extends Controller<Funcionario>{
+
+	private static final long serialVersionUID = 9011861114364637235L;
 	private List<Funcionario>listaFuncionario;
+
+	@Override
+	public Funcionario getEntity() {
+		if(entity == null)
+			entity = new Funcionario();
+		return entity;
+	}
+	public void pesquisar() {
+		try {
+			FuncionarioRepository repo = new FuncionarioRepository();
+			setListaFuncionario(repo.findAll());
+		}catch (RepositoryException e) {
+			Util.addErrorMessage("Erro ao retornar a lista de funcionarios!");
+			e.printStackTrace();
+		}
+	}
+	public TipoFuncionario[] tipoFuncionariosValues() {
+		return TipoFuncionario.values();
+	}
 	
-	public Funcionario getFuncionario() {
-		if(funcionario == null) 
-			funcionario= new Funcionario();
-		return funcionario;
-	}
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
-	public List<Funcionario> getListaFuncionario() {
+ 	public List<Funcionario> getListaFuncionario() {
 		if(listaFuncionario==null)
 			listaFuncionario= new ArrayList<Funcionario>();
 		return listaFuncionario;
@@ -36,20 +51,6 @@ public class FuncionarioController implements Serializable{
 		this.listaFuncionario = listaFuncionario;
 	}
 	public void limpar() {
-		funcionario = null;
-	}
-	public void salvar() {
-		/*Instanciar o gerenciador do jpa*/
-		EntityManager em= JPAUtil.getEntityManager();
-		em.getTransaction().begin();
-		em.merge(getFuncionario());
-		em.getTransaction().commit();
-		limpar();
-		Util.addInfoMessage("Operação realizada com sucesso!");
-	}
-	public void pesquisar() {
-		EntityManager em= JPAUtil.getEntityManager();
-		Query query = em.createQuery("SELECT func from Funcionario func");
-		setListaFuncionario(query.getResultList());
+		entity = null;
 	}
 }

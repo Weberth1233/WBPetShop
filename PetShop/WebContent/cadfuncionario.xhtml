@@ -51,20 +51,20 @@
 									<p:fieldset legend="Cadastro Funcionario">
 										<h:outputLabel value="Nome completo:" style="font-weight:bold" />
 										<p:inputText id="name" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.nome}"
+											value="#{funcionarioController.entity.nome}"
 											required="true" placeholder="Insira seu nome completo" />
 
 										<h:outputLabel for="date" value="Data Nascimento:"
 											style="font-weight:bold" />
 										<p:inputMask id="date" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.dataNascimento}"
+											value="#{funcionarioController.entity.dataNascimento}"
 											mask="99/99/9999" placeholder="dia/mês/ano">
 											<f:convertDateTime pattern="dd/MM/yyyy" />
 										</p:inputMask>
 
 										<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
 										<p:inputMask id="cpf" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.cpf}"
+											value="#{funcionarioController.entity.cpf}"
 											required="true" mask="999.999.999-99"
 											requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
 											placeholder="000.000.000-00" />
@@ -72,7 +72,7 @@
 										<h:outputLabel for="cargo" value="Cargo ocupado:"
 											style="font-weight:bold" />
 										<p:inputText id="cargo" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.cargoOcupado}"
+											value="#{funcionarioController.entity.cargoOcupado}"
 											required="true"
 											requiredMessage="Cargo não pode ser um campo nulo!"
 											label="cargoOcupado" placeholder="Exemplo: Atendente" />
@@ -80,7 +80,7 @@
 										<h:outputLabel for="email" value="E-mail:"
 											style="font-weight:bold" />
 										<p:inputText id="email" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.email}"
+											value="#{funcionarioController.entity.email}"
 											required="true"
 											requiredMessage="E-mail não pode ser um campo nulo!"
 											label="email" placeholder="exemplo@hotmail.com" />
@@ -88,7 +88,7 @@
 										<h:outputLabel for="salario" value="salario"
 											style="font-weight:bold" />
 										<p:inputText id="salario" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.salario}"
+											value="#{funcionarioController.entity.salario}"
 											required="true"
 											requiredMessage="Salario não pode ser um campo nulo!"
 											label="endereco" placeholder="0000" />
@@ -96,7 +96,7 @@
 										<h:outputLabel for="chorario" value="Carga Horaria:"
 											style="font-weight:bold" />
 										<p:inputText id="cargahoraria" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.cargaHoraria}"
+											value="#{funcionarioController.entity.cargaHoraria}"
 											required="true"
 											requiredMessage="Carga Horaria não pode ser um campo nulo!"
 											label="Carga Horaria" placeholder="Exemplo:60" />
@@ -104,14 +104,14 @@
 										<h:outputLabel for="senha" value="Senha:"
 											style="font-weight:bold" />
 										<p:password id="senhafunc" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.senha}"
+											value="#{funcionarioController.entity.senha}"
 											required="true" requiredfMessage="Campo senha é obrigatorio!"
 											label="Senha" placeholder="Insira uma senha forte:" />
 
 										<h:outputLabel for="login" value="Login"
 											style="font-weight:bold" />
 										<p:inputText id="loginfunc" style="border-radius:30px;"
-											value="#{funcionarioController.funcionario.login}"
+											value="#{funcionarioController.entity.login}"
 											required="true" requiredMessage="Campo login é obrigatorio!"
 											label="login" placeholder="Exemplo:meuloginbr" />
 									</p:fieldset>
@@ -133,7 +133,7 @@
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
 							process="@this" update="panel"
-							actionListener="#{usuarioController.excluir}">
+							actionListener="#{funcionarioController.remover}">
 							<p:confirm header="Confirmação" message="Deseja excluir?"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
