@@ -1,11 +1,18 @@
 package br.unitins.petshop.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Servico extends DefaultEntity<Servico> {
+	
+	@NotBlank(message = "Preço não pode ser um campo vazio!")
 	private Float preco;
+	
+	@NotBlank(message = "Descrição não pode ser um campo vazio!")
 	private String descricao;
+	
+	@NotBlank(message = "Nome não pode ser um campo vazio!")
 	private String nome;
 	
 	public Float getPreco() {
