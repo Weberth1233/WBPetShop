@@ -26,9 +26,6 @@
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
 
-		<p:ajaxStatus onstart="PE('statusDialog').show()"
-			onsuccess="PE('statusDialog').hide()" />
-
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/images/snoopy02.gif" />
@@ -52,7 +49,7 @@
 										<h:outputLabel value="Nome completo:" style="font-weight:bold" />
 										<p:inputText id="name" style="border-radius:30px;"
 											value="#{funcionarioController.entity.nome}"
-											required="true" placeholder="Insira seu nome completo" />
+											placeholder="Insira seu nome completo" />
 
 										<h:outputLabel for="date" value="Data Nascimento:"
 											style="font-weight:bold" />
@@ -65,54 +62,44 @@
 										<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
 										<p:inputMask id="cpf" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cpf}"
-											required="true" mask="999.999.999-99"
-											requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
+											mask="999.999.999-99"
+											label="cpf"
 											placeholder="000.000.000-00" />
 
 										<h:outputLabel for="cargo" value="Cargo ocupado:"
 											style="font-weight:bold" />
 										<p:inputText id="cargo" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cargoOcupado}"
-											required="true"
-											requiredMessage="Cargo não pode ser um campo nulo!"
 											label="cargoOcupado" placeholder="Exemplo: Atendente" />
 
 										<h:outputLabel for="email" value="E-mail:"
 											style="font-weight:bold" />
 										<p:inputText id="email" style="border-radius:30px;"
 											value="#{funcionarioController.entity.email}"
-											required="true"
-											requiredMessage="E-mail não pode ser um campo nulo!"
 											label="email" placeholder="exemplo@hotmail.com" />
 
 										<h:outputLabel for="salario" value="salario"
 											style="font-weight:bold" />
 										<p:inputText id="salario" style="border-radius:30px;"
 											value="#{funcionarioController.entity.salario}"
-											required="true"
-											requiredMessage="Salario não pode ser um campo nulo!"
 											label="endereco" placeholder="0000" />
 
 										<h:outputLabel for="chorario" value="Carga Horaria:"
 											style="font-weight:bold" />
 										<p:inputText id="cargahoraria" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cargaHoraria}"
-											required="true"
-											requiredMessage="Carga Horaria não pode ser um campo nulo!"
 											label="Carga Horaria" placeholder="Exemplo:60" />
 
 										<h:outputLabel for="senha" value="Senha:"
 											style="font-weight:bold" />
 										<p:password id="senhafunc" style="border-radius:30px;"
 											value="#{funcionarioController.entity.senha}"
-											required="true" requiredfMessage="Campo senha é obrigatorio!"
 											label="Senha" placeholder="Insira uma senha forte:" />
 
 										<h:outputLabel for="login" value="Login"
 											style="font-weight:bold" />
 										<p:inputText id="loginfunc" style="border-radius:30px;"
 											value="#{funcionarioController.entity.login}"
-											required="true" requiredMessage="Campo login é obrigatorio!"
 											label="login" placeholder="Exemplo:meuloginbr" />
 									</p:fieldset>
 								</p:panelGrid>
