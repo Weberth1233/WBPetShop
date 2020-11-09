@@ -10,10 +10,8 @@ import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.model.Veterinario;
 
 public class VeterinarioRepository extends Repository<Veterinario>{
-	private Veterinario veterinario;
 	
-	public VeterinarioRepository() {
-	}
+	public VeterinarioRepository() {}
 	
 	public VeterinarioRepository(EntityManager em) {
 		super(em);
@@ -29,12 +27,4 @@ public class VeterinarioRepository extends Repository<Veterinario>{
 			throw new RepositoryException("Erro ao buscar no banco dados do veteriáario");
 		}
 	}
-	public Veterinario getVeterinario() {
-		return veterinario;
-	}
-
-	public void setVeterinario(Veterinario veterinario) {
-		this.veterinario = veterinario;
-	}
-	
 }

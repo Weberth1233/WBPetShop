@@ -1,6 +1,8 @@
 package br.unitins.petshop.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 
@@ -8,7 +10,7 @@ import javax.persistence.OneToOne;
 public class Veterinario extends DefaultEntity<Veterinario>{
 	
 	private String crnv;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Funcionario funcionario;
 	
 	public String getCrnv() {

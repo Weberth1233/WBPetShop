@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Veterinario;
 import br.unitins.petshop.repository.VeterinarioRepository;
 @Named
@@ -20,8 +21,10 @@ public class VeterinarioController extends Controller<Veterinario>{
 	
 	@Override
 	public Veterinario getEntity() {
-		if(entity == null) 
+		if(entity == null) {
 			entity = new Veterinario();
+			entity.setFuncionario(new Funcionario());
+		}
 		return entity;
 	}
 	public void pesquisar() {
@@ -34,7 +37,6 @@ public class VeterinarioController extends Controller<Veterinario>{
 			e.printStackTrace();
 			setListaVeterinarios(null);
 		}
-		
 	}
 	public List<Veterinario> getListaVeterinarios() {
 		if(listaVeterinarios == null) 
