@@ -20,8 +20,7 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	private String login;
 	private String email;
 	private TipoFuncionario TipoFuncionario;
-	
-	@Size(min = 10, max = 15 ,message = "Senha fraca!")
+	/*@Size(min = 10, max = 15 ,message = "Senha fraca!")*/
 	private String senha;
 	
 	public String getNome() {

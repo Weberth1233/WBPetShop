@@ -1,18 +1,13 @@
 package br.unitins.petshop.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
-import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
-import br.unitins.petshop.model.DefaultEntity;
 import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.TipoFuncionario;
 import br.unitins.petshop.repository.FuncionarioRepository;
@@ -30,11 +25,12 @@ public class FuncionarioController extends Controller<Funcionario>{
 		return entity;
 	}
 	public void pesquisar() {
+		FuncionarioRepository repo = new FuncionarioRepository();
 		try {
-			FuncionarioRepository repo = new FuncionarioRepository();
 			setListaFuncionario(repo.findAll());
 		}catch (RepositoryException e) {
 			Util.addErrorMessage("Erro ao retornar a lista de funcionarios!");
+			setListaFuncionario(null);
 			e.printStackTrace();
 		}
 	}
