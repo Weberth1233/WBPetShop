@@ -135,7 +135,7 @@
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
 					<p:inputText id="filtro" value="#{funcionarioController.buscar}"/>
-					<p:commandButton value="Pesquisar" process="@this buscar" update="tabela"
+					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
 						actionListener="#{funcionarioController.pesquisarPorNome}" />
 				</p:panelGrid>
 
