@@ -2,25 +2,52 @@ package br.unitins.petshop.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
 @Entity
 public class Funcionario extends DefaultEntity<Funcionario> {
 	private String nome;
+	
+	@CPF(message = "CPF não pode ser um campo nulo!")
+	@Column(unique=true, nullable=false) 
 	private String cpf;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Servico servico;
+	
 	private Integer cargaHoraria;
-	private String cargoOcupado;
+	
 	private Date dataAdmissao;
+	
+	@NotNull(message = "Salario não pode ser um campo nulo!")
 	private Float salario;
+	
+	@NotBlank(message= "Login não pode ser um campo nulo!")
 	private String login;
+	
+	@NotBlank(message = "E-mail não pode ser um campo nulo!")
+	@Column(unique=true, nullable=false) 
 	private String email;
+	
 	private TipoFuncionario TipoFuncionario;
-	/*@Size(min = 10, max = 15 ,message = "Senha fraca!")*/
+	
+	@NotBlank(message = "Senha não pode ser um campo nulo!")
+	@Size(min = 9, message = "Senha fraca!")
+	@Column(unique=true, nullable=false) 
 	private String senha;
 	
 	public String getNome() {
@@ -47,17 +74,15 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
-	public String getCargoOcupado() {
-		return cargoOcupado;
-	}
-	public void setCargoOcupado(String cargoOcupado) {
-		this.cargoOcupado = cargoOcupado;
-	}
 	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
 	public void setDataAdmissao(Date dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
+	}
+	@PrePersist
+	private void atualizaDataCriacao() {
+		dataAdmissao = new Date();
 	}
 	public Float getSalario() {
 		return salario;
@@ -88,5 +113,11 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	}
 	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
 		TipoFuncionario = tipoFuncionario;
+	}
+	public Servico getServico() {
+		return servico;
+	}
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 }

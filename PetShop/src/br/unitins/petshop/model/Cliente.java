@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -16,10 +17,11 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Cliente extends DefaultEntity<Cliente>{
-	@NotNull(message = "Nome em branco !")
 	private String nome;
+
 	@CPF(message = "CPF não é valido!")
 	private String cpf;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	private String numeroTelefone;

@@ -2,6 +2,8 @@ package br.unitins.petshop.controller;
 
 import java.io.Serializable;
 
+import javax.persistence.PersistenceException;
+
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
@@ -22,9 +24,10 @@ public abstract class Controller <T extends DefaultEntity<T>> implements Seriali
 			repo.salvar(getEntity());
 			repo.commitTransaction();
 			Util.addInfoMessage("Operação realizado com sucesso!");
-		} catch (RepositoryException e) {
+		}
+		catch (RepositoryException e) {
 			repo.rollbackTransaction();
-			Util.addErrorMessage("Erro ao salvar!");
+			Util.addErrorMessage(e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 		limpar();

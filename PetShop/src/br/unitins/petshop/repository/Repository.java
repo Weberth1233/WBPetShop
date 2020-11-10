@@ -3,9 +3,11 @@ package br.unitins.petshop.repository;
 import java.lang.reflect.ParameterizedType;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
 
 public class Repository <T extends DefaultEntity<T>> {
@@ -42,10 +44,16 @@ public class Repository <T extends DefaultEntity<T>> {
 	public void salvar(T entity) throws RepositoryException{
 		try {
 			getEntityManager().merge(entity);
-		}catch (Exception e) {
+		}
+		catch(PersistenceException e) {
+			System.out.println("Informações duplicadas");
+			e.printStackTrace();
+			throw new RepositoryException("Algum dos seguintes registro estão duplicados:Nome, CPF ou E-mail");
+		}
+		catch (Exception e) {
 			System.out.println("Erro ao salvar!");
 			e.printStackTrace();
-			throw new RepositoryException("Salvar deu errooooo!");
+			throw new RepositoryException("Erro ao salvar!");
 		}
 	}
 	public void remover(T entity) throws RepositoryException{
@@ -58,7 +66,7 @@ public class Repository <T extends DefaultEntity<T>> {
 			throw new RepositoryException("Erro ao remover!");
 		}
 	}
-	public T findById(Integer id) throws RepositoryException {
+	public T findById(Integer id)  {
 		// obtendo o tipo da classe de forma generica (a classe deve ser publica)
 		final ParameterizedType type = 
 				(ParameterizedType) getClass().getGenericSuperclass();

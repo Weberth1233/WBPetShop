@@ -53,7 +53,7 @@
 											value="#{exameController.entity.nome}" required="true" />
 
 										<h:outputLabel value="Preço:" style="font-weight:bold" />
-										<p:inputText id="precoExame" style="border-radius:30px;"
+										<p:inputMask id="precoExame" style="border-radius:30px;" mask="9999"
 											value="#{exameController.entity.precoExame}" required="true"
 											placeholder="0000" />
 
@@ -92,11 +92,11 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
-						actionListener="#{exameController.pesquisar}" />
+					<p:inputText id="filtro" value="#{exameController.buscar}"/>
+					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
+						actionListener="#{exameController.pesquisarPorNome}" />
 				</p:panelGrid>
-
+				
 				<p:dataTable id="tabela" value="#{exameController.listaExames}"
 					var="obj">
 					<p:column>

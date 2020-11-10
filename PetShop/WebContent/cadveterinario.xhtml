@@ -140,32 +140,7 @@
 					value="#{veterinarioController.listaVeterinarios}" var="obj">
 					<p:column>
 						<f:facet name="header">Nome:</f:facet>
-						<p:outputLabel value="#{obj.nome}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Data Nascimento:</f:facet>
-						<p:outputLabel value="#{obj.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">CPF:</f:facet>
-						<p:outputLabel value="#{obj.cpf}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">E-mail:</f:facet>
-						<p:outputLabel value="#{obj.email}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Salario:</f:facet>
-						<p:outputLabel value="#{obj.salario}">
-							<f:convertNumber locale="pt_BR" currencySymbol="R$"
-								type="currency" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">Login:</f:facet>
-						<p:outputLabel value="#{obj.login}" />
+						<p:outputLabel value="#{obj.funcionario.nome}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">CRNV:</f:facet>

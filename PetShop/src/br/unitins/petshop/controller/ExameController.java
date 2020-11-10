@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Exame;
+import br.unitins.petshop.repository.ClienteRepository;
 import br.unitins.petshop.repository.ExameRepository;
 
 @Named
@@ -18,8 +19,9 @@ public class ExameController extends Controller<Exame> {
 	private static final long serialVersionUID = 2404598018914367942L;
 	
 	private List<Exame>listaExames;
+	private String buscar;
 	
-	public void pesquisar() {
+	/*public void pesquisar() {
 		ExameRepository repo = new ExameRepository();
 		try {
 			setListaExames(repo.findAll());
@@ -29,8 +31,18 @@ public class ExameController extends Controller<Exame> {
 			e.printStackTrace();
 			setListaExames(null);
 		}
+	}*/
+	public void pesquisarPorNome() {
+		ExameRepository repo = new ExameRepository();
+		try {
+			setListaExames(repo.findByNome(getBuscar()));
+		} catch (RepositoryException e) {
+			Util.addErrorMessage("Erro ao pesquisar cliente");
+			e.printStackTrace();
+			setListaExames(null);
+		}
+		buscar = null;
 	}
-	
 	@Override
 	public Exame getEntity() {
 		if(entity == null) 
@@ -46,6 +58,12 @@ public class ExameController extends Controller<Exame> {
 
 	public void setListaExames(List<Exame> listaExames) {
 		this.listaExames = listaExames;
+	}
+	public String getBuscar() {
+		return buscar;
+	}
+	public void setBuscar(String buscar) {
+		this.buscar = buscar;
 	}
 	
 	

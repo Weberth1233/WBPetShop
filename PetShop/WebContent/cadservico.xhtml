@@ -45,6 +45,7 @@
 							<div class="card card-w-title">
 								<p:panelGrid columns="1"
 									styleClass="form-group ui-panelgrid-blank" layout="grid">
+																	
 									<p:fieldset legend="Cadastro de Serviço"
 										style="margin-bottom:20px;">
 										<h:outputLabel for="nomeS" value="Nome do Serviço:"
@@ -93,9 +94,9 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
-						actionListener="#{servicoController.pesquisar}" />
+					<p:inputText id="idfiltro" value="#{servicoController.buscar}"/>
+					<p:commandButton value="Pesquisar" process="@this idfiltro" update="tabela"
+						actionListener="#{servicoController.pesquisarPorNome}" />
 				</p:panelGrid>
 
 				<p:dataTable id="tabela" value="#{servicoController.listaServico}"

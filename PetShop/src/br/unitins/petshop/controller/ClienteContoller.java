@@ -11,6 +11,7 @@ import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.repository.ClienteRepository;
+import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
 @ViewScoped
@@ -19,6 +20,7 @@ public class ClienteContoller extends Controller<Cliente>{
 	private static final long serialVersionUID = 1982086533161935915L;
 	private List<Cliente>listaCliente;
 	private Animal animal;
+	private String buscar;
 	
 	@Override
 	public Cliente getEntity() {
@@ -27,7 +29,7 @@ public class ClienteContoller extends Controller<Cliente>{
 		return entity;
 	}
 
-	public void pesquisar() {
+	/*public void pesquisar() {
 		ClienteRepository repo = new ClienteRepository();
 		try {
 			setListaCliente(repo.findAll());
@@ -37,8 +39,18 @@ public class ClienteContoller extends Controller<Cliente>{
 			System.out.println("ERRO AQUI NO PESQUISAR DO CONTROLLER..VEM AQUI OLHAR!");
 			setListaCliente(null);
 		}
+	}*/
+	public void pesquisarPorNome() {
+		ClienteRepository repo = new ClienteRepository();
+		try {
+			setListaCliente(repo.findByNome(getBuscar()));
+		} catch (RepositoryException e) {
+			Util.addErrorMessage("Erro ao pesquisar cliente");
+			e.printStackTrace();
+			setListaCliente(null);
+		}
+		buscar = null;
 	}
-	
 	public List<Cliente> getListaCliente() {
 		if(listaCliente==null) 
 			listaCliente= new ArrayList<Cliente>();
@@ -49,6 +61,14 @@ public class ClienteContoller extends Controller<Cliente>{
 		this.listaCliente = listaCliente;
 	}
 	
+	public String getBuscar() {
+		return buscar;
+	}
+
+	public void setBuscar(String buscar) {
+		this.buscar = buscar;
+	}
+
 	public void adicionarAnimal() {
 		if(getEntity().getListaAnimal() == null) 
 			getEntity().setListaAnimal(new ArrayList<Animal>());
@@ -58,6 +78,9 @@ public class ClienteContoller extends Controller<Cliente>{
 		
 		animal = null;
 		
+	}
+	public void editar(Animal animal) {
+		setAnimal(animal);
 	}
 	public Animal getAnimal() {
 		if(animal == null) 

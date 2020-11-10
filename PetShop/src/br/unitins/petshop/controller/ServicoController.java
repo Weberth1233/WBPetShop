@@ -6,8 +6,11 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.controller.listing.ServicoListing;
 import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.ServicoRepository;
 
@@ -16,6 +19,7 @@ import br.unitins.petshop.repository.ServicoRepository;
 public class ServicoController extends Controller<Servico> {
 	private static final long serialVersionUID = -4603573072138068045L;
 	private List<Servico>listaServico;
+	private String buscar;
 	
 	@Override
 	public Servico getEntity() {
@@ -23,7 +27,7 @@ public class ServicoController extends Controller<Servico> {
 			entity= new Servico();
 		return entity;
 	}
-	public void pesquisar() {
+	/*public void pesquisar() {
 		ServicoRepository repo = new ServicoRepository();
 		try {
 			setListaServico(repo.findAll());
@@ -32,6 +36,17 @@ public class ServicoController extends Controller<Servico> {
 			setListaServico(null);
 			e.printStackTrace();
 		}
+	}*/
+	public void pesquisarPorNome() {
+		ServicoRepository repo = new ServicoRepository();
+		try {
+			setListaServico(repo.findByNome(getBuscar()));
+		} catch (RepositoryException e) {
+			Util.addErrorMessage("Erro ao pesquisar serviços");
+			e.printStackTrace();
+			setListaServico(null);
+		}
+		buscar = null;
 	}
 	public List<Servico> getListaServico() {
 		if(listaServico == null)
@@ -41,4 +56,11 @@ public class ServicoController extends Controller<Servico> {
 	public void setListaServico(List<Servico> listaServico) {
 		this.listaServico = listaServico;
 	}
+	public String getBuscar() {
+		return buscar;
+	}
+	public void setBuscar(String buscar) {
+		this.buscar = buscar;
+	}
+	
 }

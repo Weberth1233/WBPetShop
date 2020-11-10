@@ -30,7 +30,7 @@ public class VeterinarioController extends Controller<Veterinario>{
 	public void pesquisar() {
 		VeterinarioRepository repo = new VeterinarioRepository();
 		try {
-			setListaVeterinarios(repo.findAll());
+			setListaVeterinarios(repo.findVeterinario());
 		} catch (RepositoryException e) {
 			System.out.println("Erro no controller no metodo pesquisar");
 			Util.addErrorMessage("Erro ao buscar informações no banco de dados!");

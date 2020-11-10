@@ -26,25 +26,26 @@ public class ClienteRepository extends Repository<Cliente>{
 			throw new RepositoryException("Erro ao montar a lista");
 		}
 	}
-	public List<Cliente> findTheCliente(String nome) throws RepositoryException {
+	public List<Cliente> findByNome(String nome) throws RepositoryException{ 
 		try {
 			EntityManager em = JPAUtil.getEntityManager();
 			StringBuffer jpql = new StringBuffer();
 			jpql.append("SELECT ");
-			jpql.append(" c ");
+			jpql.append("  c ");
 			jpql.append("FROM ");
-			jpql.append(" Cliente c ");
+			jpql.append("  Cliente c ");
 			jpql.append("WHERE ");
-			jpql.append(" c.nome = :nome) ");
+			jpql.append("  UPPER(c.nome) like UPPER(:nome) ");
 			jpql.append("ORDER BY c.nome ");
 			
 			Query query = em.createQuery(jpql.toString());
 			query.setParameter("nome", "%"+ nome + "%");
-			return query.getResultList();	
+			
+			return query.getResultList();
 		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
 			e.printStackTrace();
-			System.out.println("Erro ao encontar o cliente no serviço ou consulta");
-			throw new RepositoryException("Erro na busca");
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
 		}
 	}
 }

@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Exame;
 
 public class ExameRepository extends Repository<Exame>{
@@ -27,5 +28,26 @@ public class ExameRepository extends Repository<Exame>{
 			throw new RepositoryException("Erro ao buscar exames");
 		}	
 	}
-	
+	public List<Exame> findByNome(String nome) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  e ");
+			jpql.append("FROM ");
+			jpql.append("  Exame e ");
+			jpql.append("WHERE ");
+			jpql.append("  UPPER(e.nome) like UPPER(:nome) ");
+			jpql.append("ORDER BY e.nome ");
+			
+			Query query = em.createQuery(jpql.toString());
+			query.setParameter("nome", "%"+ nome + "%");
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
 }

@@ -62,21 +62,14 @@
 										<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
 										<p:inputMask id="cpf" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cpf}"
-											mask="999.999.999-99"
-											label="cpf"
+											mask="999.999.999-99" label="cpf"
 											placeholder="000.000.000-00" />
-
-										<h:outputLabel for="cargo" value="Cargo ocupado:"
-											style="font-weight:bold" />
-										<p:inputText id="cargo" style="border-radius:30px;"
-											value="#{funcionarioController.entity.cargoOcupado}"
-											label="cargoOcupado" placeholder="Exemplo: Atendente" />
 
 										<h:outputLabel for="email" value="E-mail:"
 											style="font-weight:bold" />
 										<p:inputText id="email" style="border-radius:30px;"
-											value="#{funcionarioController.entity.email}"
-											label="email" placeholder="exemplo@hotmail.com" />
+											value="#{funcionarioController.entity.email}" label="email"
+											placeholder="exemplo@hotmail.com" />
 
 										<h:outputLabel for="salario" value="salario"
 											style="font-weight:bold" />
@@ -89,18 +82,28 @@
 										<p:inputText id="cargahoraria" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cargaHoraria}"
 											label="Carga Horaria" placeholder="Exemplo:60" />
+										
+										<p:outputLabel value="Serviço: " />
+										<p:autoComplete 
+											value="#{funcionarioController.entity.servico}"
+											forceSelection="true" style="border-radius:30px;"
+											placeholder="Informe ao menos 2 letras para iniciar a consulta..."
+											minQueryLength="2" dropdown="true" maxResults="3"
+											moreText="Ainda tem mais ..." var="obj"
+											itemLabel="#{obj.nome}" itemValue="#{obj}"
+											completeMethod="#{funcionarioController.completeMarca}" />
 
 										<h:outputLabel for="senha" value="Senha:"
 											style="font-weight:bold" />
 										<p:password id="senhafunc" style="border-radius:30px;"
-											value="#{funcionarioController.entity.senha}"
-											label="Senha" placeholder="Insira uma senha forte:" />
+											value="#{funcionarioController.entity.senha}" label="Senha"
+											placeholder="Insira uma senha forte:" />
 
 										<h:outputLabel for="login" value="Login"
 											style="font-weight:bold" />
 										<p:inputText id="loginfunc" style="border-radius:30px;"
-											value="#{funcionarioController.entity.login}"
-											label="login" placeholder="Exemplo:meuloginbr" />
+											value="#{funcionarioController.entity.login}" label="login"
+											placeholder="Exemplo:meuloginbr" />
 									</p:fieldset>
 								</p:panelGrid>
 							</div>
@@ -131,9 +134,9 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
-						actionListener="#{funcionarioController.pesquisar}" />
+					<p:inputText id="filtro" value="#{funcionarioController.buscar}"/>
+					<p:commandButton value="Pesquisar" process="@this buscar" update="tabela"
+						actionListener="#{funcionarioController.pesquisarPorNome}" />
 				</p:panelGrid>
 
 				<p:dataTable id="tabela"
@@ -153,8 +156,8 @@
 						<p:outputLabel value="#{obj.cpf}" />
 					</p:column>
 					<p:column>
-						<f:facet name="header">Cargo Ocupado:</f:facet>
-						<p:outputLabel value="#{obj.cargoOcupado}" />
+						<f:facet name="header">Serviço:</f:facet>
+						<p:outputLabel value="#{obj.servico.nome}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">E-mail:</f:facet>

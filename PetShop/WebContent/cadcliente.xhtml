@@ -102,6 +102,7 @@
 						<p:commandButton value="Lista Clientes"
 							onclick="PF('dlg').show();" />
 					</p:tab>
+
 					<p:tab id="tabAnimal" title="Animal">
 						<p:panel header="Adicionar Animais">
 							<div class="ui-g ui-fluid">
@@ -142,29 +143,36 @@
 								</div>
 							</div>
 						</p:panel>
-
-						<p:dataTable id="dtAnimal"
-							value="#{clienteContoller.entity.listaAnimal}" var="obj">
-							<p:column>
-								<f:facet name="header">Nome:</f:facet>
-								<p:outputLabel value="#{obj.nome}" />
-							</p:column>
-							<p:column>
-								<f:facet name="header">Peso:</f:facet>
-								<p:outputLabel value="#{obj.peso}" />
-							</p:column>
-							<p:column>
-								<f:facet name="header">Data Nascimento:</f:facet>
-								<p:outputLabel value="#{obj.dataNascimento}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</p:outputLabel>
-							</p:column>
-							<p:column>
-								<f:facet name="header">Observações:</f:facet>
-								<p:outputLabel value="#{obj.observacoes}" />
-							</p:column>
-						</p:dataTable>
-
+						<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
+							width="80%" height="300">
+							<p:dataTable id="dtAnimal"
+								value="#{clienteContoller.entity.listaAnimal}" var="obj">
+								<p:column>
+									<f:facet name="header">Nome:</f:facet>
+									<p:outputLabel value="#{obj.nome}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">Peso:</f:facet>
+									<p:outputLabel value="#{obj.peso}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">Data Nascimento:</f:facet>
+									<p:outputLabel value="#{obj.dataNascimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:outputLabel>
+								</p:column>
+								<p:column>
+									<f:facet name="header">Observações:</f:facet>
+									<p:outputLabel value="#{obj.observacoes}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">Ação:</f:facet>
+									<p:commandButton value="Editar"
+										actionListener="#{clienteContoller.editar(obj)}"
+										process="@this" update="@form" />
+								</p:column>
+							</p:dataTable>
+						</p:dialog>
 						<p:toolbar>
 							<f:facet name="left">
 								<p:commandButton value="Salvar" icon="pi pi-check"
@@ -174,8 +182,9 @@
 									action="#{clienteContoller.limpar}">
 									<p:ajax update="@form" resetValues="true" />
 								</p:commandButton>
+								<p:commandButton value="Animais Cadastrados:"
+									onclick="PF('dla').show();" />
 							</f:facet>
-
 							<f:facet name="right">
 								<p:commandButton value="Excluir" icon="pi pi-trash"
 									process="@this" update="panel"
@@ -193,9 +202,10 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
-						actionListener="#{clienteContoller.pesquisar}" />
+					<p:inputText id="filtro" value="#{clienteContoller.buscar}" />
+					<p:commandButton value="Pesquisar" process="@this filtro"
+						update="tabela"
+						actionListener="#{clienteContoller.pesquisarPorNome}" />
 				</p:panelGrid>
 
 				<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
