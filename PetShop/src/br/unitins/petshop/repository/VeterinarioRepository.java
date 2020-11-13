@@ -28,19 +28,11 @@ public class VeterinarioRepository extends Repository<Veterinario>{
 			throw new RepositoryException("Erro ao buscar no banco dados do veteriáario");
 		}
 	}
-	public List<Veterinario> findVeterinario() throws RepositoryException{ 
+	public List<Veterinario> findVeterinario(String nome) throws RepositoryException{ 
 		try {
 			EntityManager em = JPAUtil.getEntityManager();
-			StringBuffer jpql = new StringBuffer();
-			jpql.append("SELECT ");
-			jpql.append("  v.crnv, f.nome ");
-			jpql.append("FROM ");
-			jpql.append("  Veterinario v, Funcionario f ");
-			jpql.append("WHERE ");
-			jpql.append("  v.funcionario_id = f.id ");
-			jpql.append("ORDER BY f.nome ");
-			
-			Query query = em.createQuery(jpql.toString());
+			Query query = em.createQuery("SELECT f FROM Veterinario v, Funcionario f WHERE f.id = v.funcionario.id and UPPER(f.nome) like UPPER(:nome) ORDER BY f.nome");
+			query.setParameter("nome", "%"+ nome + "%");
 			return query.getResultList();
 		} catch (Exception e) {
 			System.out.println("Erro ao realizar uma consulta ao banco.");

@@ -49,13 +49,11 @@ public class ExameController extends Controller<Exame> {
 			entity = new Exame();
 		return entity;
 	}
-
 	public List<Exame> getListaExames() {
 		if(listaExames == null) 
 			listaExames= new ArrayList<Exame>();
 		return listaExames;
 	}
-
 	public void setListaExames(List<Exame> listaExames) {
 		this.listaExames = listaExames;
 	}
@@ -65,6 +63,4 @@ public class ExameController extends Controller<Exame> {
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
-	
-	
 }

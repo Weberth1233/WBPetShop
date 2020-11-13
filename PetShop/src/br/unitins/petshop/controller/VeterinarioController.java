@@ -18,6 +18,7 @@ public class VeterinarioController extends Controller<Veterinario>{
 	private static final long serialVersionUID = 2728371485171185844L;
 
 	private List<Veterinario>listaVeterinarios;
+	private String buscar;
 	
 	@Override
 	public Veterinario getEntity() {
@@ -30,7 +31,7 @@ public class VeterinarioController extends Controller<Veterinario>{
 	public void pesquisar() {
 		VeterinarioRepository repo = new VeterinarioRepository();
 		try {
-			setListaVeterinarios(repo.findVeterinario());
+			setListaVeterinarios(repo.findVeterinario(getBuscar()));
 		} catch (RepositoryException e) {
 			System.out.println("Erro no controller no metodo pesquisar");
 			Util.addErrorMessage("Erro ao buscar informações no banco de dados!");
@@ -46,6 +47,12 @@ public class VeterinarioController extends Controller<Veterinario>{
 
 	public void setListaVeterinarios(List<Veterinario> listaVeterinarios) {
 		this.listaVeterinarios = listaVeterinarios;
+	}
+	public String getBuscar() {
+		return buscar;
+	}
+	public void setBuscar(String buscar) {
+		this.buscar = buscar;
 	}
 	
 }

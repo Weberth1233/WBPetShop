@@ -46,59 +46,68 @@
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 								<p:fieldset legend="Cadastro Veterinário">
 									<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-									<p:inputText id="name" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.nome}"
+									<p:inputText id="name" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.nome}"
 										required="true" placeholder="Insira seu nome completo" />
 
 									<h:outputLabel for="date" value="Data Nascimento:"
 										style="font-weight:bold" />
-									<p:inputMask id="date" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.dataNascimento}" 
+									<p:inputMask id="date" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.dataNascimento}"
 										mask="99/99/9999" placeholder="dia/mês/ano">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
 									</p:inputMask>
 
 									<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-									<p:inputMask id="cpf" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.cpf}"
+									<p:inputMask id="cpf" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.cpf}"
 										required="true" mask="999.999.999-99"
 										requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
 										placeholder="000.000.000-00" />
 
 									<h:outputLabel for="email" value="E-mail:"
 										style="font-weight:bold" />
-									<p:inputText id="email" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.email}"
+									<p:inputText id="email" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.email}"
 										required="true"
 										requiredMessage="E-mail não pode ser um campo nulo!"
 										label="email" placeholder="exemplo@hotmail.com" />
 
 									<h:outputLabel for="salario" value="salario"
 										style="font-weight:bold" />
-									<p:inputText id="salario" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.salario}"
+									<p:inputText id="salario" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.salario}"
 										required="true"
 										requiredMessage="Salario não pode ser um campo nulo!"
 										label="endereco" placeholder="0000" />
 
 									<h:outputLabel for="chorario" value="Carga Horaria:"
 										style="font-weight:bold" />
-									<p:inputText id="cargahoraria" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.cargaHoraria}"
+									<p:inputText id="cargahoraria" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.cargaHoraria}"
 										required="true"
 										requiredMessage="Carga Horaria não pode ser um campo nulo!"
 										label="Carga Horaria" placeholder="Exemplo:60" />
 
 									<h:outputLabel for="senha" value="Senha:"
 										style="font-weight:bold" />
-									<p:password id="senhafunc" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.senha}"
+									<p:password id="senhafunc" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.senha}"
 										required="true" requiredMessage="Campo senha é obrigatorio!"
 										label="Senha" placeholder="Insira uma senha forte:" />
 
 									<h:outputLabel for="login" value="Login"
 										style="font-weight:bold" />
-									<p:inputText id="loginfunc" style="border-radius:30px;" value="#{veterinarioController.entity.funcionario.login}"
+									<p:inputText id="loginfunc" style="border-radius:30px;"
+										value="#{veterinarioController.entity.funcionario.login}"
 										required="true" requiredMessage="Campo login é obrigatorio!"
 										label="login" placeholder="Exemplo:meuloginbr" />
 
 									<h:outputLabel for="crnv" value="CRNV:"
 										style="font-weight:bold" />
-									<p:inputMask id="crnv" style="border-radius:30px;" value="#{veterinarioController.entity.crnv}"
-										required="true" mask="999.999.999-99"
+									<p:inputMask id="crnv" style="border-radius:30px;"
+										value="#{veterinarioController.entity.crnv}" required="true"
+										mask="999.999.999-99"
 										requiredMessage="CRNV não pode ser um campo nulo!"
 										label="crnv" placeholder="Insira seu CRNV:" />
 								</p:fieldset>
@@ -131,20 +140,26 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisar" process="@this" update="tabela"
+					<p:inputText id="filtro" value="#{veterinarioController.buscar}"/>
+					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
 						actionListener="#{veterinarioController.pesquisar}" />
 				</p:panelGrid>
-
+				
 				<p:dataTable id="tabela"
 					value="#{veterinarioController.listaVeterinarios}" var="obj">
 					<p:column>
 						<f:facet name="header">Nome:</f:facet>
-						<p:outputLabel value="#{obj.funcionario.nome}" />
+						<p:outputLabel value="#{obj.nome}" />
 					</p:column>
 					<p:column>
-						<f:facet name="header">CRNV:</f:facet>
-						<p:outputLabel value="#{obj.crnv}" />
+						<f:facet name="header">Data Admissão:</f:facet>
+						<p:outputLabel value="#{obj.dataAdmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" locale="pt_BR"/>
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">E-mail:</f:facet>
+						<p:outputLabel value="#{obj.email}"></p:outputLabel>
 					</p:column>
 					<p:column>
 						<f:facet name="header">Ação:</f:facet>
