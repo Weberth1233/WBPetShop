@@ -99,10 +99,13 @@
 								</div>
 							</div>
 						</p:panel>
-						<p:commandButton value="Lista Clientes"
-							onclick="PF('dlg').show();" />
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Lista Clientes"
+									onclick="PF('dlg').show();" />
+							</f:facet>
+						</p:toolbar>
 					</p:tab>
-
 					<p:tab id="tabAnimal" title="Animal">
 						<p:panel header="Adicionar Animais">
 							<div class="ui-g ui-fluid">

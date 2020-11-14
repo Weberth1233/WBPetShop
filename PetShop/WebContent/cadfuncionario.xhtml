@@ -152,6 +152,12 @@
 						</p:outputLabel>
 					</p:column>
 					<p:column>
+						<f:facet name="header">Data Admissão:</f:facet>
+						<p:outputLabel value="#{obj.dataAdmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
 						<f:facet name="header">CPF:</f:facet>
 						<p:outputLabel value="#{obj.cpf}" />
 					</p:column>
@@ -162,21 +168,6 @@
 					<p:column>
 						<f:facet name="header">E-mail:</f:facet>
 						<p:outputLabel value="#{obj.email}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Salario:</f:facet>
-						<p:outputLabel value="#{obj.salario}">
-							<f:convertNumber locale="pt_BR" currencySymbol="R$"
-								type="currency" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">Senha:</f:facet>
-						<p:outputLabel value="#{obj.senha}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Login:</f:facet>
-						<p:outputLabel value="#{obj.login}" />
 					</p:column>
 					<p:column>
 						<center>
