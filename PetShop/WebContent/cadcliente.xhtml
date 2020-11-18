@@ -48,8 +48,14 @@
 										<p:panelGrid columns="1"
 											styleClass="form-group ui-panelgrid-blank" layout="grid">
 											<p:fieldset legend="Cadastro de Cliente">
-												<h:outputLabel value="Nome completo:"
-													style="font-weight:bold" />
+												<p:commandLink value="Nome: "
+													actionListener="#{clienteContoller.abrirClienteListing}"
+													update="@none" process="@this">
+													<p:ajax event="dialogReturn"
+														listener="#{clienteContoller.obterClienteListing}"
+														update="@form" />
+												</p:commandLink>
+
 												<p:inputText id="name" style="border-radius:30px;"
 													required="true" requiredMessage="Nome deve ser informado!"
 													value="#{clienteContoller.entity.nome}"
@@ -101,8 +107,9 @@
 						</p:panel>
 						<p:toolbar>
 							<f:facet name="left">
-								<p:commandButton value="Lista Clientes"
-									onclick="PF('dlg').show();" />
+								<p:commandButton value="Voltar"
+									onclick="history.go(-1); return false;"
+									styleClass="col-md-2 mb-3 btn btn-default form-control" />
 							</f:facet>
 						</p:toolbar>
 					</p:tab>
@@ -179,7 +186,7 @@
 						<p:toolbar>
 							<f:facet name="left">
 								<p:commandButton value="Salvar" icon="pi pi-check"
-									process="@form" update="@form"
+									prokçcess="@form" update="@form"
 									action="#{clienteContoller.salvar}" />
 								<p:commandButton value="Limpar" process="@this" update="panel"
 									action="#{clienteContoller.limpar}">
@@ -212,7 +219,7 @@
 				</p:panelGrid>
 
 				<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
-					var="obj">
+					var="obj" paginator="true" rows="5" lazy="true">
 					<p:column>
 						<f:facet name="header">Nome:</f:facet>
 						<p:outputLabel value="#{obj.nome}" />
