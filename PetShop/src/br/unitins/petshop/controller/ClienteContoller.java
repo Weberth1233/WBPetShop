@@ -2,16 +2,16 @@ package br.unitins.petshop.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.repository.ClienteRepository;
-import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
 @ViewScoped
@@ -52,8 +52,15 @@ public class ClienteContoller extends Controller<Cliente>{
 		buscar = null;
 	}
 	public List<Cliente> getListaCliente() {
-		if(listaCliente==null) 
-			listaCliente= new ArrayList<Cliente>();
+		ClienteRepository repo = new ClienteRepository();
+		if(listaCliente==null) {
+			try {
+				listaCliente= repo.findAll();
+			} catch (RepositoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return listaCliente;
 	}
 
@@ -89,5 +96,12 @@ public class ClienteContoller extends Controller<Cliente>{
 	}
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
+	}
+	public void abrirClienteListing() {
+		ClienteListing listing = new ClienteListing();
+		listing.open();
+	}
+	public void obterClienteListing(SelectEvent<Cliente> event) {
+		setEntity(event.getObject());
 	}
 }
