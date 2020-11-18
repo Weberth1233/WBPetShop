@@ -27,7 +27,7 @@ body {
 
 #box_content {
 	background-color: #51519A;
-	width: 350px;
+	width: 320px;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 20px 30px;
@@ -57,7 +57,8 @@ input {
 	padding: 10px;
 	font-size: 12pt;
 	padding: 10px;
-} 
+}
+
 input:focus {
 	border-bottom: 2px solid #085588;
 }
@@ -75,9 +76,18 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color:#007ad9;
+	background-color: #007ad9;
 	color: #fff;
 	cursor: pointer;
+}
+
+li {
+	color: #000;
+	list-style: none;
+	text-decoration: none;
+	margin-top: 15px;
+	background-color: #fff;
+	padding: 5px;
 }
 </style>
 </h:head>
@@ -95,14 +105,17 @@ input[type="submit"]:hover {
 			<h1 style="color: #fff">Login</h1>
 		</div>
 		<h:form>
-			<p:inputText style="margin-bottom:20px;" id="login" value="#{loginController.login}"
-				required="true" placeholder="Insira seu login" />
+			<p:inputText style="margin-bottom:20px;" id="login"
+				value="#{loginController.login}" required="true"
+				placeholder="Insira seu login" />
 			<p:password id="senha" value="#{loginController.senha}"
 				placeholder="Insira sua senha" label="senha" />
+			<h:messages></h:messages>
 			<h:commandButton value="Logar" process="@form" update="@form"
 				icon="pi pi-check" action="#{loginController.logar}" />
-			<p:messages></p:messages>
-			<p><a style="color: #fff">Não possui cadastrado ?</a></p>
+			<p style="margin-top: 10px;">
+				<a style="color: #fff">Esqueceu a senha?</a>
+			</p>
 		</h:form>
 	</div>
 </h:body>

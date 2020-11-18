@@ -1,13 +1,11 @@
 package br.unitins.petshop.controller;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
-import br.unitins.petshop.application.JPAUtil;
+import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Funcionario;
+import br.unitins.petshop.repository.FuncionarioRepository;
 
 @Named
 @RequestScoped
@@ -41,19 +39,18 @@ public class LoginController {
 		login=null;
 	}
 	public String logar() {
+		FuncionarioRepository repo= new FuncionarioRepository();
 		try {
-			EntityManager em = JPAUtil.getEntityManager();
-			Query query = em.createQuery("SELECT f FROM Funcionario f WHERE f.login = :login");
-			query.setParameter("login", getLogin());
-			funcionario = (Funcionario)query.getSingleResult();
-			/*Coloquei pra caso não lembrasse de instanciar o funcionario*/
-			if(getSenha().equals(funcionario.getSenha())) {
-				return "cadcliente.xhtml?faces-redirect=true";
+			Funcionario func = repo.verificarlogin(getLogin(), getSenha());
+			if(func != null) {
+				Session.getInstance().setAttribute("funcionarioLogado", func);
+				return "index.xhtml?faces-redirect=true";
 			}
-		}catch (NoResultException e){
+		} 
+		catch (RepositoryException e) {
+			Util.addErrorMessage("Funcionário não encontrado!");
+			e.printStackTrace();
 		}
-		Util.addErrorMessage("Usuario não encontrado!");
-		limpar();
 		return null;
 	}
 }
