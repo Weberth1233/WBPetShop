@@ -46,7 +46,7 @@ public class LoginController {
 				Session.getInstance().setAttribute("funcionarioLogado", func);
 				return "index.xhtml?faces-redirect=true";
 			}
-		} 
+		}
 		catch (RepositoryException e) {
 			Util.addErrorMessage("Funcionário não encontrado!");
 			e.printStackTrace();
