@@ -28,15 +28,15 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		/*chain.doFilter(request, response);
-		return;*/
-		
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+
+		chain.doFilter(request, response);
+		return;
+
+		/*HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String url = httpServletRequest.getRequestURI();
 		System.out.println(url);
 		if(url.equals("/PetShop/faces/login.xhtml")) {
-			
+
 			chain.doFilter(request, response);
 			return;
 		}
@@ -51,7 +51,7 @@ public class SecurityFilter implements Filter {
 		}else {
 			chain.doFilter(request, response);
 			return;
-		}
+		}*/
 	}
 	@Override
 	public void destroy() {
