@@ -82,9 +82,9 @@
 										<p:inputText id="cargahoraria" style="border-radius:30px;"
 											value="#{funcionarioController.entity.cargaHoraria}"
 											label="Carga Horaria" placeholder="Exemplo:60" />
-										
+
 										<p:outputLabel value="Serviço: " />
-										<p:autoComplete 
+										<p:autoComplete
 											value="#{funcionarioController.entity.servico}"
 											forceSelection="true" style="border-radius:30px;"
 											placeholder="Informe ao menos 2 letras para iniciar a consulta..."
@@ -104,6 +104,14 @@
 										<p:inputText id="loginfunc" style="border-radius:30px;"
 											value="#{funcionarioController.entity.login}" label="login"
 											placeholder="Exemplo:meuloginbr" />
+				
+										<h:form enctype="multipart/form-data">
+											<p:fileUpload listener="#{funcionarioController.upload}"
+												label="#{funcionarioController.nomeFoto}" mode="advanced"
+												update="@this messages" auto="false" sizeLimit="1200000"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+											<p:growl id="messages" showDetail="true" />
+										</h:form>
 									</p:fieldset>
 								</p:panelGrid>
 							</div>
@@ -134,8 +142,9 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" value="#{funcionarioController.buscar}"/>
-					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
+					<p:inputText id="itbuscar" value="#{funcionarioController.buscar}" />
+					<p:commandButton value="Pesquisar" process="@this itbuscar"
+						update="tabela"
 						actionListener="#{funcionarioController.pesquisarPorNome}" />
 				</p:panelGrid>
 
