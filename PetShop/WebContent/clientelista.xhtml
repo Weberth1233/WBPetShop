@@ -5,119 +5,106 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="content">
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
 		<h:form>
-			<p:panel header="Clientes cadastrados" style="font-size:14pt;text-align:center;">
-				<p:toolbar style="background-color:#fff;">
-					<f:facet name="right">
-						<p:commandButton action="cadcliente.xhtml?faces-redirect=true"
-							value="Adicionar novo" icon="fa fa-plus" process="@this"
-							update="@all">
-						</p:commandButton>
-					</f:facet>
-				</p:toolbar>
-				<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
-					var="obj" paginator="true" rows="5" lazy="true">
+			<p:growl id="growl" sticky="false" />
+			<p:panel header="Lista de clientes"
+				style="font-size:18pt;font-family: 'Nerko One', cursive;">
+				<p:fieldset>
+					<p:toolbar style="background-color:#51519A;">
+						<f:facet name="right">
+							<p:commandButton value="Adicionar Novo" process="@this"
+								action="#{clienteContoller.adicionarNovo}" />
+						</f:facet>
+					</p:toolbar>
+					<div class="ui-fluid p-formgrid p-grid ui-md-9"
+						style="margin-top: 25px; margin-bottom: 25px;">
+						<div class="p-field p-col">
+							<p:outputLabel for="itName" styleClass="ui-sr-only" value="Nome:"
+								style="font-family: 'Nerko One', cursive;" />
+							<p:inputText id="itName" value="#{clienteContoller.buscar}" />
+						</div>
+						<div class="p-field p-col">
+							<p:outputLabel for="itCpf" styleClass="ui-sr-only" value="CPF:"
+								style="font-family: 'Nerko One', cursive;" />
+							<p:inputText id="itCpf" value="#{clienteContoller.buscarCpf}">
+							</p:inputText>
+						</div>
+						<div class="p-formgroup-inline">
+							<p:commandButton process="@this itName itCpf"
+								update="tabela growl itName itCpf"
+								actionListener="#{clienteContoller.pesquisarPorNome}"
+								icon="pi pi-search" styleClass="white-button"
+								style="margin-top: 28px;" />
+						</div>
+					</div>
+					<p:dataTable id="tabela" value="#{clienteContoller.listaCliente}"
+						var="obj" paginator="true" rows="5" lazy="true"
+						emptyMessage="Não há resultados ainda!" style="text-align:center;">
+						<p:column>
+							<f:facet name="header">Nome:</f:facet>
+							<p:outputLabel value="#{obj.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Data Nascimento:</f:facet>
+							<p:outputLabel value="#{obj.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<f:facet name="header">CPF:</f:facet>
+							<p:outputLabel value="#{obj.cpf}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Numero:</f:facet>
+							<p:outputLabel value="#{obj.numeroTelefone}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">E-mail:</f:facet>
+							<p:outputLabel value="#{obj.email}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Endereço:</f:facet>
+							<p:outputLabel value="#{obj.endereco}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Animais:</f:facet>
+							<p:commandButton icon="fas fa-paw" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Ação:</f:facet>
+							<center>
+								<p:commandButton process="@this"
+									action="#{clienteContoller.editarCliente(obj)}"
+									icon="fa fa-pencil">
+								</p:commandButton>
+							</center>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+			</p:panel>
+
+			<p:dialog id="dadosCliente" header="Cliente" widgetVar="dla"
+				modal="true" width="20%" height="300">
+				<p:dataTable id="dtAnimal" value="#{clienteContoller.entity}"
+					var="entity">
 					<p:column>
-						<f:facet name="header">Nome:</f:facet>
-						<p:outputLabel value="#{obj.nome}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Data Nascimento:</f:facet>
-						<p:outputLabel value="#{obj.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">CPF:</f:facet>
-						<p:outputLabel value="#{obj.cpf}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Numero:</f:facet>
-						<p:outputLabel value="#{obj.numeroTelefone}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">E-mail:</f:facet>
-						<p:outputLabel value="#{obj.email}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Endereço:</f:facet>
-						<p:outputLabel value="#{obj.endereco}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Ação:</f:facet>
-						<center>
-							<p:commandButton icon="fa fa-pencil-square"
-								onclick="PF('dlg').show();"
-								value="#{clienteContoller.editar(obj)}" />
-						</center>
+						<f:facet name="header">Dados:</f:facet>
+						<p:outputLabel value="Nome:"></p:outputLabel>
+						<p:inputText value="#{entity.nome}" />
+						<p:column>
+							<p:outputLabel value="Data de Nascimento:"></p:outputLabel>
+							<p:inputText value="#{entity.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputText>
+						</p:column>
 					</p:column>
 				</p:dataTable>
-			</p:panel>
-			<p:dialog id="dialogo" header="Consulta Clientes" widgetVar="dlg" modal="true"
-				width="25%" height="300">
-				<p:panelGrid columns="2">
-					<p:commandLink value="Nome: "
-						actionListener="#{clienteContoller.abrirClienteListing}"
-						update="@none" process="@this">
-						<p:ajax event="dialogReturn"
-							listener="#{clienteContoller.obterClienteListing}" update="@form" />
-					</p:commandLink>
-
-					<p:inputText id="name" style="border-radius:30px;" required="true"
-						requiredMessage="Nome deve ser informado!"
-						value="#{clienteContoller.entity.nome}"
-						placeholder="Insira seu nome" />
-
-					<h:outputLabel for="date" value="Data Nascimento:"
-						style="font-weight:bold" />
-					<p:inputMask id="date" style="border-radius:30px;"
-						value="#{clienteContoller.entity.dataNascimento}" required="true"
-						mask="99/99/9999" placeholder="dia/mês/ano" label="data">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</p:inputMask>
-
-					<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-					<p:inputMask id="cpf" style="border-radius:30px;"
-						value="#{clienteContoller.entity.cpf}" required="true"
-						mask="999.999.999-99"
-						requiredMessage="CPF não pode ser um campo nulo!" label="cpf"
-						placeholder="000.000.000-00" />
-
-					<h:outputLabel for="numero" value="Contato:"
-						style="font-weight:bold" />
-					<p:inputMask id="numero" style="border-radius:30px;"
-						value="#{clienteContoller.entity.numeroTelefone}" required="true"
-						mask="(99)99999-9999"
-						requiredMessage="Contato não pode ser um campo nulo!"
-						label="numero" placeholder="(99)99999-9999" />
-
-					<h:outputLabel for="email" value="E-mail:" style="font-weight:bold" />
-					<p:inputText id="email" style="border-radius:30px;"
-						value="#{clienteContoller.entity.email}" required="true"
-						requiredMessage="E-mail não pode ser um campo nulo!" label="email"
-						placeholder="exemplo@hotmail.com" />
-					<h:outputLabel for="endereco" value="endereco"
-						style="font-weight:bold" />
-					<p:inputText id="endereco" style="border-radius:30px;"
-						value="#{clienteContoller.entity.endereco}" required="true"
-						requiredMessage="Endereço não pode ser um campo nulo!"
-						label="endereco" placeholder="Bairro alameda e lote" />
-				</p:panelGrid>
-				<p:toolbar>
-					<f:facet name="left">
-						<p:commandButton value="Salvar" icon="pi pi-check"
-							prokçcess="@form" update="@form"
-							action="#{clienteContoller.salvar}" />
-					</f:facet>
-					<f:facet name="right">
-						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@this" update="dialogo"
-							actionListener="#{clienteContoller.remover}">
-							<p:confirm header="Confirmação" message="Deseja excluir?"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
-					</f:facet>
-				</p:toolbar>
 			</p:dialog>
 		</h:form>
 	</ui:define>
