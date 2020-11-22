@@ -1,7 +1,5 @@
 package br.unitins.petshop.application;
 
-import java.util.jar.Attributes;
-
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
