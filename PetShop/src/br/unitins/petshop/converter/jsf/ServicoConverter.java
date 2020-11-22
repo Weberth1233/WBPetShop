@@ -1,4 +1,4 @@
-package br.unitins.petshop.converter.jpa;
+package br.unitins.petshop.converter.jsf;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

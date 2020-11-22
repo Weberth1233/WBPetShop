@@ -6,11 +6,8 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
-
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
-import br.unitins.petshop.controller.listing.ServicoListing;
 import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.ServicoRepository;
 
