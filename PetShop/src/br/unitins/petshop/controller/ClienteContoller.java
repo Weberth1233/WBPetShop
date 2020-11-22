@@ -2,11 +2,13 @@ package br.unitins.petshop.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.model.Animal;
@@ -21,11 +23,14 @@ public class ClienteContoller extends Controller<Cliente>{
 	private List<Cliente>listaCliente;
 	private Animal animal;
 	private String buscar;
-	
+	private String buscarCpf;
+
 	@Override
 	public Cliente getEntity() {
-		if(entity == null) 
-			entity= new Cliente();
+
+		if(entity == null) {
+			entity = (Cliente) Session.getInstance().getAttribute("dadosCli");
+		}
 		return entity;
 	}
 
@@ -40,26 +45,38 @@ public class ClienteContoller extends Controller<Cliente>{
 			setListaCliente(null);
 		}
 	}*/
+	private boolean verficarBuscar() {
+		if(getBuscar().isBlank() == false) {
+			return true;
+		}
+		return false;
+	}
+	private boolean verficarBuscarCpf() {
+		if(getBuscarCpf().isBlank() == false) {
+			return true;
+		}
+		return false;
+	}
 	public void pesquisarPorNome() {
 		ClienteRepository repo = new ClienteRepository();
 		try {
-			setListaCliente(repo.findByNome(getBuscar()));
+			if(verficarBuscar() && verficarBuscarCpf() ){
+				setListaCliente(null);
+				Util.addErrorMessage("Somente um campo deve ser selecionado");
+			}else {
+				setListaCliente(repo.findByNome(getBuscar()));
+			}
 		} catch (RepositoryException e) {
 			Util.addErrorMessage("Erro ao pesquisar cliente");
 			e.printStackTrace();
 			setListaCliente(null);
 		}
-		buscar = null;
+		setBuscar(null);
+		setBuscarCpf(null);
 	}
 	public List<Cliente> getListaCliente() {
-		ClienteRepository repo = new ClienteRepository();
-		if(listaCliente==null) {
-			try {
-				listaCliente= repo.findAll();
-			} catch (RepositoryException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if(listaCliente == null) {
+			listaCliente = new ArrayList<Cliente>();
 		}
 		return listaCliente;
 	}
@@ -67,7 +84,7 @@ public class ClienteContoller extends Controller<Cliente>{
 	public void setListaCliente(List<Cliente> listaCliente) {
 		this.listaCliente = listaCliente;
 	}
-	
+
 	public String getBuscar() {
 		return buscar;
 	}
@@ -79,12 +96,12 @@ public class ClienteContoller extends Controller<Cliente>{
 	public void adicionarAnimal() {
 		if(getEntity().getListaAnimal() == null) 
 			getEntity().setListaAnimal(new ArrayList<Animal>());
-		
+
 		getAnimal().setCliente(getEntity());
 		getEntity().getListaAnimal().add(getAnimal());
-		
+
 		animal = null;
-		
+
 	}
 	public void editar(Animal animal) {
 		setAnimal(animal);
@@ -97,11 +114,28 @@ public class ClienteContoller extends Controller<Cliente>{
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
 	}
+
+	public String getBuscarCpf() {
+		return buscarCpf;
+	}
+
+	public void setBuscarCpf(String buscarCpf) {
+		this.buscarCpf = buscarCpf;
+	}
 	public void abrirClienteListing() {
 		ClienteListing listing = new ClienteListing();
 		listing.open();
 	}
 	public void obterClienteListing(SelectEvent<Cliente> event) {
 		setEntity(event.getObject());
+	}
+	public String adicionarNovo() {
+		Session.getInstance().setAttribute("dadosCli", new Cliente());
+		return "cadcliente.xhtml?faces-redirect=true";
+	}
+	public String editarCliente(Cliente cliente) {
+		setEntity(cliente);
+		Session.getInstance().setAttribute("dadosCli", getEntity());
+		return "cadcliente.xhtml?faces-redirect=true";
 	}
 }
