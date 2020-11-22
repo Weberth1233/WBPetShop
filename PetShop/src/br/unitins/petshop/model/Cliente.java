@@ -4,13 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -74,5 +72,4 @@ public class Cliente extends DefaultEntity<Cliente>{
 	public void setListaAnimal(List<Animal> listaAnimal) {
 		this.listaAnimal = listaAnimal;
 	}
-	
 }
