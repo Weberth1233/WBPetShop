@@ -18,18 +18,20 @@ public abstract class Controller <T extends DefaultEntity<T>> implements Seriali
 		super();
 	}
 	public void salvar(){
-		Repository<T> repo= new Repository<T>();
+		Repository<T> repo = new Repository<T>();
 		try {
 			repo.beginTransaction();
-			repo.salvar(getEntity());
+			setEntity(repo.salvar(getEntity()));
 			repo.commitTransaction();
-			Util.addInfoMessage("Operação realizado com sucesso!");
-		}
-		catch (RepositoryException e) {
+			Util.addInfoMessage("Operação realizada com sucesso.");
+		} catch (RepositoryException e) {
 			repo.rollbackTransaction();
-			Util.addErrorMessage(e.getLocalizedMessage());
+			System.out.println("Erro ao salvar.");
 			e.printStackTrace();
+//			Util.addErrorMessage("Erro ao Salvar.");
+			Util.addErrorMessage(e.getMessage());
 		}
+		
 		limpar();
 	}
 	public void editar(T entity) {
