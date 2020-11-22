@@ -32,14 +32,15 @@
 						<div class="p-field p-col">
 							<p:outputLabel for="itCpf" styleClass="ui-sr-only" value="CPF:"
 								style="font-family: 'Nerko One', cursive;" />
-							<p:inputText id="itCpf" value="#{clienteContoller.buscarCpf}">
-							</p:inputText>
+							<p:inputMask id="itCpf" value="#{clienteContoller.buscarCpf}"
+								mask="999.999.999-99">
+							</p:inputMask>
 						</div>
 						<div class="p-formgroup-inline">
 							<p:commandButton process="@this itName itCpf"
 								update="tabela growl itName itCpf"
 								actionListener="#{clienteContoller.pesquisarPorNome}"
-								icon="pi pi-search" styleClass="white-button"
+								value="Buscar" styleClass="white-button"
 								style="margin-top: 28px;" />
 						</div>
 					</div>
@@ -74,7 +75,7 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">Animais:</f:facet>
-							<p:commandButton icon="fas fa-paw" />
+							<p:commandButton icon="fa fa-paw" aria-hidden="true"></p:commandButton>
 						</p:column>
 						<p:column>
 							<f:facet name="header">Ação:</f:facet>
@@ -88,24 +89,6 @@
 					</p:dataTable>
 				</p:fieldset>
 			</p:panel>
-
-			<p:dialog id="dadosCliente" header="Cliente" widgetVar="dla"
-				modal="true" width="20%" height="300">
-				<p:dataTable id="dtAnimal" value="#{clienteContoller.entity}"
-					var="entity">
-					<p:column>
-						<f:facet name="header">Dados:</f:facet>
-						<p:outputLabel value="Nome:"></p:outputLabel>
-						<p:inputText value="#{entity.nome}" />
-						<p:column>
-							<p:outputLabel value="Data de Nascimento:"></p:outputLabel>
-							<p:inputText value="#{entity.dataNascimento}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:inputText>
-						</p:column>
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>
