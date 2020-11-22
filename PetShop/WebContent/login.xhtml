@@ -28,6 +28,7 @@ body {
 #box_content {
 	background-color: #51519A;
 	width: 320px;
+	height:300px;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 20px 30px;
@@ -76,11 +77,8 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color: #007ad9;
-	color: #fff;
 	cursor: pointer;
 }
-
 li {
 	color: #000;
 	list-style: none;
@@ -111,9 +109,9 @@ li {
 			<p:password id="senha" value="#{loginController.senha}"
 				placeholder="Insira sua senha" label="senha" />
 			<h:messages></h:messages>
-			<h:commandButton value="Logar" process="@form" update="@form"
+			<h:commandButton value="Entrar" process="@form" update="@form"
 				icon="pi pi-check" action="#{loginController.logar}" />
-			<p style="margin-top: 10px;">
+			<p style="margin-top: 8px;">
 				<a style="color: #fff">Esqueceu a senha?</a>
 			</p>
 		</h:form>

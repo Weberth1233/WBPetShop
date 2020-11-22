@@ -5,17 +5,22 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="content">
-	<p:messages id="mensagem"></p:messages>
+		<p:messages id="mensagem"></p:messages>
 		<h:form>
-			<p:panel id="panel" header="Perfil">
+			<p:panel id="panel" header="Perfil" style="border:2px solid;">
+				<div align="left" style="position: relative; float:left;">
+					<img class="img-responsive"
+						style="max-width: 150px !important; max-height: 150px !important;border-radius: 20px;"
+						src="/PetShop/faces/img-usuario?nome=#{perfilController.funcionario.id}.png" />
+				</div>
 				<div class="ui-g ui-fluid">
-					<div class="ui-g-12 ui-md-4">
+					<div class="ui-g-12 ui-md-6">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
 							<p:inputText value="#{perfilController.funcionario.nome}" />
 						</div>
 					</div>
-					<div class="ui-g-12 ui-md-4">
+					<div class="ui-g-12 ui-md-6">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i
 								class="fa fa-calendar"></i></span>
@@ -69,14 +74,17 @@
 					</div>
 					<div class="ui-g-12 ui-md-4">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon"><i class="fa fa-briefcase"></i></span>
+							<span class="ui-inputgroup-addon"><i
+								class="fa fa-briefcase"></i></span>
 							<p:inputText disabled="true"
-								value="#{perfilController.funcionario.servico.nome}"/>
+								value="#{perfilController.funcionario.servico.nome}" />
 						</div>
 					</div>
 				</div>
 				<f:facet name="footer">
-					<p:commandButton value="Salvar" process="@form" update="panel mensagem" actionListener="#{perfilController.salvar}"></p:commandButton>
+					<p:commandButton value="Salvar Alterações" process="@form"
+						update="panel mensagem"
+						actionListener="#{perfilController.salvar}"></p:commandButton>
 				</f:facet>
 			</p:panel>
 		</h:form>
