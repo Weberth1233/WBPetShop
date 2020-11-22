@@ -19,31 +19,31 @@ public class Repository <T extends DefaultEntity<T>> {
 	public Repository(EntityManager em) {
 		setEntityManager(em);
 	}
-	public void beginTransaction() throws RepositoryException {
+	public void beginTransaction() {
 		try {
-			entityManager.getTransaction().begin();
+			getEntityManager().getTransaction().begin();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public void rollbackTransaction(){
 		try {
-			entityManager.getTransaction().rollback();
+			getEntityManager().getTransaction().rollback();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public void commitTransaction() throws RepositoryException {
 		try {
-			entityManager.getTransaction().commit();
+			getEntityManager().getTransaction().commit();
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao realizar o commit");
 		}
 	}
-	public void salvar(T entity) throws RepositoryException{
+	public T salvar(T entity) throws RepositoryException{
 		try {
-			getEntityManager().merge(entity);
+			return getEntityManager().merge(entity);
 		}
 		catch(PersistenceException e) {
 			System.out.println("Informações duplicadas");
