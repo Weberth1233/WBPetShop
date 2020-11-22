@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+	<p:messages id="mensagem"></p:messages>
+		<h:form>
+			<p:panel id="panel" header="Perfil">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+							<p:inputText value="#{perfilController.funcionario.nome}" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i
+								class="fa fa-calendar"></i></span>
+							<p:inputText
+								value="#{perfilController.funcionario.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputText>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i
+								class="fa fa-envelope"></i></span>
+							<p:inputText value="#{perfilController.funcionario.email}" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i
+								class="fa fa-address-card"></i></span>
+							<p:inputText disabled="true"
+								value="#{perfilController.funcionario.cpf}" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i
+								class="fa fa-calendar-o"></i></span>
+							<p:inputText disabled="true"
+								value="#{perfilController.funcionario.dataAdmissao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputText>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-sign-in"></i></span>
+							<p:inputText disabled="true"
+								value="#{perfilController.funcionario.login}"></p:inputText>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-money"></i></span>
+							<p:inputText disabled="true"
+								value="#{perfilController.funcionario.salario}">
+								<f:convertNumber locale="pt_BR" currencySymbol="R$"
+									type="currency" />
+							</p:inputText>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"><i class="fa fa-briefcase"></i></span>
+							<p:inputText disabled="true"
+								value="#{perfilController.funcionario.servico.nome}"/>
+						</div>
+					</div>
+				</div>
+				<f:facet name="footer">
+					<p:commandButton value="Salvar" process="@form" update="panel mensagem" actionListener="#{perfilController.salvar}"></p:commandButton>
+				</f:facet>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
