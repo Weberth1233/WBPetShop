@@ -6,12 +6,17 @@
 
 	<div class="layout-topbar">
 		<div class="layout-topbar-content">
-			<a href="#" id="menu-btn" class="menu-btn"> <i class="pi pi-bars"></i></a>
-			<p:graphicImage style="" name="images/icondog.jpg"
-				styleClass="topbar-logo" />
-			<p:commandLink value="Olá #{templateController.funcionarioLogado.nome} (Sair)"
-				rendered="#{templateController.funcionarioLogado != null}" action="templateController.encerrarSessao"
-				styleClass="topbar-link" process="@this" update="@all"/>
+			<h:form>
+				<a href="#" id="menu-btn" class="menu-btn"> <i
+					class="pi pi-bars"></i></a>
+				<p:graphicImage style="" name="images/icondog.jpg"
+					styleClass="topbar-logo" />
+				<p:commandLink
+					value="Olá #{templateController.funcionarioLogado.nome} (Sair)"
+					rendered="#{templateController.funcionarioLogado != null}"
+					action="#{templateController.encerrarSessao}"
+					styleClass="topbar-link" process="@this" update="@all" />
+			</h:form>
 		</div>
 	</div>
 </ui:composition>
