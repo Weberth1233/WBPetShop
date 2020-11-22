@@ -15,6 +15,7 @@ import br.unitins.petshop.model.Funcionario;
 public class FuncionarioRepository extends Repository<Funcionario> {
 	
 	public FuncionarioRepository() {}
+	
 	public FuncionarioRepository(EntityManager em) {
 		super(em);
 	}
