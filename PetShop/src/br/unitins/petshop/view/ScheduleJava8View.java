@@ -1,8 +1,10 @@
 package br.unitins.petshop.view;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -19,6 +21,11 @@ import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.AgendamentoServico;
+import br.unitins.petshop.repository.AgendaServicoRepository;
+
 @Named
 @ViewScoped
 public class ScheduleJava8View implements Serializable {
@@ -26,10 +33,15 @@ public class ScheduleJava8View implements Serializable {
   
 	private static final long serialVersionUID = -6132335514240444153L;
 
+	
+	private AgendamentoServico evento;
 	private ScheduleModel eventModel;
-     
-    private ScheduleModel lazyEventModel;
- 
+   
+	private ScheduleModel lazyEventModel;
+    
+	private List<AgendamentoServico>listaEventos;
+    private AgendaServicoRepository repo;
+    
     private ScheduleEvent event = new DefaultScheduleEvent();
  
     private boolean showWeekends = true;
@@ -42,85 +54,73 @@ public class ScheduleJava8View implements Serializable {
     private String scrollTime="06:00:00";
     private String minTime="04:00:00";
     private String maxTime="20:00:00";
-    private String locale="en";
+    private String locale="pt";
     private String timeZone="";
     private String clientTimeZone="local";
     private String columnHeaderFormat="";
  
     @PostConstruct
     public void init() {
+    	repo = new AgendaServicoRepository();
         eventModel = new DefaultScheduleModel();
- 
-        DefaultScheduleEvent event = DefaultScheduleEvent.builder()
-                .title("Consulta")
-                .startDate(previousDay8Pm())
-                .endDate(previousDay11Pm())
-                .description("Team A vs. Team B")
-                .build();
-        eventModel.addEvent(event);
- 
-        event = DefaultScheduleEvent.builder()
-                .title("Birthday Party")
-                .startDate(today1Pm())
-                .endDate(today6Pm())
-                .description("Aragon")
-                .overlapAllowed(true)
-                .build();
-        eventModel.addEvent(event);
- 
-        event = DefaultScheduleEvent.builder()
-                .title("Breakfast at Tiffanys")
-                .startDate(nextDay9Am())
-                .endDate(nextDay11Am())
-                .description("all you can eat")
-                .overlapAllowed(true)
-                .build();
-        eventModel.addEvent(event);
- 
-        event = DefaultScheduleEvent.builder()
-                .title("Plant the new garden stuff")
-                .startDate(theDayAfter3Pm())
-                .endDate(fourDaysLater3pm())
-                .description("Trees, flowers, ...")
-                .build();
-        eventModel.addEvent(event);
- 
-        DefaultScheduleEvent scheduleEventAllDay=DefaultScheduleEvent.builder()
-                .title("Holidays (AllDay)")
-                .startDate(sevenDaysLater0am())
-                .endDate(eightDaysLater0am())
-                .description("sleep as long as you want")
-                .allDay(true)
-                .build();
-        eventModel.addEvent(scheduleEventAllDay);
- 
-        lazyEventModel = (ScheduleModel) new LazyScheduleModel() {
-             
-            @Override
-            public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                for (int i=1; i<=5; i++) {
-                    LocalDateTime random = getRandomDateTime(start);
-                    addEvent(DefaultScheduleEvent.builder().title("Lazy Event " + i).startDate(random).endDate(random.plusHours(3)).build());
-                }
-            }
-        };
+        evento = new AgendamentoServico();
+        
+        try {
+			listaEventos = repo.findAll();
+		} catch (RepositoryException e) {
+			Util.addErrorMessage("Erro no SQL");
+			e.printStackTrace();
+		}
+        for (AgendamentoServico ev : listaEventos) {
+        	 DefaultScheduleEvent event = new DefaultScheduleEvent();
+        	 
+        	 event.setEndDate(ev.getData_fim());
+        	 event.setStartDate(ev.getData_incio());
+        	 event.setTitle(ev.getTitulo());
+        	 event.setData(ev.getId());
+        	 event.setDescription(ev.getDescricao());
+        	 event.setAllDay(true);
+        	 event.setEditable(true);
+        	 eventModel.addEvent(event);
+		}  
     }
-     
     public LocalDateTime getRandomDateTime(LocalDateTime base) {
         LocalDateTime dateTime = base.withMinute(0).withSecond(0).withNano(0);
         return dateTime.plusDays(((int) (Math.random()*30)));
     }
      
- 
-    public ScheduleModel getEventModel() {
+	public AgendamentoServico getEvento() {
+		return evento;
+	}
+
+	public void setEvento(AgendamentoServico evento) {
+		this.evento = evento;
+	}
+
+	public ScheduleModel getEventModel() {
         return eventModel;
     }
      
     public ScheduleModel getLazyEventModel() {
         return lazyEventModel;
     }
- 
-    private LocalDateTime previousDay8Pm() {
+	public List<AgendamentoServico> getListaEventos() {
+		return listaEventos;
+	}
+
+	public void setListaEventos(List<AgendamentoServico> listaEventos) {
+		this.listaEventos = listaEventos;
+	}
+
+	public AgendaServicoRepository getRepo() {
+		return repo;
+	}
+
+	public void setRepo(AgendaServicoRepository repo) {
+		this.repo = repo;
+	}
+
+	private LocalDateTime previousDay8Pm() {
         return LocalDateTime.now().minusDays(1).withHour(20).withMinute(0).withSecond(0).withNano(0);
     }
      
@@ -171,7 +171,16 @@ public class ScheduleJava8View implements Serializable {
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
-     
+    public void selecionaEvento(SelectEvent selectEvent) {
+    	ScheduleEvent event =(ScheduleEvent) selectEvent.getObject();
+    	
+    	for (AgendamentoServico ev : listaEventos) {
+			if(ev.getId() == event.getData()) {
+				evento = ev;
+				break;
+			}
+		}
+    }
     public void addEvent() {
         if (event.isAllDay()) {
             //see https://github.com/primefaces/primefaces/issues/1164
