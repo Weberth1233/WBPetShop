@@ -7,20 +7,8 @@
 	<ui:define name="content">
 		<p:messages id="mensagem"></p:messages>
 		<h:form>
-			<p:panel id="panel" header="Perfil">
-				<h3>Vertical and Grid</h3>
-				<div class="ui-fluid p-formgrid p-grid">
-					<div class="p-field p-col">
-						<p:outputLabel for="firstname2" value="Firstname" />
-						<p:inputText id="firstname2" />
-					</div>
-					<div class="p-field p-col">
-						<p:outputLabel for="lastname2" value="Lastname" />
-						<p:inputText id="lastname2" />
-					</div>
-				</div>
-
-			</p:panel>
+			<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
+				widgetVar="myschedule"></p:schedule>
 		</h:form>
 	</ui:define>
 </ui:composition>
