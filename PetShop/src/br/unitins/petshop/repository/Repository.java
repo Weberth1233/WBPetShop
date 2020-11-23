@@ -7,10 +7,9 @@ import javax.persistence.PersistenceException;
 
 import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
-import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
 
-public class Repository <T extends DefaultEntity<T>> {
+public class Repository <T extends DefaultEntity<? super T>> {
 	private EntityManager entityManager;
 
 	public Repository() {
