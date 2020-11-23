@@ -2,15 +2,13 @@ package br.unitins.petshop.controller;
 
 import java.io.Serializable;
 
-import javax.persistence.PersistenceException;
-
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
 import br.unitins.petshop.repository.Repository;
 
 /*Esta classe vai extends somente daquelas que extendem de DefaultEntity*/
-public abstract class Controller <T extends DefaultEntity<T>> implements Serializable{
+public abstract class Controller <T extends DefaultEntity<? super T>> implements Serializable{
 	private static final long serialVersionUID = -6054233331412963859L;
 	protected T entity;
 
