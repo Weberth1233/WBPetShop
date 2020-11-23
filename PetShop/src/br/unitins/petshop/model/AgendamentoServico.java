@@ -1,5 +1,8 @@
 package br.unitins.petshop.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class AgendamentoServico extends Agendamento{
 	private Float valorServico;
 	

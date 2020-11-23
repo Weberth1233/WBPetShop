@@ -1,34 +1,43 @@
 package br.unitins.petshop.model;
-
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Agendamento extends DefaultEntity<Agendamento>  {
-	private Date data;
-	private Time horaria_inicial;
-	private Time horario_final;
+	private String titulo;
+	private LocalDateTime data_incio;
+	private LocalDateTime data_fim;
+	private String descricao;
 	private int status;
-	
-	public Date getData() {
-		return data;
+	public String getTitulo() {
+		return titulo;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-	public Time getHoraria_inicial() {
-		return horaria_inicial;
+	public LocalDateTime getData_incio() {
+		return data_incio;
 	}
-	public void setHoraria_inicial(Time horaria_inicial) {
-		this.horaria_inicial = horaria_inicial;
+	public void setData_incio(LocalDateTime data_incio) {
+		this.data_incio = data_incio;
 	}
-	public Time getHorario_final() {
-		return horario_final;
+	public LocalDateTime getData_fim() {
+		return data_fim;
 	}
-	public void setHorario_final(Time horario_final) {
-		this.horario_final = horario_final;
+	public void setData_fim(LocalDateTime data_fim) {
+		this.data_fim = data_fim;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public int getStatus() {
 		return status;

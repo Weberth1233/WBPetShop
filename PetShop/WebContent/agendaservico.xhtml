@@ -4,13 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
-		<style type="text/css">
-.value {
-	width: 1000px;
-	background-color: #fff;
-	border: 1px solid #000;
-}
-</style>
 		<p:fieldset>
 			<h1>Calendário Agendamento de Serviço</h1>
 			<h:form>
@@ -18,177 +11,44 @@
 
 				<h:panelGrid columnClasses="value">
 					<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
-						widgetVar="myschedule">
-
-						<p:ajax event="dateSelect"
-							listener="#{scheduleJava8View.onDateSelect}"
-							update="eventDetails" oncomplete="PF('eventDialog').show();" />
+						widgetVar="meuCalendario" maxTime="20:00:00" minTime="04:00:00">
 						<p:ajax event="eventSelect"
-							listener="#{scheduleJava8View.onEventSelect}"
-							update="eventDetails" oncomplete="PF('eventDialog').show();" />
-						<p:ajax event="eventMove"
-							listener="#{scheduleJava8View.onEventMove}" update="messages" />
-						<p:ajax event="eventResize"
-							listener="#{scheduleJava8View.onEventResize}" update="messages" />
-
+							listener="#{scheduleJava8View.selecionaEvento}"
+							update="eventDialog" oncomplete="PF('caixaDialog').show()" />
 					</p:schedule>
 				</h:panelGrid>
 
-				<p:dialog widgetVar="eventDialog" header="Detalhes"
+				<p:dialog widgetVar="caixaDialog" header="Detalhes"
 					showEffect="clip" hideEffect="clip">
-					<h:panelGrid id="eventDetails" columns="2">
-						<p:outputLabel for="title" value="Titulo" />
-						<p:inputText id="title" value="#{scheduleJava8View.event.title}"
-							required="true" />
+					<p:outputPanel id="eventDialog">
 
-						<p:outputLabel value="Cliente:"></p:outputLabel>
-						<p:inputText value="Weberth Erik Anolar Sirqueira" required="true"
-							requiredMessage="Cliente não foi informado." disabled="true">
-							<p:commandButton type="submit" onclick="PF('dlg').show();"
-								icon="fa fa-search" aria-hidden="true">
-							</p:commandButton>
-						</p:inputText>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="title" value="Titulo" />
+							<p:inputText id="title"
+								value="#{scheduleJava8View.evento.titulo}" required="true" />
 
-						<p:outputLabel value="Funcionario:"></p:outputLabel>
-						<p:inputText value="João Pedro de Souza" required="true"
-							requiredMessage="Funcionario não foi informado." disabled="true">
-						</p:inputText>
+							<p:outputLabel for="from" value="Data e horario Inicial:" />
+							<p:datePicker id="from" 
+								value="#{scheduleJava8View.evento.data_incio}"
+								pattern="dd/MM/yyyy" showTime="true"></p:datePicker>
 
-						<p:outputLabel value="Executar Serviço:"></p:outputLabel>
-						<p:inputText value="Janio Junior" required="true"
-							requiredMessage="Executor não foi informado." disabled="true">
-							<p:commandButton type="submit" onclick="PF('dlf').show();"
-								icon="fa fa-search" aria-hidden="true">
-							</p:commandButton>
-						</p:inputText>
+							<p:outputLabel for="to" value="Data e horario final:" />
+							<p:datePicker id="to"
+								value="#{scheduleJava8View.evento.data_fim}"
+								pattern="dd/MM/yyyy" showTime="true" />
 
-						<p:outputLabel value="Serviço:"></p:outputLabel>
-						<p:selectOneMenu id="opservico" style="width:125px">
-							<f:selectItem itemLabel="Selecione.." itemValue="" />
-							<f:selectItem itemLabel="Banho e Tosa" itemValue="Banho e Tosa" />
-							<f:selectItem itemLabel="Hospedagem" itemValue="Hospedagem" />
-							<f:facet name="footer">
-								<p:separator />
-								<h:outputText value="2 Serviços" style="font-weight:bold;" />
-							</f:facet>
-						</p:selectOneMenu>
+							<p:outputLabel for="status" value="Status" />
+							<p:inputText id="status"
+								value="#{scheduleJava8View.evento.status}" required="true" />
 
-						<p:outputLabel value="Animal"></p:outputLabel>
-						<p:inputText value="Biluzinho" required="true"
-							requiredMessage="Animal não foi informado." disabled="true">
-						</p:inputText>
-
-						<p:outputLabel for="from" value="Data e horario Inicial:" />
-						<p:datePicker id="from"
-							value="#{scheduleJava8View.event.startDate}" pattern="dd/MM/yyyy"
-							showTime="true" appendTo="@(body)" />
-
-						<p:outputLabel for="to" value="Data e horario final:" />
-						<p:datePicker id="to" value="#{scheduleJava8View.event.endDate}"
-							pattern="dd/MM/yyyy" showTime="true" appendTo="@(body)" />
-						<h:selectBooleanCheckbox id="confirm">Confirmada</h:selectBooleanCheckbox>
-						<h:selectBooleanCheckbox id="wait">Aguardando</h:selectBooleanCheckbox>
-						<h:selectBooleanCheckbox id="final">Finalizada</h:selectBooleanCheckbox>
-						<p:panelGrid columns="2">
-							<p:commandButton id="addButton" value="Salvar"
-								action="#{scheduleJava8View.addEvent}"
-								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-							<p:commandButton id="diag" value="Detalhe Serviço"
-								action="detalhesservico.xhtml?faces-redirect=true" />
-						</p:panelGrid>
-					</h:panelGrid>
+							<p:outputLabel for="desc" value="Descrição:" />
+							<p:inputTextarea id="desc"
+								value="#{scheduleJava8View.evento.descricao}" required="true" />
+						</h:panelGrid>
+					</p:outputPanel>
+					<p:separator />
+					<p:commandButton value="Salvar" />
 				</p:dialog>
-				<p:dialog header="Consulta Clientes" widgetVar="dlg" modal="true"
-					width="80%" height="300">
-					<p:panelGrid columns="2">
-						<p:outputLabel value="Nome cliente:" />
-						<p:inputText id="filtroname" />
-						<p:outputLabel value="CPF:" />
-						<p:inputText id="filtocpf" />
-						<p:commandButton value="Pesquisarcli" process="@this" update="tabelacli"
-							actionListener="#{usuarioController.pesquisar}" />
-					</p:panelGrid>
-					<p:dataTable id="tabelacli" value="#{usuarioController.lista}"
-						var="obj">
-						<p:column>
-							<f:facet name="header">Nome:</f:facet>
-							<p:outputLabel value="#{obj.nome}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">Data Nascimento:</f:facet>
-							<p:outputLabel value="#{obj.dataNascimento}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:outputLabel>
-						</p:column>
-						<p:column>
-							<f:facet name="header">CPF:</f:facet>
-							<p:outputLabel value="#{obj.cpf}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">Numero:</f:facet>
-							<p:outputLabel value="#{obj.telefone}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">E-mail:</f:facet>
-							<p:outputLabel value="#{obj.email}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">Endereço:</f:facet>
-							<p:outputLabel value="#{obj.endereco}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">Animais: <i class="fa fa-eye"
-									aria-hidden="true"></i>
-							</f:facet>
-							<i class="fa fa-eye" aria-hidden="true"></i>
-						</p:column>
-						<p:column>
-							<f:facet name="header">Ação:</f:facet>
-							<p:commandButton value="Editar"
-								actionListener="#{usuarioController.editar(obj)}"
-								process="@this" update="@form" />
-						</p:column>
-					</p:dataTable>
-				</p:dialog>
-				
-				
-				<p:dialog header="Consulta Funcionario" widgetVar="dlf" modal="true"
-				width="80%" height="300">
-				<p:panelGrid columns="2">
-					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" />
-					<p:commandButton value="Pesquisarfun" process="@this" update="tabelafun"
-						actionListener="#{funcionarioController.pesquisar}" />
-				</p:panelGrid>
-
-				<p:dataTable id="tabelafun"
-					value="#{funcionarioController.listaFuncionario}" var="obj">
-					<p:column>
-						<f:facet name="header">Nome:</f:facet>
-						<p:outputLabel value="#{obj.nome}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Data Nascimento:</f:facet>
-						<p:outputLabel value="#{obj.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">Cargo Ocupado:</f:facet>
-						<p:outputLabel value="#{obj.cargoOcupado}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">E-mail:</f:facet>
-						<p:outputLabel value="#{obj.email}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Ação:</f:facet>
-						<p:commandButton value="Editar"
-							actionListener="#{funcionarioController.editar(obj)}"
-							process="@this" update="@form" />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 			</h:form>
 		</p:fieldset>
 	</ui:define>
