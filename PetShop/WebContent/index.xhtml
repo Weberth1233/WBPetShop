@@ -1,84 +1,158 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
-
-	<ui:define name="content">
-		<style>
-div#box-all-content {
-	position: relative;
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Index</title>
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<link href="https://fonts.googleapis.com/css?family=Tangerine"
+		rel="Stylesheet"></link>
+	<style>
+* {
 	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Helvetica;
+	color: #323232;
+	border: none;
 }
 
-div.content-hello {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
+div.content-top-all {
+	display: flex;
+	justify-content: space-between;
+	background: linear-gradient(#51519A 55%, #000);
+	height: 60px;
+	border-bottom: 3px solid;
+	background: linear-gradient(#51519A 55%, #000);
 }
 
-.content-hello .content-hello-text {
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	transform: translate(-0%, -0%);
-	color: white;
+div.topbar-all {
+	background: url("resources/images/dog.jpg") no-repeat;
+	background-position: 50% 40%;
+	width: 100%;
+	height: 400px;
 }
 
-.content-hello-img {
-	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url("resources/images/gatotela.jpg");
-	max-width: 100%;
-	margin: 0%;
-	height: 800px;
-	background-position: 60% 20%;
-	background-repeat: no-repeat;
-	background-size: cover;
-	position: relative;
-	height: 800px;
-	border-radius: 15px;
-	box-shadow: 5px 2px;
+div#content-all {
+	background-color: #F1FBFA;
 }
 
-.content-hello h1 {
-	font-size: 60px;
+div.menu {
+	margin: 20px;
+	display: flex;
+	justify-content: flex-end;
 }
 
-@media only screen and (min-width: 1000px) {
-	.content-hello h1 {
-		font-size: 85px;
-	}
+div.logo h2 {
+	margin: 7px;
+	font-size: 25pt;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+	font-size: 25pt;
+}
+
+div.logo {
+	margin-left: 10px;
+}
+
+div.menu div a {
+	font-weight: bold;
+	font-size: 13pt;
+	margin-left: 20px;
+	margin-right: 20px;
+	color: #fff;
+	text-shadow: 2px 2px #000;
+}
+
+div.menu div:hover {
+	color: #51519A;
+	cursor: pointer;
+}
+
+div.group-image-text {
+	margin-top: 20px;
+}
+
+div.group-image-text h3 {
+	text-align: center;
+	font-size: 25pt;
+	color: #51519A;
+	text-shadow: 1px 2px #000;
+	font-weight: bold;
 }
 </style>
-		<div id="box-all-content" style="margin-top: -20px">
-			<div class="content-hello-img" style="width: 100%">
-				<div class="content-hello">
-					<div class="content-hello-text">
-						<h2 style="font-size: 25px">Bem vindo!</h2>
-					</div>
-					<h1>WBPetShop</h1>
-					<h3 style="text-align: center; font-size: 13pt;">O melhor
-						lugar para o seu pet é aqui!</h3>
+</h:head>
+<h:body>
+	<div id="content-all">
+		<div class="topbar-all">
+			<div class="content-top-all">
+
+				<div class="logo">
+					<h2>WBPetShop</h2>
 				</div>
+
+				<div class="menu">
+					<div>
+						<a href="clientelista.xhtml">Dashboard</a>
+					</div>
+					<div>
+						<a href="perfil.xhtml">Perfil</a>
+					</div>
+					<div>
+						<a href="agendaservico.xhtml">Agendar</a>
+					</div>
+				</div>
+				<div class="itens-topbar" style="display: flex; margin: 20px;">
+					<div>
+						<img class="img-responsive"
+							style="max-width: 25px !important; max-height: 30px !important; border-radius: 20px; margin-right: 5px;"
+							src="/PetShop/faces/img-usuario?nome=#{perfilController.funcionario.id}.png" />
+					</div>
+					<h:form>
+						<div>
+							<p:commandLink style="color:#fff;"
+								value="Olá #{templateController.funcionarioLogado.nome} (Sair)"
+								rendered="#{templateCont+roller.funcionarioLogado != null}"
+								action="#{templateController.encerrarSessao}"
+								styleClass="topbar-link" process="@this"/>
+						</div>
+					</h:form>
+				</div>
+
 			</div>
 		</div>
-
-		<p:fieldset style="margin-top:20px;">
-			<h1>Um animal de estimação deve ser levado regularmente a um pet
-				shop, seja para uma consulta veterinária, seja para banho ou tosa</h1>
-			<div class="conteudo" style="text-indent: 50px">
-				<p style="text-align: justify;">Ter um animal de estimação em
-					casa é sinônimo de ter uma companhia, um amigo fiel e muita
-					alegria, mas também é sinônimo de preocupação. Os animais são como
-					filhos e também precisam de cuidados especiais. Mas, mesmo sabendo
-					da importância desses cuidados, muitos donos acabam deixando eles
-					de lado por falta de tempo. O que eles não sabem é que hoje existem
-					locais onde tudo pode ser resolvido sem ter que ir de um lado para
-					o outro, são os chamados pet shop. Fonte hh: Canal do Pet - iG</p>
+		<div class="group-image">
+			<div class="group-image-text">
+				<h3>Grid de Fotos</h3>
 			</div>
-		</p:fieldset>
-	</ui:define>
-</ui:composition>
+			<p:contentFlow>
+				<p:graphicImage value="resources/images/dog.jpg"
+					styleClass="content" />
+				<p:graphicImage value="resources/images/animal-1239334_1280.jpg"
+					styleClass="content" />
+				<p:graphicImage
+					value="resources/images/dog-in-bluebells-5038855_1920.jpg"
+					styleClass="content" />
+				<p:graphicImage value="resources/images/bone.png"
+					styleClass="content" />
+				<p:graphicImage value="resources/images/medicine-5003631_1280.jpg"
+					styleClass="content" />
+				<p:graphicImage value="resources/images/vet-3895477_1280.jpg"
+					styleClass="content" />
+			</p:contentFlow>
+		</div>
+		<div>
+			<h1 style="text-align: center;">WBPetShop</h1>
+			<p></p>
+		</div>
+	</div>
+	<footer
+		style="width: 100%; height: 100px; background-color: #51519A; border: 2px solid">
+		<p>OLÁ</p>
+	</footer>
+</h:body>
+</html>
 
