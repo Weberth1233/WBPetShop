@@ -11,10 +11,17 @@
 
 				<h:panelGrid columnClasses="value">
 					<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
-						widgetVar="meuCalendario" maxTime="20:00:00" minTime="04:00:00">
+						widgetVar="meuCalendario"
+						timeZone="America/Sao_Paulo">
+
 						<p:ajax event="eventSelect"
 							listener="#{scheduleJava8View.selecionaEvento}"
 							update="eventDialog" oncomplete="PF('caixaDialog').show()" />
+
+						<p:ajax event="dateSelect"
+							listener="#{scheduleJava8View.quandoNovo}" update="eventDialog"
+							oncomplete="PF('caixaDialog').show()" />
+
 					</p:schedule>
 				</h:panelGrid>
 
@@ -28,7 +35,7 @@
 								value="#{scheduleJava8View.evento.titulo}" required="true" />
 
 							<p:outputLabel for="from" value="Data e horario Inicial:" />
-							<p:datePicker id="from" 
+							<p:datePicker id="from"
 								value="#{scheduleJava8View.evento.data_incio}"
 								pattern="dd/MM/yyyy" showTime="true"></p:datePicker>
 
@@ -47,7 +54,9 @@
 						</h:panelGrid>
 					</p:outputPanel>
 					<p:separator />
-					<p:commandButton value="Salvar" />
+					<p:commandButton value="Salvar"
+						update="schedule messages" oncomplete="PF('caixaDialog').hide()"
+						actionListener="#{scheduleJava8View.addEvent}" />
 				</p:dialog>
 			</h:form>
 		</p:fieldset>
