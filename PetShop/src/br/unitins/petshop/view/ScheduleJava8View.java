@@ -1,5 +1,6 @@
 package br.unitins.petshop.view;
 
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,10 +23,13 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import com.sun.source.tree.NewClassTree;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.AgendamentoServico;
+import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.repository.AgendaServicoRepository;
 
 @Named
@@ -75,7 +79,7 @@ public class ScheduleJava8View implements Serializable {
 		}
 		for (AgendamentoServico ev : listaEventos) {
 			DefaultScheduleEvent event = new DefaultScheduleEvent();
-
+			
 			event.setEndDate(ev.getData_fim());
 			event.setStartDate(ev.getData_incio());
 			event.setTitle(ev.getTitulo());
@@ -83,7 +87,7 @@ public class ScheduleJava8View implements Serializable {
 			event.setDescription(ev.getDescricao());
 			event.setEditable(true);
 			event.setAllDay(true);
-			
+			evento.setClienteAgenda(ev.getClienteAgenda());
 			if(ev.getStatus() == 0) {
 				event.setStyleClass("emp1");
 			}else {
@@ -200,7 +204,6 @@ public class ScheduleJava8View implements Serializable {
 	}
 
 	public void addEvent() {
-
 		AgendaServicoRepository repository = new AgendaServicoRepository();
 		if(evento.getId() == null) {
 			if(evento.getData_incio().getDayOfMonth() <= evento.getData_fim().getDayOfMonth()) {
@@ -252,9 +255,19 @@ public class ScheduleJava8View implements Serializable {
 
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
-		evento = new AgendamentoServico();
-		evento.setData_incio(event.getStartDate());
-		evento.setData_fim(event.getEndDate());
+		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
+		try {
+			if(cli.getNome() != null) {
+				System.out.println(cli.getNome());
+				evento = new AgendamentoServico();
+				evento.setClienteAgenda(cli);
+				evento.setData_incio(event.getStartDate());
+				evento.setData_fim(event.getEndDate());
+				Session.getInstance().setAttribute("dadosCli", new Cliente());
+			}
+		}catch (NullPointerException e) {
+			Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
+		}
 	}
 
 	/*public void quandoNovo(SelectEvent selectEvent) {
@@ -433,5 +446,4 @@ public class ScheduleJava8View implements Serializable {
 	public void setLazyEventModel(ScheduleModel lazyEventModel) {
 		this.lazyEventModel = lazyEventModel;
 	}
-	
 }
