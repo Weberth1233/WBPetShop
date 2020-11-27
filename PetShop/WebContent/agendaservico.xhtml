@@ -11,16 +11,26 @@
 
 				<h:panelGrid columnClasses="value">
 					<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
-						widgetVar="meuCalendario"
-						timeZone="America/Sao_Paulo">
+						widgetVar="meuCalendario" clientTimeZone="local" resizable="true"
+						rightHeaderTemplate="dayGridMonth,timeGridWeek,timeGridDay,listYear">
 
 						<p:ajax event="eventSelect"
 							listener="#{scheduleJava8View.selecionaEvento}"
-							update="eventDialog" oncomplete="PF('caixaDialog').show()" />
+							update="eventDialog messages"
+							oncomplete="PF('caixaDialog').show()" />
 
 						<p:ajax event="dateSelect"
-							listener="#{scheduleJava8View.quandoNovo}" update="eventDialog"
+							listener="#{scheduleJava8View.quandoNovo}"
+							update="eventDialog messages"
 							oncomplete="PF('caixaDialog').show()" />
+
+						<p:ajax event="eventMove"
+							listener="#{scheduleJava8View.onEventMove}"
+							update="schedule messages" />
+
+						<p:ajax event="eventResize"
+							listener="#{scheduleJava8View.onEventResize}"
+							update="schedule messages" />
 
 					</p:schedule>
 				</h:panelGrid>
@@ -51,11 +61,15 @@
 							<p:outputLabel for="desc" value="Descrição:" />
 							<p:inputTextarea id="desc"
 								value="#{scheduleJava8View.evento.descricao}" required="true" />
+							
+							<p:outputLabel for="allDay" value="All Day (see #1164):" />
+							<h:selectBooleanCheckbox id="allDay"
+								value="#{scheduleJava8View.event.allDay}" />
 						</h:panelGrid>
 					</p:outputPanel>
 					<p:separator />
-					<p:commandButton value="Salvar"
-						update="schedule messages" oncomplete="PF('caixaDialog').hide()"
+					<p:commandButton value="Salvar" update="schedule messages"
+						oncomplete="PF('caixaDialog').hide()"
 						actionListener="#{scheduleJava8View.addEvent}" />
 				</p:dialog>
 			</h:form>

@@ -27,16 +27,19 @@ public class AgendaServicoRepository extends Repository<AgendamentoServico> {
 			throw new RepositoryException("Erro ao buscar exames");
 		}	
 	}
-	public void Updade(AgendamentoServico evento) throws RepositoryException{
+	public void updade(AgendamentoServico evento) throws RepositoryException{
 		try {
+		
 			EntityManager em = JPAUtil.getEntityManager();
-			Query query= em.createQuery("UPDATE AgendamentoServico SET titulo=?,data_fim=?,data_incio=?,descricao=?,status=? WHERE id=?");
-			query.setParameter(1, evento.getTitulo());
-			query.setParameter(2, evento.getData_fim());
-			query.setParameter(3, evento.getData_incio());
-			query.setParameter(4, evento.getDescricao());
-			query.setParameter(5, evento.getStatus());
-			query.setParameter(6, evento.getId());
+			Query query= em.createQuery("UPDATE Agendamento SET dataAtualizacao=?, dataCriacao=?, data_fim=?, data_incio=?, descricao=?, status=?, titulo=? WHERE id=?");
+			query.setParameter(1, evento.getDataAtualizacao());
+			query.setParameter(2, evento.getDataCriacao());
+			query.setParameter(3, evento.getData_fim());
+			query.setParameter(4, evento.getData_incio());
+			query.setParameter(5, evento.getDescricao());
+			query.setParameter(6, evento.getStatus());
+			query.setParameter(7, evento.getTitulo());
+			query.setParameter(8, evento.getId());
 		}catch (Exception e) {
 			e.getStackTrace();
 			System.out.println("Erro ao atualizar evento");
