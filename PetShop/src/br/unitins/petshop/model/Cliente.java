@@ -27,6 +27,9 @@ public class Cliente extends DefaultEntity<Cliente>{
 	private String email;
 	private String endereco;
 	
+	@OneToMany(mappedBy = "clienteAgenda", cascade = CascadeType.ALL)
+	private List<Agendamento> agendamentos;
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Animal>listaAnimal;
 	
@@ -72,4 +75,11 @@ public class Cliente extends DefaultEntity<Cliente>{
 	public void setListaAnimal(List<Animal> listaAnimal) {
 		this.listaAnimal = listaAnimal;
 	}
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+	public void setAgendamentos(List<Agendamento> agendamentos) {
+		this.agendamentos = agendamentos;
+	}
+	
 }
