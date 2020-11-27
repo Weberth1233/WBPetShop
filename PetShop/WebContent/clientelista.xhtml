@@ -75,7 +75,10 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">Animais:</f:facet>
-							<p:commandButton icon="fa fa-paw" aria-hidden="true"></p:commandButton>
+							<p:commandButton actionListener="#{clienteContoller.editar(obj)}"
+								process="@this" update="@form" oncomplete="PF('dla').show();" icon="fa fa-paw" 
+								aria-hidden="true">
+							</p:commandButton>
 						</p:column>
 						<p:column>
 							<f:facet name="header">Ação:</f:facet>
@@ -89,6 +92,30 @@
 					</p:dataTable>
 				</p:fieldset>
 			</p:panel>
+			<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
+				width="80%" height="300">
+				<p:dataTable id="dtAnimal"
+					value="#{clienteContoller.entity.listaAnimal}" var="obj">
+					<p:column>
+						<f:facet name="header">Nome:</f:facet>
+						<p:outputLabel value="#{obj.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Peso:</f:facet>
+						<p:outputLabel value="#{obj.peso}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data Nascimento:</f:facet>
+						<p:outputLabel value="#{obj.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Observações:</f:facet>
+						<p:outputLabel value="#{obj.observacoes}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

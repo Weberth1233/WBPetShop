@@ -92,7 +92,7 @@ public class ClienteContoller extends Controller<Cliente>{
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
-
+	
 	public void adicionarAnimal() {
 		if(getEntity().getListaAnimal() == null) 
 			getEntity().setListaAnimal(new ArrayList<Animal>());
@@ -103,8 +103,9 @@ public class ClienteContoller extends Controller<Cliente>{
 		animal = null;
 
 	}
-	public void editar(Animal animal) {
-		setAnimal(animal);
+	public void retornarAnimal(Cliente entity) {
+		setEntity(entity);
+		Session.getInstance().setAttribute("dadosCli", getEntity());
 	}
 	public Animal getAnimal() {
 		if(animal == null) 
