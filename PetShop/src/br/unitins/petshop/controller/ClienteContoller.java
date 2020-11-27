@@ -134,6 +134,11 @@ public class ClienteContoller extends Controller<Cliente>{
 		Session.getInstance().setAttribute("dadosCli", new Cliente());
 		return "cadcliente.xhtml?faces-redirect=true";
 	}
+	public String agendarCliente(Cliente cliente) {
+		setEntity(cliente);
+		Session.getInstance().setAttribute("dadosCli", getEntity());
+		return "agendaservico.xhtml?faces-redirect=true";
+	}
 	public String editarCliente(Cliente cliente) {
 		setEntity(cliente);
 		Session.getInstance().setAttribute("dadosCli", getEntity());

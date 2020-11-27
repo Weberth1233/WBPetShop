@@ -87,6 +87,10 @@
 									action="#{clienteContoller.editarCliente(obj)}"
 									icon="fa fa-pencil">
 								</p:commandButton>
+								<p:commandButton process="@this"
+									action="#{clienteContoller.agendarCliente(obj)}"
+									icon="fa fa-calendar">
+								</p:commandButton>
 							</center>
 						</p:column>
 					</p:dataTable>
