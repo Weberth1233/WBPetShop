@@ -12,8 +12,10 @@ public class Animal extends DefaultEntity<Animal>{
 	private String nome;
 	private String peso;
 	private String observacoes;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
+	
 	@ManyToOne
 	private Cliente cliente;
 	
