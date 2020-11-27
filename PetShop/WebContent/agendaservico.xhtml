@@ -62,9 +62,10 @@
 							<p:inputTextarea id="desc"
 								value="#{scheduleJava8View.evento.descricao}" required="true" />
 							
-							<p:outputLabel for="allDay" value="All Day (see #1164):" />
-							<h:selectBooleanCheckbox id="allDay"
-								value="#{scheduleJava8View.event.allDay}" />
+							<p:outputLabel for="cli" value="Cliente" />
+							<p:inputText id="cli"
+								value="#{scheduleJava8View.evento.clienteAgenda.nome}" required="true"
+								disabled="#{scheduleJava8View.evento.clienteAgenda.nome != null}" />
 						</h:panelGrid>
 					</p:outputPanel>
 					<p:separator />
