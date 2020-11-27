@@ -55,6 +55,21 @@ public class Repository <T extends DefaultEntity<? super T>> {
 			throw new RepositoryException("Erro ao salvar!");
 		}
 	}
+	public void salvarPersistence(T entity) throws RepositoryException{
+		try {
+			getEntityManager().persist(entity);;
+		}
+		catch(PersistenceException e) {
+			System.out.println("Informações duplicadas");
+			e.printStackTrace();
+			throw new RepositoryException("Algum dos seguintes registro estão duplicados:Nome, CPF ou E-mail");
+		}
+		catch (Exception e) {
+			System.out.println("Erro ao salvar!");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao salvar!");
+		}
+	}
 	public void remover(T entity) throws RepositoryException{
 		try {
 			T t = getEntityManager().merge(entity);
