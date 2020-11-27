@@ -1,11 +1,10 @@
 package br.unitins.petshop.model;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -14,7 +13,10 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	private LocalDateTime data_incio;
 	private LocalDateTime data_fim;
 	private String descricao;
+	@ManyToOne
+	private Cliente clienteAgenda;
 	private int status;
+	
 	public String getTitulo() {
 		return titulo;
 	}
@@ -44,5 +46,11 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public Cliente getClienteAgenda() {
+		return clienteAgenda;
+	}
+	public void setClienteAgenda(Cliente clienteAgenda) {
+		this.clienteAgenda = clienteAgenda;
 	}
 }
