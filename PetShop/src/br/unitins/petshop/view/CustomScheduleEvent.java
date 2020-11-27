@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleRenderingMode;
-
 import br.unitins.petshop.model.Cliente;
+
 
 public class CustomScheduleEvent implements ScheduleEvent {
 
-    private Integer id;
+    private String id;
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -18,7 +18,7 @@ public class CustomScheduleEvent implements ScheduleEvent {
     private Object data;
     private String url;
     private String description;
-    private Cliente cliente; 
+    private Cliente cliente;
     private boolean allDay;
     private boolean editable;
 
@@ -33,16 +33,17 @@ public class CustomScheduleEvent implements ScheduleEvent {
         this.data = data;
     }
 
-    public CustomScheduleEvent(String title, LocalDateTime start, LocalDateTime end, String styleClass, boolean allDay, Object data) {
-        this.title = title;
-        this.startDate = start;
-        this.endDate = end;
-        this.styleClass = styleClass;
-        this.allDay = allDay;
-        this.data = data;
-    }
-
-    @Override
+  
+    public CustomScheduleEvent(Object data, String title, LocalDateTime startDate, LocalDateTime endDate, String description, Cliente cliente) {
+    	this.data = data;
+		this.title = title;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.description = description;
+		this.cliente = cliente;
+	}
+    
+	@Override
     public String getTitle() {
         return title;
     }
@@ -123,6 +124,14 @@ public class CustomScheduleEvent implements ScheduleEvent {
         this.editable = editable;
     }
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	@Override
 	public String getGroupId() {
 		// TODO Auto-generated method stub
