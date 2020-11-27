@@ -14,18 +14,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.joda.time.DateTime;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import com.sun.istack.logging.Logger;
 
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
@@ -53,18 +49,18 @@ public class ScheduleJava8View implements Serializable {
 
 	private boolean showWeekends = true;
 	private boolean tooltip = true;
-	private boolean allDaySlot = true;
-
+	private boolean allDaySlot = false;
+	
 	private String timeFormat;
-	private String slotDuration="00:30:00";
-	private String slotLabelInterval;
-	private String scrollTime="06:00:00";
-	private String minTime="04:00:00";
-	private String maxTime="20:00:00";
-	private String locale="pt";
-	private String timeZone="";
-	private String clientTimeZone="local";
-	private String columnHeaderFormat="";
+    private String slotDuration="00:30:00";
+    private String slotLabelInterval;
+    private String scrollTime="06:00:00";
+    private String minTime="04:00:00";
+    private String maxTime="20:00:00";
+    private String locale="en";
+    private String timeZone="";
+    private String clientTimeZone="local";
+    private String columnHeaderFormat="";
 
 	@PostConstruct
 	public void init() {
@@ -87,6 +83,12 @@ public class ScheduleJava8View implements Serializable {
 			event.setDescription(ev.getDescricao());
 			event.setEditable(true);
 			event.setAllDay(true);
+			
+			if(ev.getStatus() == 0) {
+				event.setStyleClass("emp1");
+			}else {
+				event.setStyleClass("emp2");
+			}
 			eventModel.addEvent(event);
 		}  
 	}
@@ -179,7 +181,6 @@ public class ScheduleJava8View implements Serializable {
 	}
 	/*public void selecionaEvento(SelectEvent selectEvent) {
 		ScheduleEvent event =(ScheduleEvent) selectEvent.getObject();
-
 		for (AgendamentoServico ev : listaEventos) {
 			if(ev.getId() == event.getData()) {
 				evento = ev;
@@ -247,8 +248,8 @@ public class ScheduleJava8View implements Serializable {
 			Util.addErrorMessage("Não é possivel remover");
 		}
 	}
-	
-	
+
+
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
 		evento = new AgendamentoServico();
@@ -272,14 +273,48 @@ public class ScheduleJava8View implements Serializable {
     }*/
 
 	public void onEventMove(ScheduleEntryMoveEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Delta:" + event.getDeltaAsDuration());
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento modificado:", "Total de dias:" + event.getDeltaAsDuration());
+		for (AgendamentoServico ev : listaEventos) {
+			if(ev.getId() == event.getScheduleEvent().getData()) {
+				evento = ev;
+				evento.setData_incio(event.getScheduleEvent().getStartDate());
+				evento.setData_fim(event.getScheduleEvent().getEndDate());
 
+				AgendaServicoRepository repo= new AgendaServicoRepository();
+				try {
+					repo.beginTransaction();
+					repo.salvar(evento);
+					repo.commitTransaction();
+					init();
+				} catch (RepositoryException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
 		addMessage(message);
 	}
 
 	public void onEventResize(ScheduleEntryResizeEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Start-Delta:" + event.getDeltaStartAsDuration() + ", End-Delta: " + event.getDeltaEndAsDuration());
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento modificado", "Dia inicial:" + event.getDeltaStartAsDuration() + ", Dia final: " + event.getDeltaEndAsDuration());
+		for (AgendamentoServico ev : listaEventos) {
+			if(ev.getId() == event.getScheduleEvent().getData()) {
+				evento = ev;
+				evento.setData_incio(event.getScheduleEvent().getStartDate());
+				evento.setData_fim(event.getScheduleEvent().getEndDate());
 
+				AgendaServicoRepository repo= new AgendaServicoRepository();
+				try {
+					repo.beginTransaction();
+					repo.salvar(evento);
+					repo.commitTransaction();
+					init();
+				} catch (RepositoryException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
 		addMessage(message);
 	}
 
@@ -390,4 +425,13 @@ public class ScheduleJava8View implements Serializable {
 	public void setColumnHeaderFormat(String columnHeaderFormat) {
 		this.columnHeaderFormat = columnHeaderFormat;
 	}
+
+	public void setEventModel(ScheduleModel eventModel) {
+		this.eventModel = eventModel;
+	}
+
+	public void setLazyEventModel(ScheduleModel lazyEventModel) {
+		this.lazyEventModel = lazyEventModel;
+	}
+	
 }
