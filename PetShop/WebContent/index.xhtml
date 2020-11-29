@@ -21,16 +21,17 @@
 }
 
 div.content-top-all {
+	width: auto;
 	display: flex;
 	justify-content: space-between;
 	background: linear-gradient(#51519A 55%, #000);
 	height: 60px;
 	border-bottom: 3px solid;
-	background: linear-gradient(#51519A 55%, #000);
 }
 
 div.topbar-all {
 	background: url("resources/images/dog.jpg") no-repeat;
+	max-width: 100%;
 	background-position: 50% 40%;
 	width: 100%;
 	height: 400px;
@@ -83,47 +84,67 @@ div.group-image-text h3 {
 	text-shadow: 1px 2px #000;
 	font-weight: bold;
 }
+
+@media screen and (max-width: 420px) {
+	div.content-top-all {
+		overflow: hidden;
+	}
+	div.menu {
+		margin: 3px;
+	}
+	div.menu div a {
+		margin-left: 2px;
+		font-size: 8pt;
+	}
+	div.logo h2 {
+		font-size: 10pt;
+	}
+	div.perfil a {
+		visibility: collapse;
+	}
+	img.img-responsive {
+		position: relative;
+		top: -16px;
+	}
+}
 </style>
 </h:head>
 <h:body>
 	<div id="content-all">
-		<div class="topbar-all">
-			<div class="content-top-all">
+		<div class="content-top-all">
 
-				<div class="logo">
-					<h2>WBPetShop</h2>
+			<div class="logo">
+				<h2>WBPetShop</h2>
+			</div>
+			<div class="menu">
+				<div>
+					<a href="clientelista.xhtml">Dashboard</a>
 				</div>
-
-				<div class="menu">
-					<div>
-						<a href="clientelista.xhtml">Dashboard</a>
-					</div>
-					<div>
-						<a href="perfil.xhtml">Perfil</a>
-					</div>
-					<div>
-						<a href="agendaservico.xhtml">Agendar</a>
-					</div>
+				<div>
+					<a href="perfil.xhtml">Perfil</a>
 				</div>
-				<div class="itens-topbar" style="display: flex; margin: 20px;">
-					<div>
-						<img class="img-responsive"
-							style="max-width: 25px !important; max-height: 30px !important; border-radius: 20px; margin-right: 5px;"
-							src="/PetShop/faces/img-usuario?nome=#{perfilController.funcionario.id}.png" />
-					</div>
-					<h:form>
-						<div>
-							<p:commandLink style="color:#fff;"
-								value="Olá #{templateController.funcionarioLogado.nome} (Sair)"
-								rendered="#{templateCont+roller.funcionarioLogado != null}"
-								action="#{templateController.encerrarSessao}"
-								styleClass="topbar-link" process="@this"/>
-						</div>
-					</h:form>
+				<div>
+					<a href="agendaservico.xhtml">Agendar</a>
 				</div>
-
+			</div>
+			<div class="itens-topbar" style="display: flex; margin: 20px;">
+				<div>
+					<img class="img-responsive"
+						style="max-width: 25px !important; max-height: 30px !important; border-radius: 20px; margin-right: 5px;"
+						src="/PetShop/faces/img-usuario?nome=#{perfilController.funcionario.id}.png" />
+				</div>
+				<h:form>
+					<div class="perfil">
+						<p:commandLink style="color:#fff;"
+							value="Olá #{templateController.funcionarioLogado.nome} (Sair)"
+							rendered="#{templateCont+roller.funcionarioLogado != null}"
+							action="#{templateController.encerrarSessao}"
+							styleClass="topbar-link" process="@this" />
+					</div>
+				</h:form>
 			</div>
 		</div>
+		<div class="topbar-all"></div>
 		<div class="group-image">
 			<div class="group-image-text">
 				<h3>Grid de Fotos</h3>
@@ -133,14 +154,16 @@ div.group-image-text h3 {
 					styleClass="content" />
 				<p:graphicImage value="resources/images/animal-1239334_1280.jpg"
 					styleClass="content" />
-				<p:graphicImage
-					value="resources/images/dog-in-bluebells-5038855_1920.jpg"
+				<p:graphicImage value="resources/images/banhoetosa.png"
 					styleClass="content" />
 				<p:graphicImage value="resources/images/bone.png"
 					styleClass="content" />
 				<p:graphicImage value="resources/images/medicine-5003631_1280.jpg"
 					styleClass="content" />
 				<p:graphicImage value="resources/images/vet-3895477_1280.jpg"
+					styleClass="content" />
+				<p:graphicImage
+					value="resources/images/dog-in-bluebells-5038855_1920.jpg"
 					styleClass="content" />
 			</p:contentFlow>
 		</div>
@@ -151,7 +174,10 @@ div.group-image-text h3 {
 	</div>
 	<footer
 		style="width: 100%; height: 100px; background-color: #51519A; border: 2px solid">
-		<p>OLÁ</p>
+		<div class="text-footer" style="position: relative; top: 50%;">
+			<p style="text-align: center; color: #fff">Copyright 2020 UNITINS
+				- Todos os direitos reservados</p>
+		</div>
 	</footer>
 </h:body>
 </html>
