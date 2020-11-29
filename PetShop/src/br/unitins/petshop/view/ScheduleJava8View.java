@@ -30,12 +30,13 @@ import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.AgendamentoServico;
 import br.unitins.petshop.model.Cliente;
+import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.AgendaServicoRepository;
+import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
 @ViewScoped
 public class ScheduleJava8View implements Serializable {
-
 
 	private static final long serialVersionUID = -6132335514240444153L;
 
@@ -86,8 +87,7 @@ public class ScheduleJava8View implements Serializable {
 			event.setData(ev.getId());
 			event.setDescription(ev.getDescricao());
 			event.setEditable(true);
-			event.setAllDay(true);
-			evento.setClienteAgenda(ev.getClienteAgenda());
+			event.setAllDay(false);
 			if(ev.getStatus() == 0) {
 				event.setStyleClass("emp1");
 			}else {
@@ -231,6 +231,15 @@ public class ScheduleJava8View implements Serializable {
 				repository.rollbackTransaction();
 				Util.addErrorMessage("Erro ao salvar agendamento entre em contato com adm");
 			}
+		}
+	}
+	public List<Servico>completeServico(String query) {
+		ServicoRepository repo = new ServicoRepository();
+		try {
+			return repo.findByNome(query, 6); 
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Servico>();
 		}
 	}
 	public void remover() {
