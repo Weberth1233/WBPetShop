@@ -127,6 +127,9 @@ public class ClienteContoller extends Controller<Cliente>{
 		ClienteListing listing = new ClienteListing();
 		listing.open();
 	}
+	public void editarAnimal(Animal entity) {
+		setAnimal(entity);
+	}
 	public void obterClienteListing(SelectEvent<Cliente> event) {
 		setEntity(event.getObject());
 	}
