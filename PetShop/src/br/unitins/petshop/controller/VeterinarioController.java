@@ -6,8 +6,13 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.controller.listing.ClienteListing;
+import br.unitins.petshop.controller.listing.VeterinarioListing;
+import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Veterinario;
 import br.unitins.petshop.repository.VeterinarioRepository;
@@ -28,6 +33,7 @@ public class VeterinarioController extends Controller<Veterinario>{
 		}
 		return entity;
 	}
+	
 	public void pesquisar() {
 		VeterinarioRepository repo = new VeterinarioRepository();
 		try {
@@ -44,7 +50,7 @@ public class VeterinarioController extends Controller<Veterinario>{
 			listaVeterinarios= new ArrayList<Veterinario>();
 		return listaVeterinarios;
 	}
-
+	
 	public void setListaVeterinarios(List<Veterinario> listaVeterinarios) {
 		this.listaVeterinarios = listaVeterinarios;
 	}
@@ -54,5 +60,14 @@ public class VeterinarioController extends Controller<Veterinario>{
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
-	
+	public void editarVete(Funcionario func) {
+		entity.setFuncionario(func);
+	}
+	public void abrirVeterinarioListing() {
+		VeterinarioListing listing = new VeterinarioListing();
+		listing.open();
+	}
+	public void obterVeterinarioListing(SelectEvent<Veterinario> event) {
+		setEntity(event.getObject());
+	}
 }

@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Servico;
 
 public class ServicoRepository extends Repository<Servico> {

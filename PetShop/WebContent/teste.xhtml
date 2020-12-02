@@ -3,81 +3,191 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
 	<ui:define name="content">
-		<style type="text/css">
-.emp1 fc-event-inner {
-	background-color: green;
-}
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="info" summary="INFO!"
+					detail="Olá, operação com sucesso!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="warn" summary="WARN!"
+					detail="Olá, operação falhou!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="error" summary="ERROR!"
+					detail="Olá, operação deu erro!" />
+			</div>
+			<div class="ui-g-12 ui-md-3">
+				<p:staticMessage severity="fatal" summary="FATAL!"
+					detail="Olá, erro fatal!" />
+			</div>
+		</div>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
 
-.emp2 fc-event-inner {
-	background-color: red;
-}
-</style>
-		<p:fieldset>
-			<h1>Calendário Agendamento de Serviço</h1>
-			<h:form>
-				<p:growl id="messages" showDetail="true" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
 
-				<h:panelGrid columnClasses="value">
-					<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
-						widgetVar="meuCalendario" resizable="true" view="timeGridWeek"
-						rightHeaderTemplate="dayGridMonth,timeGridWeek,timeGridDay,listYear">
+		<h:form>
+			<p:panel id="panel">
+				<p:growl id="growl" sticky="false" />
+				<f:facet name="header">
+					<div align="center">
+						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
+					</div>
+				</f:facet>
+				<p:panel header="Adicionar Funcionario">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<p:panelGrid columns="1"
+									styleClass="form-group ui-panelgrid-blank" layout="grid">
+									<p:fieldset legend="Cadastro Funcionario">
+										<h:outputLabel value="Nome completo:" style="font-weight:bold" />
+										<p:inputText id="name" style="border-radius:30px;"
+											value="#{funcionarioController.entity.nome}"
+											placeholder="Insira seu nome completo" />
 
-						<p:ajax event="eventSelect"
-							listener="#{scheduleJava8View.selecionaEvento}"
-							update="eventDialog messages"
-							oncomplete="PF('caixaDialog').show()" />
+										<h:outputLabel for="date" value="Data Nascimento:"
+											style="font-weight:bold" />
+										<p:inputMask id="date" style="border-radius:30px;"
+											value="#{funcionarioController.entity.dataNascimento}"
+											mask="99/99/9999" placeholder="dia/mês/ano">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</p:inputMask>
 
-						<p:ajax event="dateSelect"
-							listener="#{scheduleJava8View.quandoNovo}"
-							update="eventDialog messages"
-							oncomplete="PF('caixaDialog').show()" />
+										<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
+										<p:inputMask id="cpf" style="border-radius:30px;"
+											value="#{funcionarioController.entity.cpf}"
+											mask="999.999.999-99" label="cpf"
+											placeholder="000.000.000-00" />
 
-						<p:ajax event="eventMove"
-							listener="#{scheduleJava8View.onEventMove}"
-							update="schedule messages" />
+										<h:outputLabel for="email" value="E-mail:"
+											style="font-weight:bold" />
+										<p:inputText id="email" style="border-radius:30px;"
+											value="#{funcionarioController.entity.email}" label="email"
+											placeholder="exemplo@hotmail.com" />
 
-						<p:ajax event="eventResize"
-							listener="#{scheduleJava8View.onEventResize}"
-							update="schedule messages" />
+										<h:outputLabel for="salario" value="salario"
+											style="font-weight:bold" />
+										<p:inputText id="salario" style="border-radius:30px;"
+											value="#{funcionarioController.entity.salario}"
+											label="endereco" placeholder="0000" />
 
-					</p:schedule>
-				</h:panelGrid>
+										<h:outputLabel for="chorario" value="Carga Horaria:"
+											style="font-weight:bold" />
+										<p:inputText id="cargahoraria" style="border-radius:30px;"
+											value="#{funcionarioController.entity.cargaHoraria}"
+											label="Carga Horaria" placeholder="Exemplo:60" />
 
-				<p:dialog widgetVar="caixaDialog" header="Detalhes"
-					showEffect="clip" hideEffect="clip">
-					<p:outputPanel id="eventDialog">
+										<p:outputLabel value="Serviço: " />
+										<p:autoComplete
+											value="#{funcionarioController.entity.servico}"
+											forceSelection="true" style="border-radius:30px;"
+											placeholder="Informe ao menos 2 letras para iniciar a consulta..."
+											minQueryLength="2" dropdown="true" maxResults="3"
+											moreText="Ainda tem mais ..." var="obj"
+											itemLabel="#{obj.nome}" itemValue="#{obj}"
+											completeMethod="#{funcionarioController.completeMarca}" />
 
-						<h:panelGrid columns="2">
-							<p:outputLabel for="title" value="Titulo" />
-							<p:inputText id="title"
-								value="#{scheduleJava8View.evento.titulo}" required="true" />
+										<h:outputLabel for="senha" value="Senha:"
+											style="font-weight:bold" />
+										<p:password id="senhafunc" style="border-radius:30px;"
+											value="#{funcionarioController.entity.senha}" label="Senha"
+											placeholder="Insira uma senha forte:" />
 
-							<p:outputLabel for="from" value="Data e horario Inicial:" />
-							<p:datePicker id="from"
-								value="#{scheduleJava8View.evento.data_incio}"
-								pattern="dd/MM/yyyy" showTime="true"></p:datePicker>
+										<h:outputLabel for="login" value="Login"
+											style="font-weight:bold" />
+										<p:inputText id="loginfunc" style="border-radius:30px;"
+											value="#{funcionarioController.entity.login}" label="login"
+											placeholder="Exemplo:meuloginbr" />
+				
+										<h:form enctype="multipart/form-data">
+											<p:fileUpload listener="#{funcionarioController.upload}"
+												label="#{funcionarioController.nomeFoto}" mode="advanced"
+												update="@this messages" auto="false" sizeLimit="1200000"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+											<p:growl id="messages" showDetail="true" />
+										</h:form>
+									</p:fieldset>
+								</p:panelGrid>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Salvar" process="@form" update="@form"
+							icon="pi pi-check" style="margin-right:10px"
+							actionListener="#{funcionarioController.salvar}" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Lista Funcionario"
+							onclick="PF('dlg').show();" />
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@this" update="panel"
+							actionListener="#{funcionarioController.remover}">
+							<p:confirm header="Confirmação" message="Deseja excluir?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+			</p:panel>
+			<p:dialog header="Consulta Funcionario" widgetVar="dlg" modal="true"
+				width="80%" height="300">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Pesquisar:" />
+					<p:inputText id="itbuscar" value="#{funcionarioController.buscar}" />
+					<p:commandButton value="Pesquisar" process="@this itbuscar"
+						update="tabela"
+						actionListener="#{funcionarioController.pesquisarPorNome}" />
+				</p:panelGrid>
 
-							<p:outputLabel for="to" value="Data e horario final:" />
-							<p:datePicker id="to"
-								value="#{scheduleJava8View.evento.data_fim}"
-								pattern="dd/MM/yyyy" showTime="true" />
-
-							<p:outputLabel for="status" value="Status" />
-							<p:inputText id="status"
-								value="#{scheduleJava8View.evento.status}" required="true" />
-
-							<p:outputLabel for="desc" value="Descrição:" />
-							<p:inputTextarea id="desc"
-								value="#{scheduleJava8View.evento.descricao}" required="true" />
-						</h:panelGrid>
-					</p:outputPanel>
-					<p:separator />
-					<p:commandButton value="Salvar" update="schedule messages"
-						oncomplete="PF('caixaDialog').hide()"
-						actionListener="#{scheduleJava8View.addEvent}" />
-				</p:dialog>
-			</h:form>
-		</p:fieldset>
+				<p:dataTable id="tabela"
+					value="#{funcionarioController.listaFuncionario}" var="obj">
+					<p:column>
+						<f:facet name="header">Nome:</f:facet>
+						<p:outputLabel value="#{obj.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data Nascimento:</f:facet>
+						<p:outputLabel value="#{obj.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data Admissão:</f:facet>
+						<p:outputLabel value="#{obj.dataAdmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column>
+						<f:facet name="header">CPF:</f:facet>
+						<p:outputLabel value="#{obj.cpf}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Serviço:</f:facet>
+						<p:outputLabel value="#{obj.servico.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">E-mail:</f:facet>
+						<p:outputLabel value="#{obj.email}" />
+					</p:column>
+					<p:column>
+						<center>
+							<f:facet name="header">Ação:</f:facet>
+							<p:commandButton value="Editar"
+								actionListener="#{funcionarioController.editar(obj)}"
+								process="@this" update="@form" />
+						</center>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
 	</ui:define>
 </ui:composition>

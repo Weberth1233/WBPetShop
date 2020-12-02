@@ -16,6 +16,7 @@ public class AgendaServicoRepository extends Repository<AgendamentoServico> {
 	public AgendaServicoRepository(EntityManager em) {
 		super(em);
 	}
+	
 	public List<AgendamentoServico> findAll() throws RepositoryException{
 		try {
 			EntityManager em = JPAUtil.getEntityManager();

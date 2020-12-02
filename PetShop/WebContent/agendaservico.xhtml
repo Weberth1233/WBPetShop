@@ -48,17 +48,26 @@
 							<p:datePicker id="from"
 								value="#{scheduleJava8View.evento.data_incio}"
 								pattern="dd/MM/yyyy" showTime="true"></p:datePicker>
-
 							<p:outputLabel for="to" value="Data e horario final:" />
 							<p:datePicker id="to"
 								value="#{scheduleJava8View.evento.data_fim}"
 								pattern="dd/MM/yyyy" showTime="true" />
-
-							<p:outputLabel for="cli" value="Cliente" />
-							<p:inputText id="cli"
-								value="#{scheduleJava8View.evento.clienteAgenda.nome}"
+							<p:outputLabel value="Animal: " />
+							<p:inputText id="pet"
+								value="#{scheduleJava8View.evento.animalAgenda.nome}"
 								required="true"
-								disabled="#{scheduleJava8View.evento.clienteAgenda.nome != null}" />
+								disabled="#{scheduleJava8View.evento.clienteAgenda.nome == null}" />
+							<p:outputLabel for="cli" value="Cliente" />
+							<h:panelGroup>
+								<p:inputText id="cli"
+									value="#{scheduleJava8View.evento.clienteAgenda.nome}"
+									required="true"
+									disabled="#{scheduleJava8View.evento.clienteAgenda.nome != null}" />
+								<p:commandButton process="@this"
+									actionListener="#{scheduleJava8View.retornarListaAnimais}"
+									oncomplete="PF('dla').show();" icon="fa fa-paw">
+								</p:commandButton>
+							</h:panelGroup>
 
 							<p:outputLabel value="Serviço: " />
 							<p:autoComplete value="#{scheduleJava8View.evento.servico}"
@@ -68,6 +77,16 @@
 								moreText="Ainda tem mais ..." var="obj" itemLabel="#{obj.nome}"
 								itemValue="#{obj}"
 								completeMethod="#{scheduleJava8View.completeServico}" />
+
+							<p:outputLabel value="Funcionário: " />
+							<p:autoComplete value="#{scheduleJava8View.evento.funcionarioAgenda}"
+								forceSelection="true" style="border-radius:30px;"
+								placeholder="Informe ao menos 2 letras para iniciar a consulta..."
+								minQueryLength="2" dropdown="true" maxResults="3"
+								moreText="Ainda tem mais ..." var="obj" itemLabel="#{obj.nome}"
+								itemValue="#{obj}"
+								completeMethod="#{scheduleJava8View.completeFuncionario}" />
+
 							<p:outputLabel for="desc" value="Descrição:" />
 							<p:inputTextarea id="desc"
 								value="#{scheduleJava8View.evento.descricao}" required="true" />
@@ -80,6 +99,37 @@
 					<p:commandButton value="Salvar" update="schedule messages"
 						oncomplete="PF('caixaDialog').hide()"
 						actionListener="#{scheduleJava8View.addEvent}" />
+				</p:dialog>
+
+				<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
+					width="80%" height="300">
+					<p:dataTable id="dtAnimal"
+						value="#{clienteContoller.entity.listaAnimal}" var="obj">
+						<p:column>
+							<f:facet name="header">Nome:</f:facet>
+							<p:outputLabel value="#{obj.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Peso:</f:facet>
+							<p:outputLabel value="#{obj.peso}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Data Nascimento:</f:facet>
+							<p:outputLabel value="#{obj.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<f:facet name="header">Observações:</f:facet>
+							<p:outputLabel value="#{obj.observacoes}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">Ação:</f:facet>
+							<p:commandButton value="Editar"
+								actionListener="#{scheduleJava8View.retornarAnimal(obj)}"
+								process="@this" update="@form:eventDialog" />
+						</p:column>
+					</p:dataTable>
 				</p:dialog>
 			</h:form>
 		</p:fieldset>

@@ -11,6 +11,8 @@ import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Exame;
 import br.unitins.petshop.model.Funcionario;
+import br.unitins.petshop.model.Servico;
+import br.unitins.petshop.model.Veterinario;
 
 public class FuncionarioRepository extends Repository<Funcionario> {
 	
@@ -68,6 +70,44 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 			System.out.println("Erro geral no login!");
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao geral ao realizar login.");
+		}
+	}
+	
+	public List<Funcionario> findByFuncionario(String nome, int maxResults) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  f ");
+			jpql.append("FROM ");
+			jpql.append("  Funcionario f ");
+			jpql.append("WHERE ");
+			jpql.append("  UPPER(f.nome) like UPPER(:nome) ");
+			jpql.append("ORDER BY f.nome ");
+			
+			Query query = em.createQuery(jpql.toString());
+			query.setParameter("nome", "%"+ nome + "%");
+			
+			query.setMaxResults(maxResults);
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
+	public List<Funcionario> findVeterinario(String nome, int maxResults) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT f FROM Veterinario v, Funcionario f WHERE f.id = v.funcionario.id and UPPER(f.nome) like UPPER(:nome) ORDER BY f.nome");
+			query.setParameter("nome", "%"+ nome + "%");
+			query.setMaxResults(maxResults);
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
 		}
 	}
 }

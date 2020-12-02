@@ -15,6 +15,10 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	private String descricao;
 	@ManyToOne
 	private Cliente clienteAgenda;
+	
+	@ManyToOne
+	private Animal animalAgenda;
+	
 	private int status;
 	
 	public String getTitulo() {
@@ -52,5 +56,11 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	}
 	public void setClienteAgenda(Cliente clienteAgenda) {
 		this.clienteAgenda = clienteAgenda;
+	}
+	public Animal getAnimalAgenda() {
+		return animalAgenda;
+	}
+	public void setAnimalAgenda(Animal animalAgenda) {
+		this.animalAgenda = animalAgenda;
 	}
 }

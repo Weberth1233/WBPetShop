@@ -11,9 +11,9 @@ import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.model.Veterinario;
 
 public class VeterinarioRepository extends Repository<Veterinario>{
-	
+
 	public VeterinarioRepository() {}
-	
+
 	public VeterinarioRepository(EntityManager em) {
 		super(em);
 	}
@@ -33,6 +33,20 @@ public class VeterinarioRepository extends Repository<Veterinario>{
 			EntityManager em = JPAUtil.getEntityManager();
 			Query query = em.createQuery("SELECT f FROM Veterinario v, Funcionario f WHERE f.id = v.funcionario.id and UPPER(f.nome) like UPPER(:nome) ORDER BY f.nome");
 			query.setParameter("nome", "%"+ nome + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
+
+	public List<Veterinario> findByNome(String nome, int maxResults) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT f FROM Veterinario v, Funcionario f WHERE f.id = v.funcionario.id and UPPER(f.nome) like UPPER(:nome) ORDER BY f.nome");
+			query.setParameter("nome", "%"+ nome + "%");
+			query.setMaxResults(maxResults);
 			return query.getResultList();
 		} catch (Exception e) {
 			System.out.println("Erro ao realizar uma consulta ao banco.");

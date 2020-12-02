@@ -127,11 +127,11 @@ public class ClienteContoller extends Controller<Cliente>{
 		ClienteListing listing = new ClienteListing();
 		listing.open();
 	}
-	public void editarAnimal(Animal entity) {
-		setAnimal(entity);
-	}
 	public void obterClienteListing(SelectEvent<Cliente> event) {
 		setEntity(event.getObject());
+	}
+	public void editarAnimal(Animal entity) {
+		setAnimal(entity);
 	}
 	public String adicionarNovo() {
 		Session.getInstance().setAttribute("dadosCli", new Cliente());
@@ -140,7 +140,7 @@ public class ClienteContoller extends Controller<Cliente>{
 	public String agendarCliente(Cliente cliente) {
 		setEntity(cliente);
 		Session.getInstance().setAttribute("dadosCli", getEntity());
-		return "agendaservico.xhtml?faces-redirect=true";
+		return "agendar.xhtml?faces-redirect=true";
 	}
 	public String editarCliente(Cliente cliente) {
 		setEntity(cliente);

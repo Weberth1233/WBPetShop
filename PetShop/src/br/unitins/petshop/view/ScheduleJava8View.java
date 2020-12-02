@@ -28,10 +28,14 @@ import com.sun.source.tree.NewClassTree;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.controller.ClienteContoller;
 import br.unitins.petshop.model.AgendamentoServico;
+import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
+import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.AgendaServicoRepository;
+import br.unitins.petshop.repository.FuncionarioRepository;
 import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
@@ -202,7 +206,6 @@ public class ScheduleJava8View implements Serializable {
 			}
 		}
 	}
-
 	public void addEvent() {
 		AgendaServicoRepository repository = new AgendaServicoRepository();
 		if(evento.getId() == null) {
@@ -242,6 +245,16 @@ public class ScheduleJava8View implements Serializable {
 			return new ArrayList<Servico>();
 		}
 	}
+	public List<Funcionario>completeFuncionario(String query) {
+		FuncionarioRepository repo = new FuncionarioRepository();
+		try {
+			return repo.findByFuncionario(query, 6);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Funcionario>();
+		}
+	}
+	
 	public void remover() {
 		AgendaServicoRepository repository = new AgendaServicoRepository();
 		if(evento.getId() != null) {
@@ -260,8 +273,17 @@ public class ScheduleJava8View implements Serializable {
 			Util.addErrorMessage("Não é possivel remover");
 		}
 	}
-
-
+	
+	public void retornarListaAnimais() {
+		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
+		ClienteContoller controller= new ClienteContoller();
+		controller.editar(cli);
+	}
+	public void retornarAnimal(Animal animal) {
+		ClienteContoller controller = new ClienteContoller();
+		controller.setAnimal(animal);
+		evento.setAnimalAgenda(animal);
+	}
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
 		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
@@ -273,8 +295,12 @@ public class ScheduleJava8View implements Serializable {
 				evento.setData_incio(event.getStartDate());
 				evento.setData_fim(event.getEndDate());
 				Session.getInstance().setAttribute("dadosCli", new Cliente());
+			}else {
+				Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
+				evento = null;
 			}
 		}catch (NullPointerException e) {
+			evento = null;
 			Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
 		}
 	}

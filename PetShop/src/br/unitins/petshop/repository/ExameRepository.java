@@ -9,6 +9,7 @@ import br.unitins.petshop.application.JPAUtil;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Exame;
+import br.unitins.petshop.model.Servico;
 
 public class ExameRepository extends Repository<Exame>{
 	
@@ -49,5 +50,30 @@ public class ExameRepository extends Repository<Exame>{
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
 		}
+	}
+	
+	public List<Exame> findByNome(String nome, int maxResults) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  e ");
+			jpql.append("FROM ");
+			jpql.append("  Exame e ");
+			jpql.append("WHERE ");
+			jpql.append("  UPPER(e.nome) like UPPER(:nome) ");
+			jpql.append("ORDER BY e.nome ");
+			
+			Query query = em.createQuery(jpql.toString());
+			query.setParameter("nome", "%"+ nome + "%");
+			
+			query.setMaxResults(maxResults);
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}	
 	}
 }

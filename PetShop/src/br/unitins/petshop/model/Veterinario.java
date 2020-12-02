@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 public class Veterinario extends DefaultEntity<Veterinario>{
 	
 	private String crnv;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Funcionario funcionario;
 	
 	public String getCrnv() {

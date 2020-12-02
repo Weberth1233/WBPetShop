@@ -8,7 +8,9 @@ import javax.inject.Named;
 
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Servico;
+import br.unitins.petshop.repository.FuncionarioRepository;
 import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
@@ -45,6 +47,15 @@ public class ServicoController extends Controller<Servico> {
 		}
 		buscar = null;
 	}
+	public List<Servico>completeServico(String query) {
+		ServicoRepository repo = new ServicoRepository();
+		try {
+			return repo.findByNome(query, 6); 
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			return new ArrayList<Servico>();
+		}
+	}
 	public List<Servico> getListaServico() {
 		if(listaServico == null)
 			listaServico= new ArrayList<Servico>();
@@ -59,5 +70,4 @@ public class ServicoController extends Controller<Servico> {
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
-	
 }

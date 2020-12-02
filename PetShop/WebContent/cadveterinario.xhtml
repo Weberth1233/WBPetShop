@@ -45,7 +45,8 @@
 							<p:panelGrid columns="1"
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 								<p:fieldset legend="Cadastro Veterinário">
-									<h:outputLabel value="Nome completo:" style="font-weight:bold" />
+
+									<p:outputLabel value="Nome"/>
 									<p:inputText id="name" style="border-radius:30px;"
 										value="#{veterinarioController.entity.funcionario.nome}"
 										required="true" placeholder="Insira seu nome completo" />
@@ -109,7 +110,7 @@
 										value="#{veterinarioController.entity.crnv}" required="true"
 										mask="999.999.999-99"
 										requiredMessage="CRNV não pode ser um campo nulo!"
-										label="crnv" placeholder="Insira seu CRNV:" />
+										label="crnv" placeholder="Insira seu CRNV:" />										
 								</p:fieldset>
 							</p:panelGrid>
 						</div>
@@ -140,11 +141,12 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" value="#{veterinarioController.buscar}"/>
-					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
+					<p:inputText id="filtro" value="#{veterinarioController.buscar}" />
+					<p:commandButton value="Pesquisar" process="@this filtro"
+						update="tabela"
 						actionListener="#{veterinarioController.pesquisar}" />
 				</p:panelGrid>
-				
+
 				<p:dataTable id="tabela"
 					value="#{veterinarioController.listaVeterinarios}" var="obj">
 					<p:column>
@@ -154,7 +156,7 @@
 					<p:column>
 						<f:facet name="header">Data Admissão:</f:facet>
 						<p:outputLabel value="#{obj.dataAdmissao}">
-							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" locale="pt_BR"/>
+							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" locale="pt_BR" />
 						</p:outputLabel>
 					</p:column>
 					<p:column>
@@ -164,7 +166,7 @@
 					<p:column>
 						<f:facet name="header">Ação:</f:facet>
 						<p:commandButton value="Editar"
-							actionListener="#{veterinarioController.editar(obj)}"
+							actionListener="#{veterinarioController.editarVete(obj)}"
 							process="@this" update="@form" />
 					</p:column>
 				</p:dataTable>

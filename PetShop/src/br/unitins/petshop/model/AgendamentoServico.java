@@ -9,6 +9,9 @@ public class AgendamentoServico extends Agendamento{
 	@ManyToOne
 	private Servico servico;
 	
+	@ManyToOne
+	private Funcionario funcionarioAgenda;
+	
 	public Float getValorServico() {
 		return valorServico;
 	}
@@ -21,4 +24,11 @@ public class AgendamentoServico extends Agendamento{
 	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
+	public Funcionario getFuncionarioAgenda() {
+		return funcionarioAgenda;
+	}
+	public void setFuncionarioAgenda(Funcionario funcionarioAgenda) {
+		this.funcionarioAgenda = funcionarioAgenda;
+	}
+	
 }

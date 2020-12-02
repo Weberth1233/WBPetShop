@@ -5,6 +5,8 @@ import java.io.Serializable;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
+import br.unitins.petshop.model.Funcionario;
+import br.unitins.petshop.model.Veterinario;
 import br.unitins.petshop.repository.Repository;
 
 /*Esta classe vai extends somente daquelas que extendem de DefaultEntity*/

@@ -27,5 +27,4 @@ public class ServicoConverter implements Converter<Servico> {
 			return null;
 		return value.getId().toString();
 	}
-
 }
