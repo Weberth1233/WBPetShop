@@ -27,6 +27,7 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	@CPF(message = "CPF não pode ser um campo nulo!")
 	@Column(unique=true, nullable=false) 
 	private String cpf;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
@@ -48,7 +49,7 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	@Column(unique=true, nullable=false) 
 	private String email;
 	
-	private TipoFuncionario TipoFuncionario;
+	private TipoFuncionario tipoFuncionario;
 	
 	@NotBlank(message = "Senha não pode ser um campo nulo!")
 	@Size(min = 9, message = "Senha fraca!")
@@ -113,11 +114,12 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public TipoFuncionario getTipoFuncionario() {
-		return TipoFuncionario;
+		return tipoFuncionario;
 	}
 	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
-		TipoFuncionario = tipoFuncionario;
+		this.tipoFuncionario = tipoFuncionario;
 	}
 	public Servico getServico() {
 		return servico;

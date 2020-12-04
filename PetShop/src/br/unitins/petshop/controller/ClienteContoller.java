@@ -14,6 +14,7 @@ import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.repository.ClienteRepository;
+import br.unitins.petshop.repository.Repository;
 
 @Named
 @ViewScoped
@@ -65,6 +66,23 @@ public class ClienteContoller extends Controller<Cliente>{
 				Util.addErrorMessage("Somente um campo deve ser selecionado");
 			}else {
 				setListaCliente(repo.findByNome(getBuscar()));
+			}
+		} catch (RepositoryException e) {
+			Util.addErrorMessage("Erro ao pesquisar cliente");
+			e.printStackTrace();
+			setListaCliente(null);
+		}
+		setBuscar(null);
+		setBuscarCpf(null);
+	}
+	public void pesquisarPorCPF() {
+		ClienteRepository repo = new ClienteRepository();
+		try {
+			if(verficarBuscar() && verficarBuscarCpf() ){
+				setListaCliente(null);
+				Util.addErrorMessage("Somente um campo deve ser selecionado");
+			}else {
+				setListaCliente(repo.findByCPF(getBuscarCpf()));
 			}
 		} catch (RepositoryException e) {
 			Util.addErrorMessage("Erro ao pesquisar cliente");
@@ -137,6 +155,12 @@ public class ClienteContoller extends Controller<Cliente>{
 		Session.getInstance().setAttribute("dadosCli", new Cliente());
 		return "cadcliente.xhtml?faces-redirect=true";
 	}
+	
+	public void criarRedirect() {
+		Session.getInstance().setAttribute("dadosCli", new Cliente());
+		Util.redirect("cadcliente.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
+	}
+	
 	public String agendarCliente(Cliente cliente) {
 		setEntity(cliente);
 		Session.getInstance().setAttribute("dadosCli", getEntity());

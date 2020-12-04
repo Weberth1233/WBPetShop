@@ -18,17 +18,27 @@
 				<p:fieldset>
 					<p:toolbar style="background-color:#51519A;">
 						<f:facet name="right">
-							<p:commandButton value="Adicionar Novo" process="@this"
-								action="#{clienteContoller.adicionarNovo}" />
+							<p:commandButton id="buttonadc" value="Adicionar Novo"
+								process="@this" update="@all"
+								actionListener="#{clienteContoller.criarRedirect}" />
 						</f:facet>
 					</p:toolbar>
 					<div class="ui-fluid p-formgrid p-grid ui-md-9"
 						style="margin-top: 25px; margin-bottom: 25px;">
+						
 						<div class="p-field p-col">
 							<p:outputLabel for="itName" styleClass="ui-sr-only" value="Nome:"
 								style="font-family: 'Nerko One', cursive;" />
 							<p:inputText id="itName" value="#{clienteContoller.buscar}" />
 						</div>
+						<div class="p-formgroup-inline">
+							<p:commandButton id="buttonpesquisar"
+								process="@this itName itCpf" update="tabela growl itName itCpf"
+								actionListener="#{clienteContoller.pesquisarPorNome}"
+								value="Buscar Nome" styleClass="white-button"
+								style="margin-top: 28px;" />
+						</div>
+						
 						<div class="p-field p-col">
 							<p:outputLabel for="itCpf" styleClass="ui-sr-only" value="CPF:"
 								style="font-family: 'Nerko One', cursive;" />
@@ -37,10 +47,10 @@
 							</p:inputMask>
 						</div>
 						<div class="p-formgroup-inline">
-							<p:commandButton process="@this itName itCpf"
-								update="tabela growl itName itCpf"
-								actionListener="#{clienteContoller.pesquisarPorNome}"
-								value="Buscar" styleClass="white-button"
+							<p:commandButton id="buttonpesquisarCPF"
+								process="@this itCpf itName" update="tabela growl itName itCpf"
+								actionListener="#{clienteContoller.pesquisarPorCPF}"
+								value="Buscar CPF" styleClass="white-button"
 								style="margin-top: 28px;" />
 						</div>
 					</div>
@@ -76,8 +86,8 @@
 						<p:column>
 							<f:facet name="header">Animais:</f:facet>
 							<p:commandButton actionListener="#{clienteContoller.editar(obj)}"
-								process="@this" update="@form" oncomplete="PF('dla').show();" icon="fa fa-paw" 
-								aria-hidden="true">
+								process="@this" update="@form" oncomplete="PF('dla').show();"
+								icon="fa fa-paw" aria-hidden="true">
 							</p:commandButton>
 						</p:column>
 						<p:column>
@@ -95,6 +105,7 @@
 						</p:column>
 					</p:dataTable>
 				</p:fieldset>
+				<p:defaultCommand target="buttonpesquisar" />
 			</p:panel>
 			<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
 				width="80%" height="300">

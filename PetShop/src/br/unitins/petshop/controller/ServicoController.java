@@ -7,10 +7,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
-import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Servico;
-import br.unitins.petshop.repository.FuncionarioRepository;
 import br.unitins.petshop.repository.ServicoRepository;
 
 @Named
@@ -23,7 +22,7 @@ public class ServicoController extends Controller<Servico> {
 	@Override
 	public Servico getEntity() {
 		if(entity == null) 
-			entity= new Servico();
+			entity= (Servico) Session.getInstance().getAttribute("dadosServ");
 		return entity;
 	}
 	/*public void pesquisar() {
@@ -69,5 +68,15 @@ public class ServicoController extends Controller<Servico> {
 	}
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
+	}
+	public void criarRedirect() {
+		Session.getInstance().setAttribute("dadosServ", new Servico());
+		Util.redirect("cadservico.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
+	}
+	
+	public void editarServico(Servico servico) {
+		setEntity(servico);
+		Session.getInstance().setAttribute("dadosServ", getEntity());
+		Util.redirect("cadservico.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
 	}
 }

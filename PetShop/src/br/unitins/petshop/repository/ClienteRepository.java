@@ -48,4 +48,26 @@ public class ClienteRepository extends Repository<Cliente>{
 			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
 		}
 	}
+	public List<Cliente> findByCPF(String cpf) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  c ");
+			jpql.append("FROM ");
+			jpql.append("  Cliente c ");
+			jpql.append("WHERE ");
+			jpql.append("  UPPER(c.cpf) like UPPER(:cpf) ");
+			jpql.append("ORDER BY c.nome ");
+			
+			Query query = em.createQuery(jpql.toString());
+			query.setParameter("cpf", "%"+ cpf + "%");
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
 }

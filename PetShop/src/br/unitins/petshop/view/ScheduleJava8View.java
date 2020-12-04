@@ -283,6 +283,7 @@ public class ScheduleJava8View implements Serializable {
 		ClienteContoller controller = new ClienteContoller();
 		controller.setAnimal(animal);
 		evento.setAnimalAgenda(animal);
+		Util.addInfoMessage("Animal foi selecionado para serviço");
 	}
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
@@ -334,7 +335,8 @@ public class ScheduleJava8View implements Serializable {
 					repo.salvar(evento);
 					repo.commitTransaction();
 					init();
-				} catch (RepositoryException e) {
+				}
+				catch (RepositoryException e) {
 					e.printStackTrace();
 				}
 				break;

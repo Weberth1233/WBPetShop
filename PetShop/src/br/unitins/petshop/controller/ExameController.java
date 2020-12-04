@@ -7,8 +7,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Exame;
+import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.ClienteRepository;
 import br.unitins.petshop.repository.ExameRepository;
 
@@ -46,7 +49,7 @@ public class ExameController extends Controller<Exame> {
 	@Override
 	public Exame getEntity() {
 		if(entity == null) 
-			entity = new Exame();
+			entity = (Exame) Session.getInstance().getAttribute("dadosExam");
 		return entity;
 	}
 	public List<Exame> getListaExames() {
@@ -62,5 +65,14 @@ public class ExameController extends Controller<Exame> {
 	}
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
+	}
+	public void criarRedirect() {
+		Session.getInstance().setAttribute("dadosExam", new Exame());
+		Util.redirect("cadexame.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
+	}
+	public void editarExame(Exame exame) {
+		setEntity(exame);
+		Session.getInstance().setAttribute("dadosExam", getEntity());
+		Util.redirect("cadexame.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
 	}
 }

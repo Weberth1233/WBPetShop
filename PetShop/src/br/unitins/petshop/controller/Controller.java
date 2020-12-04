@@ -1,12 +1,11 @@
 package br.unitins.petshop.controller;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
-import br.unitins.petshop.model.Funcionario;
-import br.unitins.petshop.model.Veterinario;
 import br.unitins.petshop.repository.Repository;
 
 /*Esta classe vai extends somente daquelas que extendem de DefaultEntity*/
@@ -24,7 +23,8 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 			setEntity(repo.salvar(getEntity()));
 			repo.commitTransaction();
 			Util.addInfoMessage("Operação realizada com sucesso.");
-		} catch (RepositoryException e) {
+		}
+		catch (RepositoryException e) {
 			repo.rollbackTransaction();
 			System.out.println("Erro ao salvar.");
 			e.printStackTrace();

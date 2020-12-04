@@ -80,9 +80,10 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 			jpql.append("SELECT ");
 			jpql.append("  f ");
 			jpql.append("FROM ");
-			jpql.append("  Funcionario f ");
+			jpql.append("  Funcionario f, Servico s ");
 			jpql.append("WHERE ");
-			jpql.append("  UPPER(f.nome) like UPPER(:nome) ");
+			jpql.append(" f.servico.id = s.id AND ");
+			jpql.append(" UPPER(f.nome) like UPPER(:nome) ");
 			jpql.append("ORDER BY f.nome ");
 			
 			Query query = em.createQuery(jpql.toString());
@@ -97,6 +98,31 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
 		}
 	}
+	
+	public List<Funcionario> findByFuncionarioServico(String nome) throws RepositoryException{ 
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer jpql = new StringBuffer();
+			jpql.append("SELECT ");
+			jpql.append("  f ");
+			jpql.append("FROM ");
+			jpql.append("  Funcionario f, Servico s ");
+			jpql.append("WHERE ");
+			jpql.append(" f.servico.id = s.id AND ");
+			jpql.append(" UPPER(f.nome) like UPPER(:nome) ");
+			jpql.append("ORDER BY f.nome ");
+			
+			Query query = em.createQuery(jpql.toString());
+			query.setParameter("nome", "%"+ nome + "%");
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
+	
 	public List<Funcionario> findVeterinario(String nome, int maxResults) throws RepositoryException{ 
 		try {
 			EntityManager em = JPAUtil.getEntityManager();

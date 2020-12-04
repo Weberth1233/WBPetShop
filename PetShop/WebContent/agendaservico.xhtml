@@ -125,9 +125,11 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">Ação:</f:facet>
-							<p:commandButton value="Editar"
-								actionListener="#{scheduleJava8View.retornarAnimal(obj)}"
-								process="@this" update="@form:eventDialog" />
+							<center>
+								<p:commandButton value="Selecione" icon="fa fa-paper-plane"
+									actionListener="#{scheduleJava8View.retornarAnimal(obj)}"
+									process="@this" update="@form:eventDialog" />
+							</center>
 						</p:column>
 					</p:dataTable>
 				</p:dialog>

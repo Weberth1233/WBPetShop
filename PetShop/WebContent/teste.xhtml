@@ -30,7 +30,6 @@
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/images/snoopy02.gif" />
 		</p:dialog>
-
 		<h:form>
 			<p:panel id="panel">
 				<p:growl id="growl" sticky="false" />
@@ -39,155 +38,66 @@
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
 					</div>
 				</f:facet>
-				<p:panel header="Adicionar Funcionario">
-					<div class="ui-g ui-fluid">
-						<div class="ui-g-12">
-							<div class="card card-w-title">
-								<p:panelGrid columns="1"
-									styleClass="form-group ui-panelgrid-blank" layout="grid">
-									<p:fieldset legend="Cadastro Funcionario">
-										<h:outputLabel value="Nome completo:" style="font-weight:bold" />
-										<p:inputText id="name" style="border-radius:30px;"
-											value="#{funcionarioController.entity.nome}"
-											placeholder="Insira seu nome completo" />
-
-										<h:outputLabel for="date" value="Data Nascimento:"
-											style="font-weight:bold" />
-										<p:inputMask id="date" style="border-radius:30px;"
-											value="#{funcionarioController.entity.dataNascimento}"
-											mask="99/99/9999" placeholder="dia/mês/ano">
-											<f:convertDateTime pattern="dd/MM/yyyy" />
-										</p:inputMask>
-
-										<h:outputLabel for="cpf" value="CPF:" style="font-weight:bold" />
-										<p:inputMask id="cpf" style="border-radius:30px;"
-											value="#{funcionarioController.entity.cpf}"
-											mask="999.999.999-99" label="cpf"
-											placeholder="000.000.000-00" />
-
-										<h:outputLabel for="email" value="E-mail:"
-											style="font-weight:bold" />
-										<p:inputText id="email" style="border-radius:30px;"
-											value="#{funcionarioController.entity.email}" label="email"
-											placeholder="exemplo@hotmail.com" />
-
-										<h:outputLabel for="salario" value="salario"
-											style="font-weight:bold" />
-										<p:inputText id="salario" style="border-radius:30px;"
-											value="#{funcionarioController.entity.salario}"
-											label="endereco" placeholder="0000" />
-
-										<h:outputLabel for="chorario" value="Carga Horaria:"
-											style="font-weight:bold" />
-										<p:inputText id="cargahoraria" style="border-radius:30px;"
-											value="#{funcionarioController.entity.cargaHoraria}"
-											label="Carga Horaria" placeholder="Exemplo:60" />
-
-										<p:outputLabel value="Serviço: " />
-										<p:autoComplete
-											value="#{funcionarioController.entity.servico}"
-											forceSelection="true" style="border-radius:30px;"
-											placeholder="Informe ao menos 2 letras para iniciar a consulta..."
-											minQueryLength="2" dropdown="true" maxResults="3"
-											moreText="Ainda tem mais ..." var="obj"
-											itemLabel="#{obj.nome}" itemValue="#{obj}"
-											completeMethod="#{funcionarioController.completeMarca}" />
-
-										<h:outputLabel for="senha" value="Senha:"
-											style="font-weight:bold" />
-										<p:password id="senhafunc" style="border-radius:30px;"
-											value="#{funcionarioController.entity.senha}" label="Senha"
-											placeholder="Insira uma senha forte:" />
-
-										<h:outputLabel for="login" value="Login"
-											style="font-weight:bold" />
-										<p:inputText id="loginfunc" style="border-radius:30px;"
-											value="#{funcionarioController.entity.login}" label="login"
-											placeholder="Exemplo:meuloginbr" />
-				
-										<h:form enctype="multipart/form-data">
-											<p:fileUpload listener="#{funcionarioController.upload}"
-												label="#{funcionarioController.nomeFoto}" mode="advanced"
-												update="@this messages" auto="false" sizeLimit="1200000"
-												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-											<p:growl id="messages" showDetail="true" />
-										</h:form>
-									</p:fieldset>
-								</p:panelGrid>
+				<p:wizard backLabel="Anterior" nextLabel="Próximo">
+					<p:tab id="tabDadosPrincipais" title="Dados Principais">
+						<p:panel header="Adicionar Cliente">
+							<div class="ui-fluid p-formgrid p-grid">
+								<div class="p-field p-col-12 p-md-6">
+									<p:outputLabel for="firstname6" value="Nome:" />
+									<p:inputText id="firstname6" />
+								</div>
+								<div class="p-field p-col-12 p-md-6">
+									<p:outputLabel for="lastname6" value="Sobrenome:" />
+									<p:inputText id="lastname6" />
+								</div>
+								<div class="p-field p-col-12">
+									<p:outputLabel for="address" value="Endereço:" />
+									<p:inputTextarea id="address" rows="4" />
+								</div>
+								<div class="p-field p-col-12 p-md-6">
+									<p:outputLabel for="city" value="Cidade:" />
+									<p:inputText id="city" />
+								</div>
+								<div class="p-field p-col-12 p-md-3">
+									<p:outputLabel for="state" value="State" />
+									<p:selectOneMenu id="state">
+										<f:selectItem itemLabel="Select One" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="Option 1" itemValue="Option 1" />
+										<f:selectItem itemLabel="Option 2" itemValue="Option 2" />
+										<f:selectItem itemLabel="Option 3" itemValue="Option 3" />
+									</p:selectOneMenu>
+								</div>
+								<div class="p-field p-col-12 p-md-3">
+									<p:outputLabel for="zip" value="Zip" />
+									<p:inputText id="zip" />
+								</div>
 							</div>
-						</div>
-					</div>
-				</p:panel>
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Salvar" process="@form" update="@form"
-							icon="pi pi-check" style="margin-right:10px"
-							actionListener="#{funcionarioController.salvar}" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:commandButton value="Lista Funcionario"
-							onclick="PF('dlg').show();" />
-					</p:toolbarGroup>
-					<p:toolbarGroup align="right">
-						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@this" update="panel"
-							actionListener="#{funcionarioController.remover}">
-							<p:confirm header="Confirmação" message="Deseja excluir?"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
-					</p:toolbarGroup>
-				</p:toolbar>
+						</p:panel>
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Salvar" icon="pi pi-check"
+									prokçcess="@form" update="@form"
+									action="#{clienteContoller.salvar}" />
+								<p:commandButton value="Limpar" process="@this" update="panel"
+									action="#{clienteContoller.limpar}">
+									<p:ajax update="@form" resetValues="true" />
+								</p:commandButton>
+								<p:commandButton value="Animais Cadastrados:"
+									onclick="PF('dla').show();" />
+							</f:facet>
+							<f:facet name="right">
+								<p:commandButton value="Excluir" icon="pi pi-trash"
+									process="@this" update="panel"
+									actionListener="#{clienteContoller.remover}">
+									<p:confirm header="Confirmação" message="Deseja excluir?"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</f:facet>
+						</p:toolbar>
+					</p:tab>
+				</p:wizard>
 			</p:panel>
-			<p:dialog header="Consulta Funcionario" widgetVar="dlg" modal="true"
-				width="80%" height="300">
-				<p:panelGrid columns="2">
-					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="itbuscar" value="#{funcionarioController.buscar}" />
-					<p:commandButton value="Pesquisar" process="@this itbuscar"
-						update="tabela"
-						actionListener="#{funcionarioController.pesquisarPorNome}" />
-				</p:panelGrid>
-
-				<p:dataTable id="tabela"
-					value="#{funcionarioController.listaFuncionario}" var="obj">
-					<p:column>
-						<f:facet name="header">Nome:</f:facet>
-						<p:outputLabel value="#{obj.nome}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Data Nascimento:</f:facet>
-						<p:outputLabel value="#{obj.dataNascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">Data Admissão:</f:facet>
-						<p:outputLabel value="#{obj.dataAdmissao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column>
-						<f:facet name="header">CPF:</f:facet>
-						<p:outputLabel value="#{obj.cpf}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">Serviço:</f:facet>
-						<p:outputLabel value="#{obj.servico.nome}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">E-mail:</f:facet>
-						<p:outputLabel value="#{obj.email}" />
-					</p:column>
-					<p:column>
-						<center>
-							<f:facet name="header">Ação:</f:facet>
-							<p:commandButton value="Editar"
-								actionListener="#{funcionarioController.editar(obj)}"
-								process="@this" update="@form" />
-						</center>
-					</p:column>
-				</p:dataTable>
-			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

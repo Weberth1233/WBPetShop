@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
@@ -27,7 +26,9 @@ public class FuncionarioController extends Controller<Funcionario>{
 	private static final long serialVersionUID = 9011861114364637235L;
 	private List<Funcionario>listaFuncionario;
 	private String buscar;
-
+	
+	private Funcionario funcionario;
+	
 	private InputStream fotoInputStream = null;
 	private String nomeFoto = null;
 
@@ -51,7 +52,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 			repo.commitTransaction();
 			Util.addInfoMessage("Operação realizada com sucesso.");
 			limpar();
-		} catch (RepositoryException e) {
+		}catch (RepositoryException e) {
 			repo.rollbackTransaction();
 			System.out.println("Erro ao salvar.");
 			e.printStackTrace();
@@ -71,7 +72,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 	public void pesquisarPorNome() {
 		FuncionarioRepository repo = new FuncionarioRepository();
 		try {
-			setListaFuncionario(repo.findByNome(getBuscar()));
+			setListaFuncionario(repo.findByFuncionarioServico(getBuscar()));
 		} catch (RepositoryException e) {
 			Util.addErrorMessage("Erro ao pesquisar cliente");
 			e.printStackTrace();
@@ -79,7 +80,8 @@ public class FuncionarioController extends Controller<Funcionario>{
 		}
 		buscar = null;
 	}
-	public TipoFuncionario[] tipoFuncionariosValues() {
+	
+	public TipoFuncionario[] getListaFuncionarios() {
 		return TipoFuncionario.values();
 	}
 	
@@ -136,6 +138,15 @@ public class FuncionarioController extends Controller<Funcionario>{
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
 	public String adicionarNovo() {
 		Session.getInstance().setAttribute("dadosFunc", new Funcionario());
 		return "cadfuncionario.xhtml?faces-redirect=true";

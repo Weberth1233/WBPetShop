@@ -1,6 +1,7 @@
 package br.unitins.petshop.repository;
 
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -40,16 +41,14 @@ public class Repository <T extends DefaultEntity<? super T>> {
 			throw new RepositoryException("Erro ao realizar o commit");
 		}
 	}
-	public T salvar(T entity) throws RepositoryException{
+	public T salvar(T entity) throws RepositoryException {
 		try {
 			return getEntityManager().merge(entity);
-		}
-		catch(PersistenceException e) {
-			System.out.println("Informações duplicadas");
+		}catch (PersistenceException e) {
+			System.out.println("Erro ao salvar!");
 			e.printStackTrace();
-			throw new RepositoryException("Algum dos seguintes registro estão duplicados:Nome, CPF ou E-mail");
-		}
-		catch (Exception e) {
+			throw new RepositoryException("Dados estão duplicados:(SENHA, LOGIN OU EMAIL).");
+		}catch (Exception e) {
 			System.out.println("Erro ao salvar!");
 			e.printStackTrace();
 			throw new RepositoryException("Erro ao salvar!");

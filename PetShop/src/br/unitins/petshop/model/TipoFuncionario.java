@@ -2,8 +2,7 @@ package br.unitins.petshop.model;
 
 
 public enum TipoFuncionario {
-	ATENDENTE(1,"Atendente"),GERENTE(2,"Gerente"), TOSADOR(3,"Tosador");
-	
+	GERENTE(0,"Gerente"),FUNCIONARIO(1,"Funcionário"), VETERINARIO(2,"Veterinário");
 	private String descricao;
 	private int id;
 	

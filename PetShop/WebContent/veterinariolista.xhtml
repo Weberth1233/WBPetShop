@@ -13,68 +13,51 @@
 		</p:dialog>
 		<h:form>
 			<p:growl id="growl" sticky="false" />
-			<p:panel header="Lista de funcionários"
+			<p:panel header="Lista de Veterinários"
 				style="font-size:18pt;font-family: 'Nerko One', cursive;">
 				<p:fieldset>
 					<p:toolbar style="background-color:#51519A;">
 						<f:facet name="right">
-							<p:commandButton id="buttonadc" value="Adicionar Novo" process="@this"
-								action="#{funcionarioController.adicionarNovo}" />
+							<p:commandButton id="buttonadc" value="Adicionar Novo"
+								process="@this" action="#{funcionarioController.adicionarNovo}" />
 						</f:facet>
 					</p:toolbar>
 					<div class="ui-fluid p-formgrid p-grid ui-md-5"
 						style="margin-top: 25px; margin-bottom: 25px;">
 						<div class="p-field p-col">
-							<p:outputLabel for="itName" styleClass="ui-sr-only" value="Nome:"
+							<p:outputLabel for="filtro" styleClass="ui-sr-only" value="Nome:"
 								style="font-family: 'Nerko One', cursive;" />
-							<p:inputText id="itName" value="#{funcionarioController.buscar}" />
+							<p:inputText id="filtro" value="#{veterinarioController.buscar}" />
 						</div>
 						<div class="p-formgroup-inline">
-							<p:commandButton id="buttonpesquisar" process="@this itName"
-								update="tabela growl itName"
-								actionListener="#{funcionarioController.pesquisarPorNome}"
-								value="Buscar" styleClass="white-button"
-								style="margin-top: 28px;" />
+							<p:commandButton id="buttonpesquisar" value="Pesquisar"
+								process="@this filtro" update="tabela"
+								actionListener="#{veterinarioController.pesquisar}"
+								styleClass="white-button" style="margin-top: 28px;" />
 						</div>
 					</div>
 					<p:defaultCommand target="buttonpesquisar" />
-					<p:dataTable id="tabela" paginator="true" rows="5" lazy="true"
-						value="#{funcionarioController.listaFuncionario}" var="obj" emptyMessage="Não há resultados ainda!" style="text-align:center;">
+					<p:dataTable id="tabela"
+						value="#{veterinarioController.listaVeterinarios}" var="obj"
+						paginator="true" rows="5" lazy="true"
+						emptyMessage="Não há resultados ainda!">
 						<p:column>
 							<f:facet name="header">Nome:</f:facet>
 							<p:outputLabel value="#{obj.nome}" />
 						</p:column>
 						<p:column>
-							<f:facet name="header">Data Nascimento:</f:facet>
-							<p:outputLabel value="#{obj.dataNascimento}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:outputLabel>
-						</p:column>
-						<p:column>
 							<f:facet name="header">Data Admissão:</f:facet>
 							<p:outputLabel value="#{obj.dataAdmissao}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" locale="pt_BR" />
 							</p:outputLabel>
-						</p:column>
-						<p:column>
-							<f:facet name="header">CPF:</f:facet>
-							<p:outputLabel value="#{obj.cpf}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">Serviço:</f:facet>
-							<p:outputLabel value="#{obj.servico.nome}" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">E-mail:</f:facet>
-							<p:outputLabel value="#{obj.email}" />
+							<p:outputLabel value="#{obj.email}"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<center>
-								<f:facet name="header">Ação:</f:facet>
-								<p:commandButton icon="fa fa-pencil"
-									action="#{funcionarioController.editarFuncionario(obj)}"
-									process="@this" />
-							</center>
+							<f:facet name="header">CPF:</f:facet>
+							<p:outputLabel value="#{obj.cpf}"></p:outputLabel>
 						</p:column>
 					</p:dataTable>
 				</p:fieldset>

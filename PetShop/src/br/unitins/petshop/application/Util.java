@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 
+
 public class Util {
 	//images
 	public static final String PATH_IMAGES = File.separator + "images";
@@ -60,5 +61,14 @@ public class Util {
 			return false;
 		}
 		return true;
+	}
+	public static void redirect(String page) {
+		try {
+			FacesContext.getCurrentInstance()
+				.getExternalContext().redirect(page);
+		} catch (IOException e) {
+			e.printStackTrace();
+			addErrorMessage("Problemas ao redirecionar a página.");
+		}
 	}
 }
