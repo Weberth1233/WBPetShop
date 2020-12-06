@@ -5,99 +5,20 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="content">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-3">
-				<p:staticMessage severity="info" summary="INFO!"
-					detail="Olá, operação com sucesso!" />
-			</div>
-			<div class="ui-g-12 ui-md-3">
-				<p:staticMessage severity="warn" summary="WARN!"
-					detail="Olá, operação falhou!" />
-			</div>
-			<div class="ui-g-12 ui-md-3">
-				<p:staticMessage severity="error" summary="ERROR!"
-					detail="Olá, operação deu erro!" />
-			</div>
-			<div class="ui-g-12 ui-md-3">
-				<p:staticMessage severity="fatal" summary="FATAL!"
-					detail="Olá, erro fatal!" />
-			</div>
-		</div>
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
-
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage name="/images/snoopy02.gif" />
 		</p:dialog>
 		<h:form>
-			<p:panel id="panel">
-				<p:growl id="growl" sticky="false" />
-				<f:facet name="header">
-					<div align="center">
-						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
-					</div>
-				</f:facet>
-				<p:wizard backLabel="Anterior" nextLabel="Próximo">
-					<p:tab id="tabDadosPrincipais" title="Dados Principais">
-						<p:panel header="Adicionar Cliente">
-							<div class="ui-fluid p-formgrid p-grid">
-								<div class="p-field p-col-12 p-md-6">
-									<p:outputLabel for="firstname6" value="Nome:" />
-									<p:inputText id="firstname6" />
-								</div>
-								<div class="p-field p-col-12 p-md-6">
-									<p:outputLabel for="lastname6" value="Sobrenome:" />
-									<p:inputText id="lastname6" />
-								</div>
-								<div class="p-field p-col-12">
-									<p:outputLabel for="address" value="Endereço:" />
-									<p:inputTextarea id="address" rows="4" />
-								</div>
-								<div class="p-field p-col-12 p-md-6">
-									<p:outputLabel for="city" value="Cidade:" />
-									<p:inputText id="city" />
-								</div>
-								<div class="p-field p-col-12 p-md-3">
-									<p:outputLabel for="state" value="State" />
-									<p:selectOneMenu id="state">
-										<f:selectItem itemLabel="Select One" itemValue="#{null}"
-											noSelectionOption="true" />
-										<f:selectItem itemLabel="Option 1" itemValue="Option 1" />
-										<f:selectItem itemLabel="Option 2" itemValue="Option 2" />
-										<f:selectItem itemLabel="Option 3" itemValue="Option 3" />
-									</p:selectOneMenu>
-								</div>
-								<div class="p-field p-col-12 p-md-3">
-									<p:outputLabel for="zip" value="Zip" />
-									<p:inputText id="zip" />
-								</div>
-							</div>
-						</p:panel>
-						<p:toolbar>
-							<f:facet name="left">
-								<p:commandButton value="Salvar" icon="pi pi-check"
-									prokçcess="@form" update="@form"
-									action="#{clienteContoller.salvar}" />
-								<p:commandButton value="Limpar" process="@this" update="panel"
-									action="#{clienteContoller.limpar}">
-									<p:ajax update="@form" resetValues="true" />
-								</p:commandButton>
-								<p:commandButton value="Animais Cadastrados:"
-									onclick="PF('dla').show();" />
-							</f:facet>
-							<f:facet name="right">
-								<p:commandButton value="Excluir" icon="pi pi-trash"
-									process="@this" update="panel"
-									actionListener="#{clienteContoller.remover}">
-									<p:confirm header="Confirmação" message="Deseja excluir?"
-										icon="pi pi-exclamation-triangle" />
-								</p:commandButton>
-							</f:facet>
-						</p:toolbar>
-					</p:tab>
-				</p:wizard>
-			</p:panel>
+			<p:dataTable id="dtteste"
+				value="#{helloController.lista}" var="obj">
+				<p:column>
+					<f:facet name="header">Titulo:</f:facet>
+					<p:outputLabel value="#{obj.titulo}" />
+				</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>
