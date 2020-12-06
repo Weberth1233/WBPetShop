@@ -23,13 +23,13 @@
 						<p:ajax event="dateSelect"
 							listener="#{scheduleJavaConsulta.quandoNovo}"
 							update="eventDialog messages"
-							oncomplete="PF('caixaDialog').show()" />
+							oncomplete="PF('caixaDialog').show()" disabled="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}" />
 
 						<p:ajax event="eventMove"
 							listener="#{scheduleJavaConsulta.onEventMove}"
 							update="schedule messages" />
 
-						<p:ajax event="eventResize"
+						<p:ajax event="eventResize" 
 							listener="#{scheduleJavaConsulta.onEventResize}"
 							update="schedule messages" />
 
@@ -95,7 +95,7 @@
 								<p:inputText id="exames"
 									value="#{scheduleJavaConsulta.exames.nome}" />
 								<p:commandButton process="@this"
-									update="@form:eventDialog:exames messages" value="Adicionar"
+									update="@form:eventDialog:exames messages" icon="fa fa-plus-circle"
 									actionListener="#{scheduleJavaConsulta.adicionarExames}" />
 							</h:panelGroup>
 							<p:outputLabel for="status" value="Status" />
@@ -109,7 +109,6 @@
 						actionListener="#{scheduleJavaConsulta.addEvent}" />
 
 					<p:commandButton value="Diagnóstico"
-						rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}"
 						actionListener="#{scheduleJavaConsulta.detalhes}" process="@this"
 						oncomplete="PF('caixaDialog').hide()" update="schedule messages" />
 				</p:dialog>
