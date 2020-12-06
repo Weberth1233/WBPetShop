@@ -5,8 +5,8 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 	<ui:define name="content">
 		<p:fieldset>
-			<h1>Calendário Agendamento de Serviço</h1>
-			<h:form>
+			<h1>Calendário Agendamento de Consulta</h1>
+			<h:form id="formulario">
 				<p:growl id="messages" showDetail="true" />
 
 				<h:panelGrid columnClasses="value">
@@ -54,6 +54,7 @@
 								value="#{scheduleJavaConsulta.evento.data_fim}"
 								pattern="dd/MM/yyyy" showTime="true" />
 							<p:outputLabel value="Animal: " />
+
 							<p:inputText id="pet"
 								value="#{scheduleJavaConsulta.evento.animalAgenda.nome}"
 								required="true"
@@ -64,12 +65,11 @@
 									value="#{scheduleJavaConsulta.evento.clienteAgenda.nome}"
 									required="true"
 									disabled="#{scheduleJavaConsulta.evento.clienteAgenda.nome != null}" />
-								<p:commandButton process="@this"
+								<p:commandButton process="@this" update="messages"
 									actionListener="#{scheduleJavaConsulta.retornarListaAnimais}"
 									oncomplete="PF('dla').show();" icon="fa fa-paw">
 								</p:commandButton>
 							</h:panelGroup>
-
 							<p:outputLabel value="Veterinário:" />
 							<p:autoComplete
 								value="#{scheduleJavaConsulta.evento.veterinario}"
@@ -80,8 +80,24 @@
 								itemValue="#{obj}"
 								completeMethod="#{scheduleJavaConsulta.completeVeterinario}" />
 							<p:outputLabel for="desc" value="Descrição:" />
+
 							<p:inputTextarea id="desc"
 								value="#{scheduleJavaConsulta.evento.descricao}" required="true" />
+
+							<p:commandLink value="Exames:"
+								actionListener="#{scheduleJavaConsulta.abrirExameListing}"
+								update="@none" process="@this">
+								<p:ajax event="dialogReturn"
+									listener="#{scheduleJavaConsulta.obterExameListing}"
+									update="@form:eventDialog:exames" />
+							</p:commandLink>
+							<h:panelGroup>
+								<p:inputText id="exames"
+									value="#{scheduleJavaConsulta.exames.nome}" />
+								<p:commandButton process="@this"
+									update="@form:eventDialog:exames messages" value="Adicionar"
+									actionListener="#{scheduleJavaConsulta.adicionarExames}" />
+							</h:panelGroup>
 							<p:outputLabel for="status" value="Status" />
 							<p:inputText id="status"
 								value="#{scheduleJavaConsulta.evento.status}" required="true" />
@@ -91,6 +107,11 @@
 					<p:commandButton value="Salvar" update="schedule messages"
 						oncomplete="PF('caixaDialog').hide()"
 						actionListener="#{scheduleJavaConsulta.addEvent}" />
+
+					<p:commandButton value="Diagnóstico"
+						rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}"
+						actionListener="#{scheduleJavaConsulta.detalhes}" process="@this"
+						oncomplete="PF('caixaDialog').hide()" update="schedule messages" />
 				</p:dialog>
 
 				<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
@@ -119,7 +140,8 @@
 							<f:facet name="header">Ação:</f:facet>
 							<p:commandButton value="Editar"
 								actionListener="#{scheduleJavaConsulta.retornarAnimal(obj)}"
-								process="@this" update="@form:eventDialog" />
+								process="@this" update=":@form:eventDialog:pet"
+								oncomplete="PF('dla').hide()" />
 						</p:column>
 					</p:dataTable>
 				</p:dialog>
