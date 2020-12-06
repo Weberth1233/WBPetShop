@@ -32,8 +32,8 @@
 		</p:dialog>
 
 		<h:form>
+			<p:growl id="growl" sticky="false" />
 			<p:panel id="panel">
-				<p:growl id="growl" sticky="false" />
 				<f:facet name="header">
 					<div align="center">
 						<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
@@ -53,9 +53,9 @@
 											value="#{exameController.entity.nome}" required="true" />
 
 										<h:outputLabel value="Preço:" style="font-weight:bold" />
-										<p:inputMask id="precoExame" style="border-radius:30px;" mask="9999"
-											value="#{exameController.entity.precoExame}" required="true"
-											placeholder="0000" />
+										<p:inputMask id="precoExame" style="border-radius:30px;"
+											mask="9999" value="#{exameController.entity.precoExame}"
+											required="true" placeholder="0000" />
 
 										<h:outputLabel for="descricao" value="Descricao:"
 											style="font-weight:bold" />
@@ -80,7 +80,7 @@
 					</p:toolbarGroup>
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Excluir" icon="pi pi-trash"
-							process="@this" update="panel"
+							process="@this" update="@form panel"
 							actionListener="#{exameController.remover}">
 							<p:confirm header="Confirmação" message="Deseja excluir?"
 								icon="pi pi-exclamation-triangle" />
@@ -92,11 +92,12 @@
 				width="80%" height="300">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Pesquisar:" />
-					<p:inputText id="filtro" value="#{exameController.buscar}"/>
-					<p:commandButton value="Pesquisar" process="@this filtro" update="tabela"
+					<p:inputText id="filtro" value="#{exameController.buscar}" />
+					<p:commandButton value="Pesquisar" process="@this filtro"
+						update="tabela"
 						actionListener="#{exameController.pesquisarPorNome}" />
 				</p:panelGrid>
-				
+
 				<p:dataTable id="tabela" value="#{exameController.listaExames}"
 					var="obj">
 					<p:column>
