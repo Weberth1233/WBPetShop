@@ -76,7 +76,12 @@ public class ScheduleJavaConsulta implements Serializable {
 		evento = new AgendamentoConsulta();
 		eventModel = new DefaultScheduleModel();
 		try {
-			listaEventos = repo.findAll();
+			Funcionario func =(Funcionario)Session.getInstance().getAttribute("funcionarioLogado");
+			if(func.getTipoFuncionario().getId() == 2) {
+				listaEventos = repo.findListVet(func.getId());
+			}else {
+				listaEventos = repo.findAll();
+			}
 		} catch (RepositoryException e) {
 			Util.addErrorMessage("Erro no SQL");
 			e.printStackTrace();
