@@ -19,7 +19,7 @@
 					<p:toolbar style="background-color:#51519A;">
 						<f:facet name="right">
 							<p:commandButton id="buttonadc" value="Adicionar Novo"
-								process="@this" action="#{funcionarioController.adicionarNovo}" />
+								process="@this" action="cadveterinario.xhtml?faces-redirect=true" />
 						</f:facet>
 					</p:toolbar>
 					<div class="ui-fluid p-formgrid p-grid ui-md-5"
@@ -54,6 +54,10 @@
 						<p:column>
 							<f:facet name="header">E-mail:</f:facet>
 							<p:outputLabel value="#{obj.email}"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<f:facet name="header">Tipo Funcionário:</f:facet>
+							<p:outputLabel value="#{obj.tipoFuncionario.descricao}"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<f:facet name="header">CPF:</f:facet>

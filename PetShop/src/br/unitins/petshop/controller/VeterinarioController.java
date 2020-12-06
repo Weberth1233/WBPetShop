@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.controller.listing.VeterinarioListing;
@@ -69,5 +70,8 @@ public class VeterinarioController extends Controller<Veterinario>{
 	}
 	public void obterVeterinarioListing(SelectEvent<Veterinario> event) {
 		setEntity(event.getObject());
+	}
+	public String adicionarNovo() {
+		return "cadveterinario.xhtml?faces-redirect=true";
 	}
 }
