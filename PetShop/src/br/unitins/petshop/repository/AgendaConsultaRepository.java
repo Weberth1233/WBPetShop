@@ -28,4 +28,17 @@ public class AgendaConsultaRepository extends Repository<AgendamentoConsulta> {
 			throw new RepositoryException("Erro ao buscar exames");
 		}	
 	}
+	
+	public List<AgendamentoConsulta> findListVet(Integer id) throws RepositoryException{
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query= em.createQuery("SELECT e FROM AgendamentoConsulta e WHERE e.veterinario.id =: id");
+			query.setParameter("id", id);
+			return query.getResultList();
+		}catch (Exception e) {
+			e.getStackTrace();
+			System.out.println("Erro ao buscar exames");
+			throw new RepositoryException("Erro ao buscar exames");
+		}	
+	}
 }
