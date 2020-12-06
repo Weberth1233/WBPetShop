@@ -79,7 +79,8 @@
 								completeMethod="#{scheduleJava8View.completeServico}" />
 
 							<p:outputLabel value="Funcionário: " />
-							<p:autoComplete value="#{scheduleJava8View.evento.funcionarioAgenda}"
+							<p:autoComplete
+								value="#{scheduleJava8View.evento.funcionarioAgenda}"
 								forceSelection="true" style="border-radius:30px;"
 								placeholder="Informe ao menos 2 letras para iniciar a consulta..."
 								minQueryLength="2" dropdown="true" maxResults="3"
@@ -99,6 +100,10 @@
 					<p:commandButton value="Salvar" update="schedule messages"
 						oncomplete="PF('caixaDialog').hide()"
 						actionListener="#{scheduleJava8View.addEvent}" />
+					
+					<p:commandButton value="Detalhes"
+						actionListener="#{scheduleJava8View.detalhes}" process="@this" 
+						oncomplete="PF('caixaDialog').hide()" update="schedule messages"/>
 				</p:dialog>
 
 				<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
