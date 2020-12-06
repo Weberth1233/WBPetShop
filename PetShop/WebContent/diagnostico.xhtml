@@ -36,10 +36,9 @@
 					closable="false" resizable="false" showHeader="false">
 					<p:graphicImage name="/images/snoopy02.gif" />
 				</p:dialog>
-
+				<p:growl id="mensagens" showDetail="true" />
 				<h:form>
 					<p:panel id="panel">
-						<p:growl id="growl" sticky="false" />
 						<f:facet name="header">
 							<div align="center">
 								<h1 style="font-family: 'Ranchers', cursive;">WBPetShop</h1>
@@ -57,19 +56,28 @@
 											<p:inputText id="itcli"
 												value="#{diagnosticoController.entity.agendamento.clienteAgenda.nome}"
 												required="true" />
+											
+											<h:outputLabel value="Animal:" style="font-weight:bold" />
+											<p:inputText id="itanimal"
+												value="#{diagnosticoController.entity.agendamento.animalAgenda.nome}"
+												required="true" />
 
 											<h:outputLabel value="Veterinário:" style="font-weight:bold" />
 											<p:inputText id="itvet"
 												value="#{diagnosticoController.entity.veterinario.nome}"
-												required="true" />											
+												required="true" />
 											<h:outputLabel for="date" value="Data:"
-													style="font-weight:bold" />
-												<p:inputMask id="date" style="border-radius:30px;"
-													value="#{diagnosticoController.entity.data}"
-													required="true" mask="99/99/9999" placeholder="dia/mês/ano"
-													label="data">
-													<f:convertDateTime pattern="dd/MM/yyyy" />
-												</p:inputMask>
+												style="font-weight:bold" />
+											<p:inputMask id="date" style="border-radius:30px;"
+												value="#{diagnosticoController.entity.data}" required="true"
+												mask="99/99/9999" placeholder="dia/mês/ano" label="data">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</p:inputMask>
+
+											<p:outputLabel value="Exame:" />
+											<p:inputText id="itExame"
+												value="#{diagnosticoController.entity.exame.nome}" />
+
 											<p:outputLabel value="Selecione Exame:"
 												style="font-weight:bold"></p:outputLabel>
 											<p:dataTable id="dtListagem" var="entity" rowIndexVar="row"
@@ -86,16 +94,13 @@
 												<p:column headerText="Ação:">
 													<p:commandButton value="Adicionar"
 														actionListener="#{diagnosticoController.adcExame(entity)}"
-														process="@this" update="@form" />
+														process="@this" update="@form mensagens" />
 												</p:column>
 												<f:facet name="footer">
 							       					 Total de #{diagnosticoController.evento.listaExame.size()} Exames.
 												</f:facet>
 											</p:dataTable>
 
-											<p:outputLabel value="Exame:" />
-											<p:inputText id="itExame"
-												value="#{diagnosticoController.entity.exame.nome}" />
 
 											<h:outputLabel value="Resultado:" style="font-weight:bold" />
 											<p:inputTextarea id="resultD" required="true"
@@ -107,8 +112,9 @@
 						</div>
 						<p:toolbar>
 							<p:toolbarGroup>
-								<p:commandButton value="Salvar" process="@form" update=":@form:itExame"
-									icon="pi pi-check" style="margin-right:10px"
+								<p:commandButton value="Salvar" process="@form"
+									update=":@form:itExame mensagens" icon="pi pi-check"
+									style="margin-right:10px"
 									actionListener="#{diagnosticoController.salvar}" />
 							</p:toolbarGroup>
 						</p:toolbar>
