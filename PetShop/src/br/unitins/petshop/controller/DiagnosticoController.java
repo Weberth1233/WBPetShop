@@ -7,6 +7,7 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.AgendamentoConsulta;
 import br.unitins.petshop.model.Diagnostico;
 import br.unitins.petshop.model.Exame;
@@ -28,8 +29,9 @@ public class DiagnosticoController extends Controller<Diagnostico>{
 	}
 	public void adcExame(Exame exame) {
 		getEntity().setExame(exame);
+		getEntity().getAgendamento().getListaExame().remove(getEntity().getExame());
+		Util.addInfoMessage("Exame adicionado com sucesso!");
 	}
-	
 	public AgendamentoConsulta getEvento() {
 		return evento;
 	}
