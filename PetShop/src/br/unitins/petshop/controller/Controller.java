@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 
 import br.unitins.petshop.application.RepositoryException;
+import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.DefaultEntity;
+import br.unitins.petshop.model.Exame;
 import br.unitins.petshop.repository.Repository;
 
 /*Esta classe vai extends somente daquelas que extendem de DefaultEntity*/
@@ -23,6 +25,7 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 			setEntity(repo.salvar(getEntity()));
 			repo.commitTransaction();
 			Util.addInfoMessage("Operação realizada com sucesso.");
+			limpar();
 		}
 		catch (RepositoryException e) {
 			repo.rollbackTransaction();
@@ -31,8 +34,6 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 //			Util.addErrorMessage("Erro ao Salvar.");
 			Util.addErrorMessage(e.getMessage());
 		}
-		
-		limpar();
 	}
 	public void editar(T entity) {
 		setEntity(entity);
@@ -42,14 +43,14 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 		try {
 			repo.beginTransaction();
 			repo.remover(getEntity());
-			Util.addInfoMessage("Remoção realizado com sucesso!");
 			repo.commitTransaction();
-		} catch (RepositoryException e) {
+			Util.addInfoMessage("Remoção realizada com sucesso!");
+			limpar();
+		}catch (RepositoryException e) {
 			repo.rollbackTransaction();
 			Util.addErrorMessage("Erro ao remover do banco!");
 			e.printStackTrace();
 		}
-		limpar();
 	}
 	public void limpar() {
 		 setEntity(null);

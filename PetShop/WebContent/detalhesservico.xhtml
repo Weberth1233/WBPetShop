@@ -10,26 +10,45 @@
 				<div class="row">
 					<div class="col-xs-12 col-xs-updated">
 						<h:form styleClass="form-horizontal">
-							<h:messages id="messages" style="color:red" globalOnly="false" />
-							<p:fieldset legend="Dados Funcionário">
-								<div class="mb-3">
-									<p><h:outputLabel style="font-weight:bold" value="Nome Funcionário:" /></p>
-									<p><h:outputLabel style="font-weight:bold" value="CRNV:"/></p>
-								</div>
+							<h:messages id="messages" style="color:red" globalsOnly="false" />
+							<p:panel header="Detalhes Agendamento">
+							<p:fieldset legend="Dados Agendamento:">
+								<p><p:outputLabel value="Titulo:" style="font-weight:bold" />
+								<p:outputLabel style="font-weight:bold"
+										value=" #{detalhesServicoController.evento.titulo}"/>
+								</p>
+								<p><p:outputLabel value="Data Inicial:" style="font-weight:bold" /></p>
+								<p><p:outputLabel style="font-weight:bold"
+										value="#{detalhesServicoController.evento.data_incio}">
+										<f:convertDateTime type="localDate" pattern="dd-MM-yyyy hh:mm:ss" />
+									</p:outputLabel>
+								</p>
+								<p><p:outputLabel style="font-weight:bold" value="Data final:" /></p>
+								<p><p:outputLabel style="font-weight:bold"
+										value="#{detalhesServicoController.evento.data_fim}">
+										<f:convertDateTime type="localDate" pattern="dd-MM-yyyy hh:mm:ss" />
+									</p:outputLabel>
+								</p>
 							</p:fieldset>
-							<p:fieldset legend="Dados Serviço">
-								<div class="mb-3">
-									<p><h:outputLabel style="font-weight:bold" value="Nome Serviço:"/></p>
-									<p><h:outputLabel style="font-weight:bold" value="Descrição:" /></p>
-									<p><h:outputLabel style="font-weight:bold" value="Preço Serviço:"/></p>
-								</div>
+							<p:fieldset legend="Dados Cliente:">
+								<p><p:outputLabel value="Cliente:" style="font-weight:bold"/>
+								<p:outputLabel style="font-weight:bold"
+									value=" #{detalhesServicoController.evento.clienteAgenda.nome}" /></p>
+								<p><p:outputLabel value="Animal:" style="font-weight:bold"/>
+								<p:outputLabel
+									value=" #{detalhesServicoController.evento.animalAgenda.nome}" /></p>
+								
+								<p><p:outputLabel value="Fone:" style="font-weight:bold"/>
+								<p:outputLabel style="font-weight:bold"
+									value=" #{detalhesServicoController.evento.clienteAgenda.numeroTelefone}" /></p>
 							</p:fieldset>
-							<hr />
-							<div class="mb-3">
-								<h:commandButton value="Voltar"
-									onclick="history.go(-1); return false;"
-									styleClass="col-md-2 mb-3 btn btn-default form-control" />
-							</div>
+								<hr />
+								<div class="mb-3">
+									<p:commandButton value="Voltar"
+										onclick="history.go(-1); return false;"
+										styleClass="col-md-2 mb-3 btn btn-default form-control" />
+								</div>
+							</p:panel>
 						</h:form>
 					</div>
 				</div>

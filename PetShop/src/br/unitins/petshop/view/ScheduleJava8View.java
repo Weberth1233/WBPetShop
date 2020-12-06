@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -204,6 +205,16 @@ public class ScheduleJava8View implements Serializable {
 				evento = ev;
 				break;
 			}
+		}
+	}
+	public void detalhes() {
+		if(getEvento() == null) {
+			Util.addWarningMessage("Não há detalhes para este agendamento.");
+		}else {
+			Flash flash = FacesContext.getCurrentInstance().
+					getExternalContext().getFlash();
+			flash.put("eventodetalhes", getEvento());
+			Util.redirect("detalhesservico.xhtml?faces-redirect=true");
 		}
 	}
 	public void addEvent() {

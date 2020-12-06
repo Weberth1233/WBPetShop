@@ -13,7 +13,7 @@ import org.primefaces.model.file.UploadedFile;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
-
+import br.unitins.petshop.model.Exame;
 import br.unitins.petshop.model.Funcionario;
 import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.model.TipoFuncionario;
@@ -58,6 +58,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 			e.printStackTrace();
 			Util.addErrorMessage(e.getMessage());
 		}
+		Session.getInstance().setAttribute("dadosFunc", new Funcionario());
 	}
 	/*public void pesquisar() {
 		FuncionarioRepository repo = new FuncionarioRepository();
@@ -69,6 +70,12 @@ public class FuncionarioController extends Controller<Funcionario>{
 			e.printStackTrace();
 		}
 	}*/
+	@Override
+	public void remover() {
+		super.remover();
+		Session.getInstance().setAttribute("dadosFunc", new Funcionario());
+	}
+	
 	public void pesquisarPorNome() {
 		FuncionarioRepository repo = new FuncionarioRepository();
 		try {

@@ -16,16 +16,16 @@
 				</h:link> <h:link outcome="/clientelista">
 					<i class="fa fa-paw" />
 					<span style="color: #fff;">Cliente</span>
-				</h:link> <h:link outcome="/funcionariolista">
+				</h:link> <h:link outcome="/funcionariolista" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
 					<i class="fa fa-paw" />
 					<span style="color: #fff;">Profissionais</span>
-				</h:link> <h:link outcome="/veterinariolista">
+				</h:link> <h:link outcome="/veterinariolista" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
 					<i class="fa fa-paw" />
 					<span style="color: #fff;">Veterinário</span>
-				</h:link> <h:link outcome="/servicolista">
+				</h:link> <h:link outcome="/servicolista" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
 					<i class="fa fa-paw" />
 					<span style="color: #fff;">Serviços</span>
-				</h:link> <h:link outcome="/examelista">
+				</h:link> <h:link outcome="/examelista" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
 					<i class="fa fa-paw" />
 					<span style="color: #fff;">Exames</span>
 				</h:link> <h:link outcome="/diagnostico">

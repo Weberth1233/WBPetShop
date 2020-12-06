@@ -8,6 +8,7 @@
 		<class>br.unitins.petshop.model.Animal</class>
 		<class>br.unitins.petshop.model.Cliente</class>
 		<class>br.unitins.petshop.model.DefaultEntity</class>
+		<class>br.unitins.petshop.model.Diagnostico</class>
 		<class>br.unitins.petshop.model.Exame</class>
 		<class>br.unitins.petshop.model.Funcionario</class>
 		<class>br.unitins.petshop.model.Servico</class>

@@ -13,6 +13,7 @@ import br.unitins.petshop.application.Util;
 import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
+import br.unitins.petshop.model.Exame;
 import br.unitins.petshop.repository.ClienteRepository;
 import br.unitins.petshop.repository.Repository;
 
@@ -119,8 +120,8 @@ public class ClienteContoller extends Controller<Cliente>{
 		getEntity().getListaAnimal().add(getAnimal());
 
 		animal = null;
-
 	}
+	
 	public void retornarAnimal(Cliente entity) {
 		setEntity(entity);
 		Session.getInstance().setAttribute("dadosCli", getEntity());
@@ -160,7 +161,16 @@ public class ClienteContoller extends Controller<Cliente>{
 		Session.getInstance().setAttribute("dadosCli", new Cliente());
 		Util.redirect("cadcliente.xhtml?faces-redirect=true.xhtml?faces-redirect=true");
 	}
-	
+	@Override
+	public void salvar() {
+		super.salvar();
+		Session.getInstance().setAttribute("dadosCli", new Cliente());
+	}
+	@Override
+	public void remover() {
+		super.remover();
+		Session.getInstance().setAttribute("dadosCli", new Cliente());
+	}
 	public String agendarCliente(Cliente cliente) {
 		setEntity(cliente);
 		Session.getInstance().setAttribute("dadosCli", getEntity());

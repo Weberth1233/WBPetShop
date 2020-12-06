@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -25,6 +26,7 @@ import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
 import br.unitins.petshop.controller.ClienteContoller;
+import br.unitins.petshop.controller.listing.ExameListing;
 import br.unitins.petshop.model.AgendamentoConsulta;
 import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
@@ -46,6 +48,8 @@ public class ScheduleJavaConsulta implements Serializable {
 	private ScheduleModel lazyEventModel;
 
 	private List<AgendamentoConsulta>listaEventos;
+	
+	private Exame exames;
 
 	private AgendaConsultaRepository repo;
 
@@ -186,6 +190,16 @@ public class ScheduleJavaConsulta implements Serializable {
 			}
 		}
 	}*/
+	public void detalhes() {
+		if(getEvento() == null) {
+			Util.addWarningMessage("Não há detalhes para este agendamento.");
+		}else {
+			Flash flash = FacesContext.getCurrentInstance().
+					getExternalContext().getFlash();
+			flash.put("eventoconsulta", getEvento());
+			Util.redirect("diagnostico.xhtml?faces-redirect=true");
+		}
+	}
 	public void selecionaEvento(SelectEvent selectEvent) {
 		ScheduleEvent event =(ScheduleEvent) selectEvent.getObject();
 
@@ -270,10 +284,12 @@ public class ScheduleJavaConsulta implements Serializable {
 		ClienteContoller controller= new ClienteContoller();
 		controller.editar(cli);
 	}
+	
 	public void retornarAnimal(Animal animal) {
 		ClienteContoller controller = new ClienteContoller();
 		controller.setAnimal(animal);
 		evento.setAnimalAgenda(animal);
+		Util.addInfoMessage("Animal adicionado com sucesso!");
 	}
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
@@ -356,11 +372,36 @@ public class ScheduleJavaConsulta implements Serializable {
 		}
 		addMessage(message);
 	}
+	
 
+	public Exame getExames() {
+		if(exames == null) 
+			exames = new Exame();
+		return exames;
+	}
+		
+	public void setExames(Exame exames) {
+		this.exames = exames;
+	}
+	
+	public void adicionarExames() {
+		if(getEvento().getListaExame() == null) {
+			getEvento().setListaExame(new ArrayList<Exame>());
+		}
+		getEvento().getListaExame().add(getExames());
+		exames = null;
+	}
+	
 	private void addMessage(FacesMessage message) {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-
+	public void abrirExameListing() {
+		ExameListing listing = new ExameListing();
+		listing.open();
+	}
+	public void obterExameListing(SelectEvent<Exame> event) {
+		setExames(event.getObject());
+	}
 	public boolean isShowWeekends() {
 		return showWeekends;
 	}

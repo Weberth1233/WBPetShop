@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.unitins.petshop.application.RepositoryException;
 import br.unitins.petshop.application.Session;
 import br.unitins.petshop.application.Util;
+import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Servico;
 import br.unitins.petshop.repository.ServicoRepository;
 
@@ -68,6 +69,16 @@ public class ServicoController extends Controller<Servico> {
 	}
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
+	}
+	@Override
+	public void salvar() {
+		super.salvar();
+		Session.getInstance().setAttribute("dadosServ", new Servico());
+	}
+	@Override
+	public void remover() {
+		super.remover();
+		Session.getInstance().setAttribute("dadosServ", new Servico());
 	}
 	public void criarRedirect() {
 		Session.getInstance().setAttribute("dadosServ", new Servico());
