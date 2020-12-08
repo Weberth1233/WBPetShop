@@ -8,7 +8,12 @@
 			<h1>Calendário Agendamento de Serviço</h1>
 			<h:form>
 				<p:growl id="messages" showDetail="true" />
-
+				<p:commandButton value="Finalizar Atendimento" process="@this"
+					update="messages" actionListener="#{scheduleJava8View.finalizar}" />
+				<p:commandButton value="Buscar Cliente"
+					style="position:relative;left:74.8%"
+					action="clientelista.xhtml?faces-redirect=true" process="@this"
+					update="@all" />
 				<h:panelGrid columnClasses="value">
 					<p:schedule id="schedule" value="#{scheduleJava8View.eventModel}"
 						widgetVar="meuCalendario" clientTimeZone="local" resizable="true"
@@ -43,7 +48,6 @@
 							<p:outputLabel for="title" value="Titulo" />
 							<p:inputText id="title"
 								value="#{scheduleJava8View.evento.titulo}" required="true" />
-
 							<p:outputLabel for="from" value="Data e horario Inicial:" />
 							<p:datePicker id="from"
 								value="#{scheduleJava8View.evento.data_incio}"
@@ -56,7 +60,7 @@
 							<p:inputText id="pet"
 								value="#{scheduleJava8View.evento.animalAgenda.nome}"
 								required="true"
-								disabled="#{scheduleJava8View.evento.clienteAgenda.nome == null}" />
+								disabled="#{scheduleJava8View.evento.clienteAgenda.nome != null}" />
 							<p:outputLabel for="cli" value="Cliente" />
 							<h:panelGroup>
 								<p:inputText id="cli"
@@ -92,18 +96,30 @@
 							<p:inputTextarea id="desc"
 								value="#{scheduleJava8View.evento.descricao}" required="true" />
 							<p:outputLabel for="status" value="Status" />
-							<p:inputText id="status"
-								value="#{scheduleJava8View.evento.status}" required="true" />
+							<p:selectOneRadio id="status"
+								value="#{scheduleJava8View.evento.status}" unselectable="true">
+								<f:selectItem itemLabel="Aguardando" itemValue="false" />
+								<f:selectItem itemLabel="Concluida" itemValue="true" />
+							</p:selectOneRadio>
 						</h:panelGrid>
 					</p:outputPanel>
 					<p:separator />
 					<p:commandButton value="Salvar" update="schedule messages"
 						oncomplete="PF('caixaDialog').hide()"
 						actionListener="#{scheduleJava8View.addEvent}" />
-					
+
 					<p:commandButton value="Detalhes"
-						actionListener="#{scheduleJava8View.detalhes}" process="@this" 
-						oncomplete="PF('caixaDialog').hide()" update="schedule messages"/>
+						actionListener="#{scheduleJava8View.detalhes}" process="@this"
+						oncomplete="PF('caixaDialog').hide()" update="schedule messages" />
+
+					<p:commandButton icon="fa fa-trash-o"
+						actionListener="#{scheduleJava8View.remover}" process="@this"
+						update="schedule messages" oncomplete="PF('caixaDialog').hide()"
+						rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
+						<p:confirm header="Confirmação"
+							message="Deseja excluir o agendamento ?"
+							icon="pi pi-exclamation-triangle" />
+					</p:commandButton>
 				</p:dialog>
 
 				<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
@@ -133,7 +149,8 @@
 							<center>
 								<p:commandButton value="Selecione" icon="fa fa-paper-plane"
 									actionListener="#{scheduleJava8View.retornarAnimal(obj)}"
-									process="@this" update="@form:eventDialog" />
+									process="@this" update="@form:pet"
+									oncomplete="PF('dla').hide()" />
 							</center>
 						</p:column>
 					</p:dataTable>

@@ -30,7 +30,7 @@ div.content-top-all {
 }
 
 div.topbar-all {
-	background: url("resources/images/dog.jpg") no-repeat;
+	background: url("../resources/images/dog.jpg") no-repeat;
 	max-width: 100%;
 	background-position: 50% 40%;
 	width: 100%;
@@ -61,7 +61,7 @@ div.logo {
 
 div.menu div a {
 	font-weight: bold;
-	font-size: 13pt;
+	font-size: 28pt;
 	margin-left: 20px;
 	margin-right: 20px;
 	color: #fff;
@@ -118,20 +118,27 @@ div.group-image-text h3 {
 			</div>
 			<div class="menu">
 				<div>
-					<a href="clientelista.xhtml">Dashboard</a>
+					<p:commandLink style="font-size:12pt;" value="Dashboard" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id != 2}"
+					action="clientelista.xhtml?faces-redirect=true"/>
 				</div>
 				<div>
-					<a href="perfil.xhtml">Perfil</a>
+					<p:commandLink style="font-size:12pt;" value="Perfil" 
+					action="perfil.xhtml?faces-redirect=true"/>
 				</div>
 				<div>
-					<a href="agendar.xhtml">Agendamentos</a>
+					<p:commandLink style="font-size:12pt;" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}" value="Consultas" 
+					action="agendarconsulta.xhtml?faces-redirect=true"/>
+				</div>
+				<div>
+					<p:commandLink style="font-size:12pt;" rendered="#{templateController.funcionarioLogado.tipoFuncionario.id != 2}" 
+					value="Agendamentos" action="agendar.xhtml?faces-redirect=true"/>
 				</div>
 			</div>
 			<div class="itens-topbar" style="display: flex; margin: 20px;">
 				<div>
 					<img class="img-responsive"
 						style="max-width: 25px !important; max-height: 30px !important; border-radius: 20px; margin-right: 5px;"
-						src="/PetShop/faces/img-usuario?nome=#{perfilController.funcionario.id}.png" />
+						src="/PetShop/faces/../img-usuario?nome=#{perfilController.funcionario.id}.png" />
 				</div>
 				<h:form>
 					<div class="perfil">
@@ -150,20 +157,20 @@ div.group-image-text h3 {
 				<h3>Grid de Fotos</h3>
 			</div>
 			<p:contentFlow>
-				<p:graphicImage value="resources/images/dog.jpg"
+				<p:graphicImage value="/resources/images/dog.jpg"
 					styleClass="content" />
-				<p:graphicImage value="resources/images/animal-1239334_1280.jpg"
+				<p:graphicImage value="/resources/images/animal-1239334_1280.jpg"
 					styleClass="content" />
-				<p:graphicImage value="resources/images/banhoetosa.png"
+				<p:graphicImage value="/resources/images/banhoetosa.png"
 					styleClass="content" />
-				<p:graphicImage value="resources/images/bone.png"
+				<p:graphicImage value="/resources/images/bone.png"
 					styleClass="content" />
-				<p:graphicImage value="resources/images/medicine-5003631_1280.jpg"
+				<p:graphicImage value="/resources/images/medicine-5003631_1280.jpg"
 					styleClass="content" />
-				<p:graphicImage value="resources/images/vet-3895477_1280.jpg"
+				<p:graphicImage value="/resources/images/vet-3895477_1280.jpg"
 					styleClass="content" />
 				<p:graphicImage
-					value="resources/images/dog-in-bluebells-5038855_1920.jpg"
+					value="/resources/images/dog-in-bluebells-5038855_1920.jpg"
 					styleClass="content" />
 			</p:contentFlow>
 		</div>

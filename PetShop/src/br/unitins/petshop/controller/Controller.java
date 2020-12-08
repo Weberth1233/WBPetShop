@@ -20,19 +20,21 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 	}
 	public void salvar(){
 		Repository<T> repo = new Repository<T>();
-		try {
-			repo.beginTransaction();
-			setEntity(repo.salvar(getEntity()));
-			repo.commitTransaction();
-			Util.addInfoMessage("Operação realizada com sucesso.");
-			limpar();
-		}
-		catch (RepositoryException e) {
-			repo.rollbackTransaction();
-			System.out.println("Erro ao salvar.");
-			e.printStackTrace();
-//			Util.addErrorMessage("Erro ao Salvar.");
-			Util.addErrorMessage(e.getMessage());
+		if(validar()) {
+			try {
+				repo.beginTransaction();
+				setEntity(repo.salvar(getEntity()));
+				repo.commitTransaction();
+				Util.addInfoMessage("Operação realizada com sucesso.");
+				limpar();
+			}
+			catch (RepositoryException e) {
+				repo.rollbackTransaction();
+				System.out.println("Erro ao salvar.");
+				e.printStackTrace();
+				//			Util.addErrorMessage("Erro ao Salvar.");
+				Util.addErrorMessage(e.getMessage());
+			}
 		}
 	}
 	public void editar(T entity) {
@@ -53,9 +55,14 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 		}
 	}
 	public void limpar() {
-		 setEntity(null);
+		setEntity(null);
 	}
+	
 	public abstract T getEntity();
+
+	public boolean validar() {
+		return true;
+	}
 	
 	public void setEntity(T entity) {
 		this.entity = entity;

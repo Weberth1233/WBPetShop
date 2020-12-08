@@ -32,7 +32,10 @@ import br.unitins.petshop.model.Animal;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Exame;
 import br.unitins.petshop.model.Funcionario;
+import br.unitins.petshop.model.StatusConsulta;
+import br.unitins.petshop.model.TipoFuncionario;
 import br.unitins.petshop.repository.AgendaConsultaRepository;
+import br.unitins.petshop.repository.AgendaServicoRepository;
 import br.unitins.petshop.repository.ExameRepository;
 import br.unitins.petshop.repository.FuncionarioRepository;
 
@@ -88,7 +91,6 @@ public class ScheduleJavaConsulta implements Serializable {
 		}
 		for (AgendamentoConsulta ev : listaEventos) {
 			DefaultScheduleEvent event = new DefaultScheduleEvent();
-			
 			event.setEndDate(ev.getData_fim());
 			event.setStartDate(ev.getData_incio());
 			event.setTitle(ev.getTitulo());
@@ -96,15 +98,14 @@ public class ScheduleJavaConsulta implements Serializable {
 			event.setDescription(ev.getDescricao());
 			event.setEditable(true);
 			event.setAllDay(false);
-			if(ev.getStatus() == 0) {
-				event.setStyleClass("emp1");
-			}else {
-				event.setStyleClass("emp2");
-			}
 			eventModel.addEvent(event);
 		}  
 	}
-
+	
+	public StatusConsulta[] getListaStatusConsultas() {
+		return StatusConsulta.values();
+	}
+	
 	public LocalDateTime getRandomDateTime(LocalDateTime base) {
 		LocalDateTime dateTime = base.withMinute(0).withSecond(0).withNano(0);
 		return dateTime.plusDays(((int) (Math.random()*30)));
@@ -254,7 +255,24 @@ public class ScheduleJavaConsulta implements Serializable {
 			return new ArrayList<Exame>();
 		}
 	}
-	
+	public void remover() {
+		AgendaConsultaRepository repository = new AgendaConsultaRepository();
+		if(evento.getId() != null) {
+			try {
+				repository.beginTransaction();
+				repository.remover(evento);
+				repository.commitTransaction();
+				init();
+				Util.addInfoMessage("Remoção realizada com sucesso.");
+			} catch (RepositoryException e) {
+				repository.rollbackTransaction();
+				Util.addErrorMessage("Erro ao remover agendamento entre em contato com adm");
+				e.printStackTrace();
+			}
+		}else {
+			Util.addErrorMessage("Não é possivel remover");
+		}
+	}
 	public List<Funcionario> completeVeterinario(String query) {
 		FuncionarioRepository repo = new FuncionarioRepository();
 		try {
@@ -296,6 +314,7 @@ public class ScheduleJavaConsulta implements Serializable {
 		evento.setAnimalAgenda(animal);
 		Util.addInfoMessage("Animal adicionado com sucesso!");
 	}
+	
 	public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
 		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
@@ -306,7 +325,7 @@ public class ScheduleJavaConsulta implements Serializable {
 				evento.setClienteAgenda(cli);
 				evento.setData_incio(event.getStartDate());
 				evento.setData_fim(event.getEndDate());
-				Session.getInstance().setAttribute("dadosCli", new Cliente());
+				Session.getInstance().setAttribute("dadosCli", cli);
 			}else {
 				Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
 				evento = null;
@@ -314,6 +333,15 @@ public class ScheduleJavaConsulta implements Serializable {
 		}catch (NullPointerException e) {
 			evento = null;
 			Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
+		}
+	}
+	public void finalizar() {
+		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
+		if(cli == null) {
+			Util.addWarningMessage("Não há cliente para finalizar o atendimento!");
+		}else {
+			Session.getInstance().setAttribute("dadosCli", new Cliente());
+			Util.addInfoMessage("Atendimento finalizado com sucesso!");
 		}
 	}
 

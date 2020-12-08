@@ -72,7 +72,24 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 			throw new RepositoryException("Erro ao geral ao realizar login.");
 		}
 	}
-	
+	public Funcionario verificarSenha(String senha, Integer id) throws RepositoryException {
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT f FROM Funcionario f WHERE f.senha = :senha and f.id = :id");
+			query.setParameter("senha", senha);
+			query.setParameter("id", id);
+			return (Funcionario) query.getSingleResult();
+		}catch (NoResultException e) {
+			e.printStackTrace();
+			System.out.println("Erro ao buscar dados para o login!");
+			throw new RepositoryException("Erro ao buscar dados para o login.");
+		}
+		catch (Exception e){
+			System.out.println("Erro geral no login!");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao geral ao realizar login.");
+		}
+	}
 	public List<Funcionario> findByFuncionario(String nome, int maxResults) throws RepositoryException{ 
 		try {
 			EntityManager em = JPAUtil.getEntityManager();
@@ -130,6 +147,26 @@ public class FuncionarioRepository extends Repository<Funcionario> {
 			query.setParameter("nome", "%"+ nome + "%");
 			query.setMaxResults(maxResults);
 			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+	}
+	public boolean atualizarSenha(String novaSenha, Integer id) throws RepositoryException {
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE ");
+			sql.append(" funcionario ");
+			sql.append("SET ");
+			sql.append(" senha = novaSenha ");
+			sql.append("WHERE ");
+			sql.append(" funcionario.id = id");
+			Query query = em.createNativeQuery(sql.toString());
+			query.setParameter(1,novaSenha);
+			query.setParameter(2,id);
+			return true;
 		} catch (Exception e) {
 			System.out.println("Erro ao realizar uma consulta ao banco.");
 			e.printStackTrace();

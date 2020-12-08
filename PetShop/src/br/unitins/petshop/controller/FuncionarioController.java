@@ -26,9 +26,9 @@ public class FuncionarioController extends Controller<Funcionario>{
 	private static final long serialVersionUID = 9011861114364637235L;
 	private List<Funcionario>listaFuncionario;
 	private String buscar;
-	
+
 	private Funcionario funcionario;
-	
+
 	private InputStream fotoInputStream = null;
 	private String nomeFoto = null;
 
@@ -40,25 +40,27 @@ public class FuncionarioController extends Controller<Funcionario>{
 		}
 		return entity;
 	}
-	
+
 	@Override
 	public void salvar() {
 		FuncionarioRepository repo = new FuncionarioRepository();
-		try {
-			repo.beginTransaction();
-			setEntity(repo.salvar(getEntity()));
-			if (! Util.saveImageUsuario(fotoInputStream, "png", getEntity().getId())) 
-				throw new RepositoryException("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
-			repo.commitTransaction();
-			Util.addInfoMessage("Operação realizada com sucesso.");
-			limpar();
-		}catch (RepositoryException e) {
-			repo.rollbackTransaction();
-			System.out.println("Erro ao salvar.");
-			e.printStackTrace();
-			Util.addErrorMessage(e.getMessage());
+		if(validar()) {
+			try {
+				repo.beginTransaction();
+				setEntity(repo.salvar(getEntity()));
+				if (! Util.saveImageUsuario(fotoInputStream, "png", getEntity().getId())) 
+					throw new RepositoryException("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
+				repo.commitTransaction();
+				Util.addInfoMessage("Operação realizada com sucesso.");
+				limpar();
+			}catch (RepositoryException e) {
+				repo.rollbackTransaction();
+				System.out.println("Erro ao salvar.");
+				e.printStackTrace();
+				Util.addErrorMessage(e.getMessage());
+			}
+			Session.getInstance().setAttribute("dadosFunc", new Funcionario());
 		}
-		Session.getInstance().setAttribute("dadosFunc", new Funcionario());
 	}
 	/*public void pesquisar() {
 		FuncionarioRepository repo = new FuncionarioRepository();
@@ -75,7 +77,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 		super.remover();
 		Session.getInstance().setAttribute("dadosFunc", new Funcionario());
 	}
-	
+
 	public void pesquisarPorNome() {
 		FuncionarioRepository repo = new FuncionarioRepository();
 		try {
@@ -87,11 +89,11 @@ public class FuncionarioController extends Controller<Funcionario>{
 		}
 		buscar = null;
 	}
-	
+
 	public TipoFuncionario[] getListaFuncionarios() {
 		return TipoFuncionario.values();
 	}
-	
+
 	public void upload(FileUploadEvent event) {
 		UploadedFile uploadFile = event.getFile();
 		System.out.println("nome arquivo: " + uploadFile.getFileName());
@@ -118,7 +120,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 			return "Selecione uma foto ...";
 		return "Arquivo: "+ nomeFoto + " (Clique para alterar a foto...)";
 	}
-	
+
 	public List<Servico>completeMarca(String query) {
 		ServicoRepository repo = new ServicoRepository();
 		try {
@@ -145,7 +147,7 @@ public class FuncionarioController extends Controller<Funcionario>{
 	public void setBuscar(String buscar) {
 		this.buscar = buscar;
 	}
-	
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -162,5 +164,15 @@ public class FuncionarioController extends Controller<Funcionario>{
 		setEntity(funcionario);
 		Session.getInstance().setAttribute("dadosFunc", getEntity());
 		return "cadfuncionario.xhtml?faces-redirect=true";
+	}
+
+	public boolean validar() {
+		if(getEntity().getNome().isBlank()) {
+			Util.addErrorMessage("Campod nome deve ser informado!.");
+			return false;
+		}
+		String senha = Util.hashSHA256(getEntity().getSenha());
+		getEntity().setSenha(senha);
+		return true;
 	}
 }

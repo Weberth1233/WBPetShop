@@ -17,7 +17,7 @@ import br.unitins.petshop.model.Funcionario;
 
 
 /*Assim vai percorrer todas as paginas no filter*/
-@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/faces/*"})
+@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/faces/pages/*"})
 public class SecurityFilter implements Filter {
 
 	@Override
@@ -35,11 +35,6 @@ public class SecurityFilter implements Filter {
 		/*HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String url = httpServletRequest.getRequestURI();
 		System.out.println(url);
-		if(url.equals("/PetShop/faces/login.xhtml")) {
-
-			chain.doFilter(request, response);
-			return;
-		}
 		HttpSession session = httpServletRequest.getSession(false);
 
 		Funcionario funcionario = null;
@@ -47,7 +42,7 @@ public class SecurityFilter implements Filter {
 			funcionario = (Funcionario) session.getAttribute("funcionarioLogado");
 		}
 		if(funcionario == null) {
-			((HttpServletResponse) response).sendRedirect("/PetShop/faces/login.xhtml");
+			((HttpServletResponse) response).sendRedirect("/PetShop/faces/./login.xhtml");
 		}else {
 			chain.doFilter(request, response);
 			return;

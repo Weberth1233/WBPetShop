@@ -38,19 +38,18 @@ public class LoginController {
 		senha=null;
 		login=null;
 	}
-	public String logar() {
+	public void logar() {
 		FuncionarioRepository repo= new FuncionarioRepository();
 		try {
-			Funcionario func = repo.verificarlogin(getLogin(), getSenha());
+			Funcionario func = repo.verificarlogin(getLogin(), Util.hashSHA256(getSenha()));
 			if(func != null) {
 				Session.getInstance().setAttribute("funcionarioLogado", func);
-				return "index.xhtml?faces-redirect=true";
+				Util.redirect("/PetShop/faces/pages/index.xhtml");
 			}
 		}
 		catch (RepositoryException e) {
 			Util.addErrorMessage("Funcionário não encontrado!");
 			e.printStackTrace();
 		}
-		return null;
 	}
 }

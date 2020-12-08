@@ -61,8 +61,7 @@
 					<div class="ui-g-12 ui-md-4">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><i class="fa fa-sign-in"></i></span>
-							<p:inputText disabled="true"
-								value="#{perfilController.funcionario.login}"></p:inputText>
+							<p:inputText value="#{perfilController.funcionario.login}"></p:inputText>
 						</div>
 					</div>
 					<div class="ui-g-12 ui-md-4">
@@ -85,10 +84,8 @@
 					</div>
 					<div class="ui-g-12 ui-md-4">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon"><i
-								class="fa fa-briefcase"></i></span>
-							<p:password
-								value="#{perfilController.funcionario.senha}" />
+							<p:commandLink value="Alterar senha" action="alterarsenha.xhtml?faces-redirect=true" 
+							process="@this" update="@all"/>
 						</div>
 					</div>
 				</div>

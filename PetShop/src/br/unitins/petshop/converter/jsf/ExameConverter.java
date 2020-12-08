@@ -16,7 +16,6 @@ public class ExameConverter implements Converter<Exame> {
 	public Exame getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value == null || value.isEmpty())
 			return null;
-
 		ExameRepository repo = new ExameRepository();
 		Exame exame = repo.findById(Integer.valueOf(value.trim()));
 		return exame;

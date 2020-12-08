@@ -40,7 +40,7 @@
 					<p:dataTable id="tabela"
 						value="#{veterinarioController.listaVeterinarios}" var="obj"
 						paginator="true" rows="5" lazy="true"
-						emptyMessage="Não há resultados ainda!">
+						emptyMessage="Não há resultados ainda!"  style="text-align:center;">
 						<p:column>
 							<f:facet name="header">Nome:</f:facet>
 							<p:outputLabel value="#{obj.nome}" />

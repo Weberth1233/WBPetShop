@@ -52,7 +52,6 @@ public class TestJPA {
 		
 		agendar.setClienteAgenda(cli);
 		agendar.setAnimalAgenda(animal);
-		agendar.setStatus(1);
 		
 		EntityManagerFactory emf = 
 				Persistence.createEntityManagerFactory("PetShop");

@@ -46,8 +46,9 @@
 								styleClass="form-group ui-panelgrid-blank" layout="grid">
 								<p:fieldset legend="Cadastro Veterinário">
 
-									<p:outputLabel value="Nome"/>
+									<p:outputLabel value="Nome" />
 									<p:inputText id="name" style="border-radius:30px;"
+										style="font-weight:bold"
 										value="#{veterinarioController.entity.funcionario.nome}"
 										required="true" placeholder="Insira seu nome completo" />
 
@@ -73,6 +74,17 @@
 										required="true"
 										requiredMessage="E-mail não pode ser um campo nulo!"
 										label="email" placeholder="exemplo@hotmail.com" />
+
+									<p:outputLabel for="@next" value="Tipo Funcionário:" style="font-weight:bold" />
+									<p:selectOneMenu id="city" style="border-radius:2px;"
+										value="#{veterinarioController.entity.funcionario.tipoFuncionario}"
+										effect="fold" editable="false">
+										<f:selectItem itemLabel="Selecione um...." itemValue="" />
+										<f:selectItems
+											value="#{veterinarioController.listaFuncionarios}" var="obj"
+											itemValue="#{obj}" itemLabel="#{obj.descricao}"
+											itemDisabled="#{obj.id != 2}" />
+									</p:selectOneMenu>
 
 									<h:outputLabel for="salario" value="salario"
 										style="font-weight:bold" />
@@ -110,7 +122,7 @@
 										value="#{veterinarioController.entity.crnv}" required="true"
 										mask="999.999.999-99"
 										requiredMessage="CRNV não pode ser um campo nulo!"
-										label="crnv" placeholder="Insira seu CRNV:" />										
+										label="crnv" placeholder="Insira seu CRNV:" />
 								</p:fieldset>
 							</p:panelGrid>
 						</div>

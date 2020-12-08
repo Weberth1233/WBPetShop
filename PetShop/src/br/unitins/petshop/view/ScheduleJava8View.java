@@ -60,17 +60,17 @@ public class ScheduleJava8View implements Serializable {
 	private boolean showWeekends = true;
 	private boolean tooltip = true;
 	private boolean allDaySlot = false;
-	
+
 	private String timeFormat;
-    private String slotDuration="00:30:00";
-    private String slotLabelInterval;
-    private String scrollTime="06:00:00";
-    private String minTime="04:00:00";
-    private String maxTime="20:00:00";
-    private String locale="en";
-    private String timeZone="";
-    private String clientTimeZone="local";
-    private String columnHeaderFormat="";
+	private String slotDuration="00:30:00";
+	private String slotLabelInterval;
+	private String scrollTime="06:00:00";
+	private String minTime="04:00:00";
+	private String maxTime="20:00:00";
+	private String locale="en";
+	private String timeZone="";
+	private String clientTimeZone="local";
+	private String columnHeaderFormat="";
 
 	@PostConstruct
 	public void init() {
@@ -85,7 +85,7 @@ public class ScheduleJava8View implements Serializable {
 		}
 		for (AgendamentoServico ev : listaEventos) {
 			DefaultScheduleEvent event = new DefaultScheduleEvent();
-			
+
 			event.setEndDate(ev.getData_fim());
 			event.setStartDate(ev.getData_incio());
 			event.setTitle(ev.getTitulo());
@@ -93,11 +93,6 @@ public class ScheduleJava8View implements Serializable {
 			event.setDescription(ev.getDescricao());
 			event.setEditable(true);
 			event.setAllDay(false);
-			if(ev.getStatus() == 0) {
-				event.setStyleClass("emp1");
-			}else {
-				event.setStyleClass("emp2");
-			}
 			eventModel.addEvent(event);
 		}  
 	}
@@ -265,7 +260,7 @@ public class ScheduleJava8View implements Serializable {
 			return new ArrayList<Funcionario>();
 		}
 	}
-	
+
 	public void remover() {
 		AgendaServicoRepository repository = new AgendaServicoRepository();
 		if(evento.getId() != null) {
@@ -284,7 +279,7 @@ public class ScheduleJava8View implements Serializable {
 			Util.addErrorMessage("Não é possivel remover");
 		}
 	}
-	
+
 	public void retornarListaAnimais() {
 		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
 		ClienteContoller controller= new ClienteContoller();
@@ -306,7 +301,6 @@ public class ScheduleJava8View implements Serializable {
 				evento.setClienteAgenda(cli);
 				evento.setData_incio(event.getStartDate());
 				evento.setData_fim(event.getEndDate());
-				Session.getInstance().setAttribute("dadosCli", new Cliente());
 			}else {
 				Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
 				evento = null;
@@ -316,7 +310,16 @@ public class ScheduleJava8View implements Serializable {
 			Util.addErrorMessage("Usuario não localizado para realizar o agendamento");
 		}
 	}
-
+	
+	public void finalizar() {
+		Cliente  cli = (Cliente) Session.getInstance().getAttribute("dadosCli");
+		if(cli == null) {
+			Util.addWarningMessage("Não há cliente para finalizar o atendimento!");
+		}else {
+			Session.getInstance().setAttribute("dadosCli", new Cliente());
+			Util.addInfoMessage("Atendimento finalizado com sucesso!");
+		}
+	}
 	/*public void quandoNovo(SelectEvent selectEvent) {
 		ScheduleEvent event = DefaultScheduleEvent.builder().startDate((LocalDateTime) selectEvent.getObject()).endDate(((LocalDateTime) selectEvent.getObject()).plusMinutes(30)).build();
 		evento = new AgendamentoServico();

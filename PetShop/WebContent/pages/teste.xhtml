@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/snoopy02.gif" />
+		</p:dialog>
+		<h:form>
+			<p:panel header="Todos agendamentos"
+				style="font-size:18pt;font-family: 'Nerko One', cursive;">
+				<p:toolbar style="background-color:#51519A;">
+					<f:facet name="right">
+						<p:commandButton
+							actionListener="#{helloController.gerarRelatorio}"
+							process="@this" value="Gerar relatório" />
+					</f:facet>
+					<f:facet name="left">
+						<p:commandButton value="Filtrar status" action="filtroagenda.xhtml?faces-redirect=true"
+							process="@this" update="@all" />
+					</f:facet>
+				</p:toolbar>
+				<p:fieldset>
+					<div class="ui-fluid p-formgrid p-grid ui-md-5"
+						style="margin-top: 25px; margin-bottom: 25px;">
+						<div class="p-field p-col">
+							<p:outputLabel styleClass="ui-sr-only" value="Pesquisar:"
+								style="font-family: 'Nerko One', cursive;" />
+
+							<p:inputText id="itFiltro" value="#{helloController.filtro}"
+								placeholder="Informe o nome do Cliente ..." />
+						</div>
+						<div class="p-formgroup-inline">
+							<p:commandButton value="Pesquisar"
+								actionListener="#{helloController.pesquisar}"
+								process="@this itFiltro" update="dtListagem"
+								style="margin-top: 28px;" />
+						</div>
+					</div>
+					<p:dataTable id="dtListagem" var="obj" rowIndexVar="row"
+						emptyMessage="Não há resultados ainda!" style="text-align:center;"
+						paginator="false" reflow="true" value="#{helloController.list}">
+						<p:column headerText="N." style="width: 30px; text-align: center;">
+							<h:outputText value="#{row + 1}" />
+						</p:column>
+						<p:column headerText="Nome">
+							<p:outputLabel value="#{obj[0]}" />
+						</p:column>
+						<p:column headerText="Data e horario inicial:">
+							<p:outputLabel value="#{obj[1]}">
+								<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss"></f:convertDateTime>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Data e horario final">
+							<p:outputLabel value="#{obj[2]}">
+								<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss"></f:convertDateTime>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Status:">
+							<p:outputLabel value="Em aguardo">
+							</p:outputLabel>
+						</p:column>
+						<f:facet name="footer">
+					 		Total de #{helloController.list.size()} Agendamentos.
+						</f:facet>
+					</p:dataTable>
+				</p:fieldset>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

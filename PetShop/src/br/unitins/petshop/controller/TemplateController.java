@@ -6,6 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.unitins.petshop.application.Session;
+import br.unitins.petshop.application.Util;
 import br.unitins.petshop.model.Funcionario;
 
 @Named
@@ -27,8 +28,8 @@ public class TemplateController implements Serializable{
 		this.funcionarioLogado = funcionarioLogado;
 	}
 	
-	public String encerrarSessao() {
+	public void encerrarSessao() {
 		Session.getInstance().invalidateSession();
-		return "login.xhtml?faces-redirect=true";
+		Util.redirect("/PetShop/faces/login.xhtml");
 	}
 }

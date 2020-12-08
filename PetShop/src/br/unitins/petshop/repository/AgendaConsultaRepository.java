@@ -41,4 +41,43 @@ public class AgendaConsultaRepository extends Repository<AgendamentoConsulta> {
 			throw new RepositoryException("Erro ao buscar exames");
 		}	
 	}
+	
+	public List<AgendamentoConsulta> findListAguardo() throws RepositoryException{
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query= em.createQuery("SELECT e FROM AgendamentoConsulta e WHERE e.status = false");
+			return query.getResultList();
+		}catch (Exception e) {
+			e.getStackTrace();
+			System.out.println("Erro ao buscar exames");
+			throw new RepositoryException("Erro ao buscar exames");
+		}	
+	}
+	
+	public List<Object[]> findByConsultasSQL(String nome) throws RepositoryException {
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT ");
+			sql.append("  c.nome, a.data_incio, a.data_fim ");
+			sql.append("FROM ");
+			sql.append("  agendamento a, ");
+			sql.append("  cliente c  ");
+			sql.append("WHERE ");
+			sql.append("  c.id = a.clienteagenda_id ");
+			sql.append("  AND a.status = false ");
+			sql.append("  AND UPPER(c.nome) like UPPER(?) ");
+			sql.append("ORDER BY c.nome ");
+
+			Query query = em.createNativeQuery(sql.toString());
+			query.setParameter(1, "%" + nome + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			System.out.println("Erro ao realizar uma consulta ao banco.");
+			e.printStackTrace();
+			throw new RepositoryException("Erro ao realizar uma consulta ao banco.");
+		}
+
+	}
+	
 }

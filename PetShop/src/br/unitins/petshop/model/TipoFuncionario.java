@@ -1,5 +1,6 @@
 package br.unitins.petshop.model;
 
+import java.util.List;
 
 public enum TipoFuncionario {
 	GERENTE(0,"Gerente"),FUNCIONARIO(1,"Funcionário"), VETERINARIO(2,"Veterinário");
@@ -23,6 +24,7 @@ public enum TipoFuncionario {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public static TipoFuncionario valueOf(Integer id) {
 		if(id == null) {
 			return null;

@@ -15,6 +15,7 @@ import br.unitins.petshop.controller.listing.ClienteListing;
 import br.unitins.petshop.controller.listing.VeterinarioListing;
 import br.unitins.petshop.model.Cliente;
 import br.unitins.petshop.model.Funcionario;
+import br.unitins.petshop.model.TipoFuncionario;
 import br.unitins.petshop.model.Veterinario;
 import br.unitins.petshop.repository.VeterinarioRepository;
 @Named
@@ -52,6 +53,10 @@ public class VeterinarioController extends Controller<Veterinario>{
 		return listaVeterinarios;
 	}
 	
+	public TipoFuncionario[] getListaFuncionarios() {
+		return TipoFuncionario.values();
+	}
+	
 	public void setListaVeterinarios(List<Veterinario> listaVeterinarios) {
 		this.listaVeterinarios = listaVeterinarios;
 	}
@@ -73,5 +78,16 @@ public class VeterinarioController extends Controller<Veterinario>{
 	}
 	public String adicionarNovo() {
 		return "cadveterinario.xhtml?faces-redirect=true";
+	}
+	
+	@Override
+	public boolean validar() {
+		if(getEntity().getFuncionario().getNome().isBlank()) {
+			Util.addErrorMessage("Campo nome deve ser informado!.");
+			return false;
+		}
+		String senha = Util.hashSHA256(getEntity().getFuncionario().getSenha());
+		getEntity().getFuncionario().setSenha(senha);
+		return true;
 	}
 }

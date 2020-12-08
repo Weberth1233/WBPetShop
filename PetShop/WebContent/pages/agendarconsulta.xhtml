@@ -8,6 +8,16 @@
 			<h1>Calendário Agendamento de Consulta</h1>
 			<h:form id="formulario">
 				<p:growl id="messages" showDetail="true" />
+				<p:commandButton value="Finalizar Atendimento" process="@this"
+					update="messages"
+					rendered="#{templateController.funcionarioLogado.tipoFuncionario.id != 2}"
+					actionListener="#{scheduleJavaConsulta.finalizar}" />
+
+				<p:commandButton value="Buscar Cliente"
+					style="position:relative;left:74.8%"
+					action="clientelista.xhtml?faces-redirect=true" process="@this"
+					update="@all"
+					rendered="#{templateController.funcionarioLogado.tipoFuncionario.id != 2}" />
 
 				<h:panelGrid columnClasses="value">
 					<p:schedule id="schedule"
@@ -23,13 +33,14 @@
 						<p:ajax event="dateSelect"
 							listener="#{scheduleJavaConsulta.quandoNovo}"
 							update="eventDialog messages"
-							oncomplete="PF('caixaDialog').show()" disabled="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}" />
+							oncomplete="PF('caixaDialog').show()"
+							disabled="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}" />
 
 						<p:ajax event="eventMove"
 							listener="#{scheduleJavaConsulta.onEventMove}"
 							update="schedule messages" />
 
-						<p:ajax event="eventResize" 
+						<p:ajax event="eventResize"
 							listener="#{scheduleJavaConsulta.onEventResize}"
 							update="schedule messages" />
 
@@ -49,16 +60,17 @@
 							<p:datePicker id="from"
 								value="#{scheduleJavaConsulta.evento.data_incio}"
 								pattern="dd/MM/yyyy" showTime="true"></p:datePicker>
+
 							<p:outputLabel for="to" value="Data e horario final:" />
 							<p:datePicker id="to"
 								value="#{scheduleJavaConsulta.evento.data_fim}"
 								pattern="dd/MM/yyyy" showTime="true" />
-							<p:outputLabel value="Animal: " />
 
+							<p:outputLabel value="Animal: " />
 							<p:inputText id="pet"
 								value="#{scheduleJavaConsulta.evento.animalAgenda.nome}"
 								required="true"
-								disabled="#{scheduleJavaConsulta.evento.clienteAgenda.nome == null}" />
+								disabled="#{scheduleJavaConsulta.evento.clienteAgenda.nome != null}" />
 							<p:outputLabel for="cli" value="Cliente" />
 							<h:panelGroup>
 								<p:inputText id="cli"
@@ -95,12 +107,19 @@
 								<p:inputText id="exames"
 									value="#{scheduleJavaConsulta.exames.nome}" />
 								<p:commandButton process="@this"
-									update="@form:eventDialog:exames messages" icon="fa fa-plus-circle"
+									update="@form:eventDialog:exames messages"
+									icon="fa fa-plus-circle"
 									actionListener="#{scheduleJavaConsulta.adicionarExames}" />
 							</h:panelGroup>
+
 							<p:outputLabel for="status" value="Status" />
-							<p:inputText id="status"
-								value="#{scheduleJavaConsulta.evento.status}" required="true" />
+							<p:selectOneRadio id="status"
+								value="#{scheduleJavaConsulta.evento.status}"
+								unselectable="true">
+								<f:selectItem itemLabel="Aguardando" itemValue="false" />
+								<f:selectItem itemLabel="Concluida" itemValue="true" />
+							</p:selectOneRadio>
+
 						</h:panelGrid>
 					</p:outputPanel>
 					<p:separator />
@@ -110,7 +129,17 @@
 
 					<p:commandButton value="Diagnóstico"
 						actionListener="#{scheduleJavaConsulta.detalhes}" process="@this"
-						oncomplete="PF('caixaDialog').hide()" update="schedule messages" />
+						oncomplete="PF('caixaDialog').hide()" update="schedule messages"
+						rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 2}" />
+
+					<p:commandButton icon="fa fa-trash-o"
+						actionListener="#{scheduleJavaConsulta.remover}" process="@this"
+						update="schedule messages" oncomplete="PF('caixaDialog').hide()"
+						rendered="#{templateController.funcionarioLogado.tipoFuncionario.id == 0}">
+						<p:confirm header="Confirmação"
+							message="Deseja excluir o agendamento ?"
+							icon="pi pi-exclamation-triangle" />
+					</p:commandButton>
 				</p:dialog>
 
 				<p:dialog header="Animal Cliente" widgetVar="dla" modal="true"
@@ -137,10 +166,12 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">Ação:</f:facet>
-							<p:commandButton value="Editar"
-								actionListener="#{scheduleJavaConsulta.retornarAnimal(obj)}"
-								process="@this" update=":@form:eventDialog:pet"
-								oncomplete="PF('dla').hide()" />
+							<center>
+								<p:commandButton value="Selecione" icon="fa fa-paper-plane"
+									actionListener="#{scheduleJavaConsulta.retornarAnimal(obj)}"
+									process="@this" update=":@form:eventDialog:pet"
+									oncomplete="PF('dla').hide()" />
+							</center>
 						</p:column>
 					</p:dataTable>
 				</p:dialog>

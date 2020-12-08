@@ -19,7 +19,7 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	@ManyToOne
 	private Animal animalAgenda;
 	
-	private int status;
+	private boolean status;
 	
 	public String getTitulo() {
 		return titulo;
@@ -45,10 +45,10 @@ public abstract class Agendamento extends DefaultEntity<Agendamento>  {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public int getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 	public Cliente getClienteAgenda() {
