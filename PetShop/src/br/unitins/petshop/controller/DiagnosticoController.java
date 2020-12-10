@@ -23,7 +23,8 @@ public class DiagnosticoController extends Controller<Diagnostico>{
 	private static final long serialVersionUID = -7374918795180548036L;
 	private AgendamentoConsulta evento;
 	private List<Exame>lista;
-	
+	private int contador = 1;
+
 	@PostConstruct
 	public void DiagnosticoController() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -37,27 +38,33 @@ public class DiagnosticoController extends Controller<Diagnostico>{
 		}
 		setLista(lista);
 	}
-	
+
 	@Override
 	public void salvar() {
-		Repository<Diagnostico> repo = new Repository<Diagnostico>();
-		try {
-			repo.beginTransaction();
-			setEntity(repo.salvar(getEntity()));
-			repo.commitTransaction();
-			Util.addInfoMessage("Operação realizada com sucesso.");
+		if(contador != lista.size()) {
+			Repository<Diagnostico> repo = new Repository<Diagnostico>();
+			try {
+				repo.beginTransaction();
+				setEntity(repo.salvar(getEntity()));
+				repo.commitTransaction();
+				Util.addInfoMessage("Operação realizada com sucesso.");
+			}
+			catch (RepositoryException e) {
+				repo.rollbackTransaction();
+				System.out.println("Erro ao salvar.");
+				e.printStackTrace();
+				//			Util.addErrorMessage("Erro ao Salvar.");
+				Util.addErrorMessage(e.getMessage());
+			}
+			entity = new Diagnostico();
+			DiagnosticoController();
+			contador = contador+1;
+		}else {
+			super.salvar();
+			entity = null;
 		}
-		catch (RepositoryException e) {
-			repo.rollbackTransaction();
-			System.out.println("Erro ao salvar.");
-			e.printStackTrace();
-//			Util.addErrorMessage("Erro ao Salvar.");
-			Util.addErrorMessage(e.getMessage());
-		}
-		entity = new Diagnostico();
-		DiagnosticoController();
 	}
-	
+
 	public void adcExame(Exame exame) {
 		getEntity().setExame(exame);
 		Util.addInfoMessage("Exame adicionado com sucesso!");
@@ -69,7 +76,7 @@ public class DiagnosticoController extends Controller<Diagnostico>{
 	public void setEvento(AgendamentoConsulta evento) {
 		this.evento = evento;
 	}
-	
+
 	@Override
 	public Diagnostico getEntity() {
 		if(entity == null) {
@@ -86,4 +93,13 @@ public class DiagnosticoController extends Controller<Diagnostico>{
 	public void setLista(List<Exame> lista) {
 		this.lista = lista;
 	}
+
+	public int getContador() {
+		return contador;
+	}
+
+	public void setContador(int contador) {
+		this.contador = contador;
+	}
+
 }
