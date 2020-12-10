@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -18,11 +20,15 @@ public class Cliente extends DefaultEntity<Cliente>{
 	private String nome;
 
 	@CPF(message = "CPF não é valido!")
+	@Column(unique=true, nullable=false) 
 	private String cpf;
 	
 	@Temporal(TemporalType.DATE)
+	@Past(message = "Data não pode estar no futuro!")
 	private Date dataNascimento;
+	
 	private String numeroTelefone;
+	
 	@Email(message = "E-mail não é valido!")
 	private String email;
 	private String endereco;
