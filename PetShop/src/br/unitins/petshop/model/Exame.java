@@ -1,9 +1,11 @@
 package br.unitins.petshop.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMax;
 
 @Entity
 public class Exame extends DefaultEntity<Exame> {
+	@DecimalMax("5000.00")
 	private Float precoExame;
 	private String nome;
 	private String descricao;
