@@ -48,7 +48,7 @@
 										<p:panelGrid columns="1"
 											styleClass="form-group ui-panelgrid-blank" layout="grid">
 											<p:fieldset legend="Cadastro de Cliente">
-												<p:outputLabel value="Nome:"/>
+												<p:outputLabel value="Nome:" style="font-weight:bold"/>
 												<p:inputText id="name" style="border-radius:30px;"
 													required="true" requiredMessage="Nome deve ser informado!"
 													value="#{clienteContoller.entity.nome}"
@@ -85,7 +85,7 @@
 													value="#{clienteContoller.entity.email}" required="true"
 													requiredMessage="E-mail não pode ser um campo nulo!"
 													label="email" placeholder="exemplo@hotmail.com" />
-												<h:outputLabel for="endereco" value="endereco"
+												<h:outputLabel for="endereco" value="Endereco"
 													style="font-weight:bold" />
 												<p:inputText id="endereco" style="border-radius:30px;"
 													value="#{clienteContoller.entity.endereco}" required="true"

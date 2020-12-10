@@ -87,7 +87,7 @@
 											style="font-weight:bold" />
 										<p:inputNumber id="salario" style="border-radius:30px;"
 											value="#{funcionarioController.entity.salario}"
-											required="true" placeholder="0000">
+											required="true" placeholder="0000" requiredMessage="Salario não pode ser um campo nulo!">
 										</p:inputNumber>
 
 										<h:outputLabel for="chorario" value="Carga Horaria:"
@@ -96,7 +96,7 @@
 											value="#{funcionarioController.entity.cargaHoraria}"
 											label="Carga Horaria" placeholder="Exemplo:60" />
 
-										<p:outputLabel value="Serviço: " />
+										<p:outputLabel value="Serviço: " style="font-weight:bold"  />
 										<p:autoComplete
 											value="#{funcionarioController.entity.servico}"
 											forceSelection="true" style="border-radius:30px;"
@@ -117,7 +117,8 @@
 										<p:inputText id="loginfunc" style="border-radius:30px;"
 											value="#{funcionarioController.entity.login}" label="login"
 											placeholder="Exemplo:meuloginbr" />
-
+										<h:outputLabel for="foto" value="Escolha uma foto:"
+											style="font-weight:bold" />
 										<h:form enctype="multipart/form-data">
 											<p:fileUpload listener="#{funcionarioController.upload}"
 												label="#{funcionarioController.nomeFoto}" mode="advanced"
