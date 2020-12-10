@@ -1,10 +1,12 @@
 package br.unitins.petshop.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Servico extends DefaultEntity<Servico> {
+	@DecimalMax("5000.00")
 	private Float preco;
 	
 	@NotBlank(message = "Descrição não pode ser um campo vazio!")
