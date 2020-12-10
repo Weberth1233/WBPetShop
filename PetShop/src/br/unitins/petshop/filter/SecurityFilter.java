@@ -29,10 +29,10 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		chain.doFilter(request, response);
-		return;
+		/*chain.doFilter(request, response);
+		return;*/
 
-		/*HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String url = httpServletRequest.getRequestURI();
 		System.out.println(url);
 		HttpSession session = httpServletRequest.getSession(false);
@@ -46,7 +46,7 @@ public class SecurityFilter implements Filter {
 		}else {
 			chain.doFilter(request, response);
 			return;
-		}*/
+		}
 	}
 	@Override
 	public void destroy() {
