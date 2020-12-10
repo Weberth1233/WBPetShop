@@ -12,9 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
@@ -28,9 +30,10 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	@Column(unique=true, nullable=false) 
 	private String cpf;
 	
+	@Past(message = "Data não pode estar no futuro!")
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
-	
+
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Servico servico;
@@ -38,7 +41,7 @@ public class Funcionario extends DefaultEntity<Funcionario> {
 	private Integer cargaHoraria;
 	
 	private Date dataAdmissao;
-	
+	@DecimalMax("5000.00")
 	@NotNull(message = "Salario não pode ser um campo nulo!")
 	private Float salario;
 	
